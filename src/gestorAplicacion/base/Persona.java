@@ -4,7 +4,7 @@ public abstract class Persona{
     private int cedula; 
     protected int edad;
     
-    Persona(){}
+    public Persona(){}//Jose Luis:Publico para que las clases hijas puedan tener el constructor sin parametros
 
     Persona(String nombre,int cedula){
         this.nombre=nombre;
