@@ -1,7 +1,5 @@
 package gestion;
-import base.Persona;
 import produccion.Fabrica;
-import gestion.CuentaBancaria;
 
 
 public class Operario extends Persona {
@@ -12,7 +10,17 @@ public class Operario extends Persona {
         this.fabrica = fabrica;
     }
 
-    public void recibirSueldo(int valor){
-        this.cuentaBancaria.añadirDinero(valor);  //SOLUCIONAR PROBLEMA CON EL METODO AÑADIR DINERO
+    
+    public void recibirSueldo(double valor){
+        this.getCuentaBancaria().añadirDinero(valor);
+    }
+
+    // Getter y Setter 'Fabrica'
+    public void setFabrica(Fabrica fabrica){
+        this.fabrica = fabrica;
+    }
+
+    public Fabrica getFabrica(){
+        return this.fabrica;
     }
 }
