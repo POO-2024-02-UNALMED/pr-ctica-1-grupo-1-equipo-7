@@ -18,7 +18,7 @@ public class uiEnviarPedidos {
                         System.out.println("Saliendo...");
                         sc.close();
                         return;
-                    } else if (seleccion > 0 && seleccion <= Cliente.clientes.size()+1) {
+                    } else if (seleccion > 0 && seleccion <= Cliente.listaClientes.size()+1) {
                         break;
                     } else {
                         System.out.println("Número fuera de rango. Por favor, elija un cliente válido.");
@@ -29,7 +29,7 @@ public class uiEnviarPedidos {
                 }
             }
 
-            System.out.println("Ha seleccionado el cliente: "+ Cliente.clientes.get(seleccion - 1).getNombre());
+            System.out.println("Ha seleccionado el cliente: "+ Cliente.listaClientes.get(seleccion - 1).getNombre());
 
 
 

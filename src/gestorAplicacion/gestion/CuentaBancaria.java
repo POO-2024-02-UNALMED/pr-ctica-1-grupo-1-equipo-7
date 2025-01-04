@@ -25,8 +25,8 @@ public class CuentaBancaria {
         this.saldo -= valor;
     }
 
-    public int calcularPago(Persona persona){ // por cada trabajo se le sumaran 10000 al salario base
-        int saldoTrabajo = persona.getCantidadTrabajo() * 10000;
+    public int calcularPago(Persona persona){ // por cada trabajo se le sumaran 7000 al salario base
+        int saldoTrabajo = persona.getCantidadTrabajo() * 7000;
         return saldoTrabajo;
     }
 

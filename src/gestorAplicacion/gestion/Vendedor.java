@@ -10,9 +10,23 @@ public class Vendedor extends Persona {
         super(nombre, cedula, edad, cuentaBancaria);
         this.tienda = tienda;
         this.metaVendedor = new ArrayList<>();
-        
+
     }
         public void recibirSueldo(double valor){
             this.getCuentaBancaria().añadirDinero(valor);
+    }
+
+    // Getter y Setter 'Tienda'
+    public void setTienda(Tienda tienda){
+        this.tienda = tienda;
+    }
+
+    public Tienda getTienda(){
+        return this.tienda;
+    }
+
+    //Getter 'metaVendedor'
+    public ArrayList<Meta> getMetaVendedor(){
+        return this.metaVendedor;
     }
 }
