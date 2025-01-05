@@ -1,6 +1,8 @@
 package produccion;
 
 import java.util.List;
+import gestion.CuentaBancaria;
+import gestion.Operario;
 
 public class Fabrica {
 
@@ -8,8 +10,8 @@ public class Fabrica {
     private String idFabrica;
     private String nombre;
     private String direccion;
-    private static CuentaBancaria cuentaBancaria;
-    private static Operario operario;
+    private CuentaBancaria cuentaBancaria;  //se quito el static ya que solo existe 1 fabrica no hace falta que el atributo sea de clase
+    private Operario operario;       //lo mismo para operario 
     private List<Producto> productosDisponibles;
 
     // Constructor

@@ -1,9 +1,8 @@
 package gestion;
-import base.Persona;
 
 public class CuentaBancaria {
     private int numeroCuenta;
-    private int saldo;
+    private double saldo;
 
     //constructores
     public CuentaBancaria (int numeroCuenta){
@@ -18,21 +17,21 @@ public class CuentaBancaria {
 
     
     //metodos
-    public void añadirDinero(int valor){
+    public void añadirDinero(double valor){
         this.saldo += valor;
     }
 
-    public void descontarDinero(int valor){
+    public void descontarDinero(double valor){
         this.saldo -= valor;
     }
 
-    public int calcularPago(Persona persona){ // por cada trabajo se le sumaran 10000 al salario base
-        int saldoTrabajo = persona.getCantidadTrabajo() * 10000;
+    public int calcularPago(Persona persona){ // por cada trabajo se le sumaran 7000 al salario base
+        int saldoTrabajo = persona.getCantidadTrabajo() * 7000;
         return saldoTrabajo;
     }
 
     public void devolverDinero(double total, Cliente cliente){
-        cliente.cuentaBancaria.añadirDinero(total);                 //REVISAR ESTE METODO DESPUES
+        cliente.getCuentaBancaria().añadirDinero(total);                //REVISAR ESTE METODO DESPUES
     }
 
 
@@ -48,12 +47,12 @@ public class CuentaBancaria {
 
     //Getter y Setter 'saldo'
 
-    public int getSaldo(){
+    public double getSaldo(){
         return this.saldo;
     }
 
-    public void setSaldo(int saldo){
-        this.saldo = saldo;
+    public void setSaldo(double saldo){
+        this.saldo = saldo; 
     }
 }
 
