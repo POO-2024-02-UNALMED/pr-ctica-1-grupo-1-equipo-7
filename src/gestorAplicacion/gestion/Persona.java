@@ -24,7 +24,6 @@ public abstract class Persona{
         this.cuentaBancaria = cuentaBancaria;
         this.cantidadTrabajo = 0;
         this.indiceMeta = 0;
-        this.indiceMeta = 0;
         this.verificadorMetasCumplidas = new ArrayList<>();
         Persona.personasTotales += 1;
         Persona.listaPersonas.add(this);
