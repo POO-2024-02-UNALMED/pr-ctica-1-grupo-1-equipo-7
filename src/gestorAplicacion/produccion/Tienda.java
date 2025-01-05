@@ -8,24 +8,25 @@ public class Tienda {
     private Vendedor vendedor;
     private CuentaBancaria cuentaBancaria;
     private ArrayList<Producto> productosDevueltos;
-    private int numTiendas; //no es necesario el static porque solo habran 3 tiendas
+    private static int numTiendas = 0; 
     private ArrayList<Producto> listaProducto;
+    private ArrayList<Object[]> productosPorCategoria = new ArrayList<>(); // Lista de [Producto, Categoria]
     private ArrayList<Producto> cantidadProductos;//duda aqui del integer con el UML
 
     //falta un map y hashmap que sale en el UML pero no es correcto usarlos
     // constructor
-    Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
+    public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
         this.nombre=nombre;
         this.vendedor=vendedor;
         this.cuentaBancaria=cuentaBancaria;
-        this.numTiendas=numTiendas;
+        numTiendas++;
         this.cantidadProductos=new ArrayList<>();
         this.listaProducto=new ArrayList<>();
         this.productosDevueltos=new ArrayList<>();
-    
+    }
     //getters y setters
 
-
+    
 // Atributo nombre
 public String getNombre() {
     return nombre;
@@ -67,10 +68,6 @@ public int getNumTiendas() {
     return numTiendas;
 }
 
-public void setNumTiendas(int numTiendas) {
-    this.numTiendas = numTiendas;
-}
-
 // Atributo listaProducto
 public ArrayList<Producto> getListaProducto() {
     return listaProducto;
@@ -88,4 +85,25 @@ public ArrayList<Producto> getCantidadProductos() {
 public void setCantidadProductos(ArrayList<Producto> cantidadProductos) {
     this.cantidadProductos = cantidadProductos;
     }  
+
+
+public void mostrarProductos(){
+    if (this.listaProducto.isEmpty()) {
+        System.out.println("No hay productos registrados.");
+        return;
+    }
+    for (int i = 0; i < listaProducto.size(); i++) {
+        System.out.println((i + 1) + ". " + this.listaProducto.get(i).getNombre());
+    }
+}
+public String cantidadProductos(){
+    if (listaProducto == null) {
+        return "El inventario no está disponible.";
+    }
+    return "En el inventario se encuentran " + listaProducto.size() + " productos.";
+}
+public void agregarProductosPorCategoria(Producto producto, int categoria){
+    Object[] productoCategoria = {producto, categoria};
+    productosPorCategoria.add(productoCategoria);
+}
 }

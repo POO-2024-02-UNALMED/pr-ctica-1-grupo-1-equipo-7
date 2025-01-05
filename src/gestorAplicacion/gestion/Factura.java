@@ -1,6 +1,6 @@
 package gestion;
 import java.util.ArrayList;
-import produccion.Producto;
+import produccion.*;
 public class Factura {
     private Tienda tienda; 
     private Cliente cliente; 
