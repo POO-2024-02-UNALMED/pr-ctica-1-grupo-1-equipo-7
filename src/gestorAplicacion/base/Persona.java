@@ -23,8 +23,6 @@ public abstract class Persona{
 
     public Persona(){}
 
-    public abstract void recibirSueldo();
-
     // Getters y Setters
 
     public String getNombre() {

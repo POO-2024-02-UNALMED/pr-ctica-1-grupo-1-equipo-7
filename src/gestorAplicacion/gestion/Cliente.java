@@ -4,7 +4,7 @@ import base.Persona;
 import produccion.Producto;
 
 public class Cliente extends Persona{
-    public static ArrayList<Cliente> clientes = new ArrayList<Cliente>();//Lista de clientes
+    private static ArrayList<Cliente> clientes = new ArrayList<Cliente>();//Lista de clientes
     private ArrayList<Factura> listaFacturas;
     private ArrayList<Producto> listaProductos;
     private int id;
@@ -18,13 +18,16 @@ public class Cliente extends Persona{
     }
      //getters y setters 
      public String getNombre(){ 
-  x`       return nombre;
+        return nombre;
      }
      public int getId(){
         return this.id;
      }
      public void setId(int nuevoId){ 
         this.id = nuevoId;
+     }
+     public static ArrayList<Cliente> getListaClientes(){
+        return clientes;
      }
      public static void mostrarClientes(){  //Imprime la lista de clientes, comenzando desde 1 para facilitar al usurario a la hora de escojer. La forma de imprimir es : 1.Cliente
         if (clientes.isEmpty()) {
