@@ -1,6 +1,9 @@
 package gestion;
 import java.util.ArrayList;
-import produccion.*;
+import produccion.Producto;
+import produccion.Tienda;
+import produccion.Transporte;
+
 public class Factura {
     private Tienda tienda; 
     private Cliente cliente; 
@@ -11,24 +14,32 @@ public class Factura {
     private static int totalCreadas=0; 
     public static ArrayList<Factura> listaFacturas; 
 
-  public static void mostrarFacturas(){
+    //Funcionalidad a la que pertenece: Devoluciones
+    //Se encarga de imprimir la lista de las facturas que contiene la tienda, con el nombre del cliente y el id de la factura.
+  public static String mostrarFacturas(){
     int n=1; 
+    String texto="";
     for (Factura f: listaFacturas){
-      System.out.println(n+" "+f.cliente.getNombre()+" ID:"+f.id);
+      texto+=n+". "+f.cliente.getNombre().toUpperCase()+" ID:"+f.id+"\n";
       n++;
     }
+    return texto;
 }
-  public static void mostrarProductos(Factura f){
+//Funcionalidad a la que pertenece: Devoluciones
+//Método que se encarga de mostrar, por medio de un String, los productos de la factura, indicando si han sido devueltos o no. 
+
+  public static String mostrarProductos(Factura f){
     int n=1; 
+    String texto="";
     for (Producto p: f.getListaProductos()){
       if (p.estado.equals("DEVUELTO")){
-      System.out.println(n+" "+p.nombre + "(devuelto)");
+      texto+=n+". "+p.nombre + "(devuelto)"+"\n";
       }
       else{
-        System.out.println(n+" "+p.nombre);
+        texto+=n+". "+p.nombre+"\n";
       }
       n++;
-    }
+    } return texto;
 }
 public  static Factura seleccionarFactura(int n){
   return listaFacturas.get(n-1);
@@ -38,7 +49,9 @@ public Producto seleccionarProducto(int n){
   return this.getListaProductos().get(n-1);
 }
 
-public boolean todosDevueltos(){
+//Funcionalidad a la que pertenece: Devoluciones
+//Método que se encarga de verificar si todos los productos de una factura han sido devueltos o no.
+public static boolean todosDevueltos(ArrayList<Producto> listaProductos){
   for (Producto p: listaProductos){
     if (!p.estado.equals("DEVUELTO")){
       return false;
@@ -51,4 +64,12 @@ public boolean todosDevueltos(){
 public ArrayList<Producto> getListaProductos(){
   return listaProductos;
 }
+
+public Tienda getTienda() {
+  return this.tienda;
+}
+public Cliente getCliente(){
+  return this.cliente;
+  }
+ 
 }
