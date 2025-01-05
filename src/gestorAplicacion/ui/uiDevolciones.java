@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import gestion.Factura;
 import produccion.*;
+import gestion.Cliente;
 
 public class uiDevolciones {
 
@@ -52,7 +53,7 @@ public class uiDevolciones {
                         }
     
                         if (opcion2 > 0 && opcion2 <= factura.getListaProductos().size()) {
-                            if (factura.todosDevueltos()) {
+                            if (Factura.todosDevueltos(factura.getListaProductos())) {
                                 System.out.println("Todos los productos de esta factura ya han sido devueltos.");
                                 break;
                             }
@@ -61,8 +62,28 @@ public class uiDevolciones {
                                 System.out.println("El producto ya ha sido devuelto, elija otro.");
                             } else{
                                 System.out.println("Eligió el producto: " + producto.getNombre());
-                                //logica para devolver el producto
-                            }
+                                double valorADevolver=Fabrica.descontarDineroCuenta(producto); // Se descuenta el dinero de la cuenta de la fábrica
+                                // y se obtiene el valor del producto a devolver.
+                                Tienda tienda=factura.getTienda();
+                                Cliente cliente=tienda.devolverProducto(factura, producto); // Se devuelve el producto a la tienda y se obtiene el cliente.
+                                Fabrica.cuentaBancaria.devolverDinero(valorADevolver, cliente); 
+                                cliente.removerProducto(producto); // Se remueve el producto de la lista de productos del cliente.
+                                System.out.println("El producto ha sido devuelto exitosamente.");
+                                System.out.println("¿Qué desea hacer? \n1. Devolver otro producto \n0. Regresar al menú de facturas");
+                                int opcion3;
+                                switch (opcion3 = sc.nextInt()) {
+                                    case 0:
+                                        System.out.println("Saliendo del menú de devoluciones.");
+                                        break;
+                                    case 1:
+                                        ui.uiDevolciones.devolver();
+                                    default:
+                                        System.out.println("Opción inválida. Intente nuevamente.");
+                                        break;
+                                }
+                            
+                            
+                            }  
                         } else {
                             System.out.println("Opción inválida. Intente nuevamente.");
                         }

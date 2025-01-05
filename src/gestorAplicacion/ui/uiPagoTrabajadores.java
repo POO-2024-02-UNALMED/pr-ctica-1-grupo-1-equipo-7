@@ -17,7 +17,7 @@ public class uiPagoTrabajadores {
             } catch (Exception e) {
                 System.out.println("Entrada inválida. Por favor, ingrese un número.");
                 sc.nextLine(); // Limpiar el buffer
-                continue;
+                continue; 
             }
             
             if (opcion == 0) {

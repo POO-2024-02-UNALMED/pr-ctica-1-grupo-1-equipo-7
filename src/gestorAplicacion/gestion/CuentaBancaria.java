@@ -32,6 +32,8 @@ public class CuentaBancaria {
 
     public void devolverDinero(double total, Cliente cliente){
         cliente.getCuentaBancaria().añadirDinero(total);                //REVISAR ESTE METODO DESPUES
+                                                                        // R// Gracias por hacermelo, lo necesitaba. By: Andres.
+        
     }
 
 
