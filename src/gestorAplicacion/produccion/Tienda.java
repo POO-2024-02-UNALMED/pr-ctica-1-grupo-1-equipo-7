@@ -1,6 +1,9 @@
 package produccion;
 import gestion.Vendedor;
+import gestion.Cliente;
 import gestion.CuentaBancaria;
+import gestion.Factura;
+
 import java.util.ArrayList;
 public class Tienda {
     //atributos
@@ -106,4 +109,12 @@ public void agregarProductosPorCategoria(Producto producto, int categoria){
     Object[] productoCategoria = {producto, categoria};
     productosPorCategoria.add(productoCategoria);
 }
+ //Funcionalidad a la que pertenece: Devoluciones
+ public Cliente devolverProducto(Factura factura, Producto producto){
+    productosDevueltos.add(producto);
+    producto.setEstado("DEVUELTO");
+    return factura.getCliente();
+    //Comentario: Funcion muy suave, modificarla despues.Att: Andres.
 }
+}
+
