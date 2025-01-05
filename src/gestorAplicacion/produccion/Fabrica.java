@@ -7,13 +7,15 @@ import gestion.Operario;
 
 public class Fabrica {
 
-    private ArrayList<Tienda>listaTienda =  new ArrayList<>();
-    private String idFabrica;
-    private String nombre;
-    private String direccion;
-    private CuentaBancaria cuentaBancaria;  //se quito el static ya que solo existe 1 fabrica no hace falta que el atributo sea de clase
-    private Operario operario;       //lo mismo para operario 
-    private List<Producto> productosDisponibles;
+    // Atributos
+    private  String idFabrica;
+    private  String nombre;
+    private  String direccion;
+    public static  CuentaBancaria cuentaBancaria;  //se quito el static ya que solo existe 1 fabrica no hace falta que el atributo sea de clase
+                                                //RTA: Para la de devoluciones necesito que sea static:). Att: Andres.
+    private  Operario operario;       //lo mismo para operario 
+    private  List<Producto> productosDisponibles;
+    private ArrayList<Tienda> listaTienda = new ArrayList<Tienda>();
 
     // Constructor
     public Fabrica(String idFabrica, String nombre, String direccion, CuentaBancaria cuentaBancaria, Operario operario, List<Producto> productosDisponibles) {
@@ -26,11 +28,27 @@ public class Fabrica {
     }
     public Fabrica() {}
 
-    //Metodos 
-    public void descontarDineroCuenta(Producto producto){//Este metodo si debe ir aca??
+    //Metodos:
+
+
+    //Funcionalidad a la que pertenece: Devoluciones 
+    //Método que se encarga de descontar el dinero de la cuenta bancaria de la fábrica cuando se realiza una devolución 
+    // y retorna el precio del producto que se va a devolver.
+    
+    public static double descontarDineroCuenta(Producto producto){
         double precio = producto.getPrecio();
-        double nuevoSaldo= cuentaBancaria.getSaldo();
+        double nuevoSaldo= Fabrica.cuentaBancaria.getSaldo()-precio;
+        Fabrica.cuentaBancaria.setSaldo(nuevoSaldo);
+        return precio; 
     }
+    public void AgregarListaTienda(Tienda tienda){
+        if (tienda != null && !listaTienda.contains(tienda)) { // Validación para evitar duplicados
+            listaTienda.add(tienda);
+        } else {
+            System.out.println("La tienda ya está registrada o es nula.");
+        }
+    }
+}
 
 
     // Getters y Setters
@@ -82,15 +100,7 @@ public class Fabrica {
     public void setProductosDisponibles(List<Producto> productosDisponibles) {
         this.productosDisponibles = productosDisponibles;
     }
-    public ArrayList<Tienda> getListaTiendas(){
-        return listaTienda;
-    }
-    public void AgregarListaTienda(Tienda tienda){
-        if (tienda != null && !listaTienda.contains(tienda)) { // Validación para evitar duplicados
-            listaTienda.add(tienda);
-        } else {
-            System.out.println("La tienda ya está registrada o es nula.");
+          public ArrayList<Tienda> getListaTiendas(){
+            return listaTienda;
         }
-    }
-}
 
