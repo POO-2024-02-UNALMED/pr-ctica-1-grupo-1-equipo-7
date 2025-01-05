@@ -5,7 +5,7 @@ public class Producto {
     int precio;
     private int cantidad;
     private int id; 
-    private static int totalCreados=0;
+    private static int totalCreados = 0;
     public String estado; //disponible,vendido,devuelto
     private String tipo; // Tipo de producto
     //Constructores: 

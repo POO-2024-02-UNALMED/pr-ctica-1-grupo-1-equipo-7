@@ -73,6 +73,9 @@ public class Cliente {
     public void setCuentaBancaria(CuentaBancaria cuentaBancaria){
         this.cuentaBancaria = cuentaBancaria;
     }
+    public static ArrayList<Cliente> getListaClientes(){
+        return listaClientes;
+    }
 
 }
 

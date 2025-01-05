@@ -15,14 +15,14 @@ public class Fabrica {
                                                 //RTA: Para la de devoluciones necesito que sea static:). Att: Andres.
     private  Operario operario;       //lo mismo para operario 
     private  List<Producto> productosDisponibles;
-    private ArrayList<Tienda> listaTienda = new ArrayList<Tienda>();
+    private static ArrayList<Tienda> listaTienda = new ArrayList<Tienda>();
 
     // Constructor
-    public Fabrica(String idFabrica, String nombre, String direccion, CuentaBancaria cuentaBancaria, Operario operario, List<Producto> productosDisponibles) {
+    public Fabrica(String idFabrica, String nombre, String direccion, CuentaBancaria cuentaBancariaFabrica, Operario operario, List<Producto> productosDisponibles) {
         this.idFabrica = idFabrica;
         this.nombre = nombre;
         this.direccion = direccion;
-        this.cuentaBancaria = cuentaBancaria;
+        cuentaBancaria = cuentaBancariaFabrica;
         this.operario = operario;
         this.productosDisponibles = productosDisponibles;
     }
@@ -48,7 +48,13 @@ public class Fabrica {
             System.out.println("La tienda ya está registrada o es nula.");
         }
     }
-}
+
+    public static void mostrarTiendas(){
+        System.out.println("Listado de Tiendas:");
+        for (int i = 0; i < listaTienda.size(); i++) {
+            System.out.println((i + 1) + ". " + listaTienda.get(i).getNombre());
+            }
+    }
 
 
     // Getters y Setters
@@ -81,8 +87,8 @@ public class Fabrica {
         return cuentaBancaria;
     }
 
-    public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {
-        this.cuentaBancaria = cuentaBancaria;
+    public void setCuentaBancaria(CuentaBancaria nuevaCuentaBancaria) {
+        cuentaBancaria = nuevaCuentaBancaria;
     }
 
     public Operario getOperario() {
@@ -102,5 +108,9 @@ public class Fabrica {
     }
           public ArrayList<Tienda> getListaTiendas(){
             return listaTienda;
-        }
+    }
+    public static ArrayList<Tienda> getListaTienda(){
+        return listaTienda;
+    }
+}
 

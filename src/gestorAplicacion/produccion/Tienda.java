@@ -13,7 +13,8 @@ public class Tienda {
     private ArrayList<Producto> productosDevueltos;
     private static int numTiendas = 0; 
     private ArrayList<Producto> listaProducto;
-    private ArrayList<Object[]> productosPorCategoria = new ArrayList<>(); // Lista de [Producto, Categoria]
+    private ArrayList<Object[]> productosPorCategoria = new ArrayList<>(); // Lista de [string, int]
+    private ArrayList<Object[]> cantidadPorCategoria = new ArrayList<>(); // Lista de [String, int]
     private ArrayList<Producto> cantidadProductos;//duda aqui del integer con el UML
 
     //falta un map y hashmap que sale en el UML pero no es correcto usarlos
@@ -89,6 +90,7 @@ public void setCantidadProductos(ArrayList<Producto> cantidadProductos) {
     this.cantidadProductos = cantidadProductos;
     }  
 
+//Metodos
 
 public void mostrarProductos(){
     if (this.listaProducto.isEmpty()) {
@@ -105,10 +107,11 @@ public String cantidadProductos(){
     }
     return "En el inventario se encuentran " + listaProducto.size() + " productos.";
 }
-public void agregarProductosPorCategoria(Producto producto, int categoria){
+public void agregarProductosPorCategoria(String producto, int categoria){
     Object[] productoCategoria = {producto, categoria};
     productosPorCategoria.add(productoCategoria);
 }
+
  //Funcionalidad a la que pertenece: Devoluciones
  public Cliente devolverProducto(Factura factura, Producto producto){
     productosDevueltos.add(producto);
@@ -117,4 +120,5 @@ public void agregarProductosPorCategoria(Producto producto, int categoria){
     //Comentario: Funcion muy suave, modificarla despues.Att: Andres.
 }
 }
+
 
