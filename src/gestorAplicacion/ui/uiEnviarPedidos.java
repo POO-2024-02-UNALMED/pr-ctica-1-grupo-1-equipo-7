@@ -28,14 +28,14 @@ public class uiEnviarPedidos {
                     sc.nextLine();
                 }
             }
-
+            System.out.println("Ha seleccionado el cliente: "+ Cliente.getListaClientes().get(seleccion - 1).getNombre());
+            System.out.println("Para confirmar, ingrese 'Aceptar'. Para regresar al menú anterior, ingrese 'Regresar'.");
+            
+            String eleccion = sc.nexInt()
+            i
+            Cliente clienteSeleccionado;
+            clienteSeleccionado = Cliente.getListaClientes().get(seleccion - 1);
             System.out.println("Ha seleccionado el cliente: "+ Cliente.listaClientes.get(seleccion - 1).getNombre());
-
-
-
-
-
-
 
         }
         

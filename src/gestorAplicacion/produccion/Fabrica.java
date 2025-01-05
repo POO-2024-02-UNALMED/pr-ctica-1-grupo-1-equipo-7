@@ -1,12 +1,13 @@
 package produccion;
 
+import java.util.ArrayList;
 import java.util.List;
 import gestion.CuentaBancaria;
 import gestion.Operario;
 
 public class Fabrica {
 
-    // Atributos
+    private ArrayList<Tienda>listaTienda =  new ArrayList<>();
     private String idFabrica;
     private String nombre;
     private String direccion;
@@ -26,9 +27,9 @@ public class Fabrica {
     public Fabrica() {}
 
     //Metodos 
-    descontarDineroCuenta(Producto producto){
+    public void descontarDineroCuenta(Producto producto){//Este metodo si debe ir aca??
         double precio = producto.getPrecio();
-        double nuevoSaldo= Fabrica.cuentaBancaria.getSaldo();
+        double nuevoSaldo= cuentaBancaria.getSaldo();
     }
 
 
@@ -80,6 +81,16 @@ public class Fabrica {
 
     public void setProductosDisponibles(List<Producto> productosDisponibles) {
         this.productosDisponibles = productosDisponibles;
+    }
+    public ArrayList<Tienda> getListaTiendas(){
+        return listaTienda;
+    }
+    public void AgregarListaTienda(Tienda tienda){
+        if (tienda != null && !listaTienda.contains(tienda)) { // Validación para evitar duplicados
+            listaTienda.add(tienda);
+        } else {
+            System.out.println("La tienda ya está registrada o es nula.");
+        }
     }
 }
 
