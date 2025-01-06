@@ -1,4 +1,5 @@
 package ui;
+import java.util.ArrayList;
 import java.util.Scanner;
 import gestion.Cliente;
 import produccion.*;
@@ -103,11 +104,46 @@ public class uiEnviarPedidos {
                             break;
                         } 
                         else {
-                            System.out.println("La opción ingresada no es válida. Por favor, ingrese 'aceptar' para confirmar la tienda seleccionada o 'regresar' para cambiarla.");
+                            System.out.println("La opción ingresada no es válida. Por favor, ingrese 'Aceptar' para confirmar la tienda seleccionada o 'Regresar' para cambiarla.");
                         }
                     }
                 }
+                System.out.println("Indique la cantidad de productos que desea enviar (máximo 5).");
+                int cantidadProductos = -1;
+                int confirmacionCantidadProductos = 0;
+                while (confirmacionCantidadProductos == 0) {
+                    try {
+                        cantidadProductos = sc.nextInt();
+                        if (cantidadProductos > 0 && cantidadProductos<=5) {
+                            System.out.println("Ha ingresado que desea enviar "+ cantidadProductos +" productos. Para confirmar, ingrese 'Aceptar'. Si desea cambiar la cantidad, ingrese 'Regresar'");
+                            while (true) {
+                                String eleccion = sc.next().toLowerCase();
 
+                                if (eleccion.equals("aceptar")) {
+                                    tiendaSeleccionada = Fabrica.getListaTienda().get(opcion - 1);
+                                    System.out.println("Ha confirmado que desea enviar "+ cantidadProductos+" productos.");
+                                    confirmacionTienda = 1;
+                                    break;
+                                } 
+                                else if (eleccion.equals("regresar")) {
+                                    System.out.println("\"Por favor, ingrese nuevamente la cantidad de productos que desea enviar");
+                                    break;
+                                } 
+                                else {
+                                    System.out.println("La opción ingresada no es válida. Por favor, ingrese 'Aceptar' para confirmar la cantidad de productos a enviar o 'Regresar' si desea modificarla.");
+                                }
+                            }
+                        }
+                        else {
+                            System.out.println("El valor ingresado está fuera del rango permitido. Recuerde que el máximo de productos a enviar es 5.");
+                        }
+                    } 
+                    catch (Exception e) {
+                        System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                        sc.nextLine();
+                    }
+                }
+                ArrayList<Producto> ListaProductosPedidos = new ArrayList<>();
             }
         }
     }
