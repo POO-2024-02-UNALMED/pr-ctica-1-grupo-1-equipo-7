@@ -26,35 +26,43 @@ public class uiPagoTrabajadores {
                 System.out.println("Saliendo al menú principal.");
                 break;
             }
+
+            // Validacion de la opcion del usuario, si la entrada es valida 
+            // muestra la lista de los posibles trabajadores
             if (opcion > 0 && opcion <= 3){
                 ArrayList<Persona> listaTrabajadores = null;
-                if(opcion == 1){
-                    listaTrabajadores = Operario.getListaPersonas();
+                switch (opcion) {
+                    case 1:
+                        listaTrabajadores = Operario.getListaPersonas();
+                        break;
+                    case 2:
+                        listaTrabajadores = Conductor.getListaPersonas();
+                        break;
+                    case 3:
+                        listaTrabajadores = Vendedor.getListaPersonas();
+                        break;
                 }
-
-                if(opcion == 2){
-                    listaTrabajadores = Conductor.getListaPersonas();        //Verificación del tipo de trabajador seleccionado
-                }
-                if(opcion == 3){
-                    listaTrabajadores = Vendedor.getListaPersonas();
-                }
+                int contador = 0;
                 for(Persona e : listaTrabajadores){
                     if(e.getCantidadTrabajo() > 0){
-                        e.toString();
+                        contador += 1;
+                        System.out.println("Trabajador" + contador);
+                        System.out.println(e);
                     }
                 }
-            }   
-
-
-
-
-
-
-
-
+                if(contador == 0){
+                    System.out.println("Aun no hay trabajadores de este tipo para pagarles.");
+                    continue;
+                }else{
+                    System.out.println("Ingrese el numero del trabajador al cual desea pagarle [1-"+contador+']');
+                }      
+            }
             else{
                 System.out.println("Entrada inválida. Por favor, ingrese un número que este en el rango [0-3].");
+                continue;
             }
+            
+
         }
         sc.close();
     }
