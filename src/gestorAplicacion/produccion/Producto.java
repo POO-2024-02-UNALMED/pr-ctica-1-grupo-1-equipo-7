@@ -5,19 +5,22 @@ public class Producto {
     int precio;
     private int cantidad;
     private int id; 
-    private static int totalCreados = 0;
+    private static int totalCreados=0;
     public String estado; //disponible,vendido,devuelto
-    private String tipo; // Tipo de producto
-    private String observaciones=null;
+    private String tipo;
+    private String categoria; 
+    private boolean devuelto; // Tipo de producto
     //Constructores: 
-    public Producto(String nombre, int precio, int cantidad, int id, String estado, String tipo){
+    public Producto(String nombre, int precio, int cantidad, int id, String estado, String tipo, String categoria){
         this.nombre = nombre;
         this.precio = precio;
         this.cantidad = cantidad;
         this.id = id;
         this.estado = estado;
         this.tipo = tipo;
+        this.categoria = categoria;
         totalCreados++;
+        
     }
     public Producto(){}
 
@@ -52,5 +55,15 @@ public class Producto {
     }
     public void setTipo(String tipo){
         this.tipo = tipo;
+    }
+    public String getCategoria(){
+        return this.categoria;
+    }
+    public void setCategoria(String categoria){
+        this.categoria = categoria;
+    }public boolean getDevuelto(){
+        return this.devuelto;
+    }public void setDevuelto(boolean devuelto){
+        this.devuelto = devuelto;
     }
 }
