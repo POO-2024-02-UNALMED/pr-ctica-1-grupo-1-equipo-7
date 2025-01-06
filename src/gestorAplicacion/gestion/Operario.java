@@ -13,6 +13,14 @@ public class Operario extends Persona {
         this.metaOperario = new ArrayList<>();
     }
 
+    @Override
+    public String toString(){
+        String texto = "Nombre:" + this.getNombre() +
+                       "\nCedula:" + this.getCedula() +     //toString Operario
+                       "\nEdad:" + this.getEdad() +
+                       "\nFabrica" + this.getFabrica();
+        return texto;
+    }
     
     public void recibirSueldo(double valor){
         this.getCuentaBancaria().añadirDinero(valor);
@@ -32,7 +40,7 @@ public class Operario extends Persona {
         return this.metaOperario;
     }
 
-    public void setOperario(Meta meta){     //Agrega una meta a la lista de metas del operario esto es algo tentativo que implemente solo 
-        this.metaOperario.add(meta);        //a operario, los otros trabajadores no lo tienen     
+    public void setOperario(Meta meta){     
+        this.metaOperario.add(meta);          
     }
 }

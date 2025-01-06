@@ -12,6 +12,16 @@ public class Vendedor extends Persona {
         this.metaVendedor = new ArrayList<>();
 
     }
+
+    @Override
+    public String toString(){
+        String texto = "Nombre:" + this.getNombre() +
+                       "\nCedula:" + this.getCedula() +
+                       "\nEdad:" + this.getEdad() +
+                       "\nTienda" + this.getTienda();
+        return texto;
+    }
+
         public void recibirSueldo(double valor){
             this.getCuentaBancaria().añadirDinero(valor);
     }
@@ -29,4 +39,10 @@ public class Vendedor extends Persona {
     public ArrayList<Meta> getMetaVendedor(){
         return this.metaVendedor;
     }
+
+    public void setVendedor(Meta meta){     
+        this.metaVendedor.add(meta);          
+    }
+
+
 }

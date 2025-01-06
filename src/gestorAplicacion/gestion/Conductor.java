@@ -15,6 +15,16 @@ public class Conductor extends Persona {
         this.metaConductor = new ArrayList<>();
     }
 
+
+    @Override
+    public String toString(){
+        String texto = "Nombre:" + this.getNombre() +
+                       "\nCedula:" + this.getCedula() +
+                       "\nEdad:" + this.getEdad() +
+                       "\nTransporte" + this.getTransporte();
+        return texto;
+    }
+
     public void recibirSueldo(double valor){
         this.getCuentaBancaria().añadirDinero(valor);
     }
@@ -50,8 +60,8 @@ public class Conductor extends Persona {
         return metaConductor;
     }
 
-    public void setMetaConductor(ArrayList<Meta> metaConductor) { 
-        this.metaConductor = metaConductor;
+    public void setConductor(Meta meta){     
+        this.metaConductor.add(meta);          
     }
 }
 

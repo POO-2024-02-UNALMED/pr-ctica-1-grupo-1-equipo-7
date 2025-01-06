@@ -1,8 +1,10 @@
 package ui;
 import java.util.Scanner;
-
-import gestion.Factura;
+import java.util.ArrayList;
+import gestion.Conductor;
 import gestion.Operario;
+import gestion.Persona;
+import gestion.Vendedor;
 
 public class uiPagoTrabajadores {
     public static void pagarTrabajadores(){
@@ -25,11 +27,35 @@ public class uiPagoTrabajadores {
                 break;
             }
             if (opcion > 0 && opcion <= 3){
-                
-            }
+                ArrayList<Persona> listaTrabajadores = null;
+                if(opcion == 1){
+                    listaTrabajadores = Operario.getListaPersonas();
+                }
+
+                if(opcion == 2){
+                    listaTrabajadores = Conductor.getListaPersonas();        //Verificación del tipo de trabajador seleccionado
+                }
+                if(opcion == 3){
+                    listaTrabajadores = Vendedor.getListaPersonas();
+                }
+                for(Persona e : listaTrabajadores){
+                    if(e.getCantidadTrabajo() > 0){
+                        e.toString();
+                    }
+                }
+            }   
+
+
+
+
+
+
+
+
             else{
                 System.out.println("Entrada inválida. Por favor, ingrese un número que este en el rango [0-3].");
             }
         }
+        sc.close();
     }
 }
