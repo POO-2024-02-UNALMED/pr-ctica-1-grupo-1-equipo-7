@@ -3,8 +3,8 @@ import gestion.Vendedor;
 import gestion.Cliente;
 import gestion.CuentaBancaria;
 import gestion.Factura;
-
 import java.util.ArrayList;
+import java.util.Scanner;
 public class Tienda {
     //atributos
     private String nombre;
@@ -16,6 +16,7 @@ public class Tienda {
     private ArrayList<Object[]> productosPorCategoria = new ArrayList<>(); // Lista de [string, int]
     private ArrayList<Object[]> cantidadPorCategoria = new ArrayList<>(); // Lista de [String, int]
     private ArrayList<Producto> cantidadProductos;//duda aqui del integer con el UML
+    Scanner sc = new Scanner(System.in);
 
     //falta un map y hashmap que sale en el UML pero no es correcto usarlos
     // constructor
@@ -115,6 +116,8 @@ public void agregarProductosPorCategoria(String producto, int categoria){
  //Funcionalidad a la que pertenece: Devoluciones
  public Cliente devolverProducto(Factura factura, Producto producto){
     productosDevueltos.add(producto);
+    System.out.println("Indique el motivo de la devolución: ");
+    System.out.println(">1. El producto no es lo que esperaba.\n>2. El producto llegó en mal estado.\n>3. Otro.");
     producto.setEstado("DEVUELTO");
     return factura.getCliente();
     //Comentario: Funcion muy suave, modificarla despues.Att: Andres.
