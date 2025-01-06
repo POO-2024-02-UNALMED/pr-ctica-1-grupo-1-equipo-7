@@ -62,6 +62,7 @@ public class uiDevolciones {
                                 System.out.println("El producto ya ha sido devuelto, elija otro.");
                             } else{
                                 System.out.println("Eligió el producto: " + producto.getNombre());
+                                
                                 double valorADevolver=Fabrica.descontarDineroCuenta(producto); // Se descuenta el dinero de la cuenta de la fábrica
                                 // y se obtiene el valor del producto a devolver.
                                 Tienda tienda=factura.getTienda();

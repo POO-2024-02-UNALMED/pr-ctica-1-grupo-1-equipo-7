@@ -8,6 +8,7 @@ public class Producto {
     private static int totalCreados = 0;
     public String estado; //disponible,vendido,devuelto
     private String tipo; // Tipo de producto
+    private String observaciones=null;
     //Constructores: 
     public Producto(String nombre, int precio, int cantidad, int id, String estado, String tipo){
         this.nombre = nombre;
