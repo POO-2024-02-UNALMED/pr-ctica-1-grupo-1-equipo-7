@@ -12,10 +12,10 @@ public class Tienda {
     private static int numTiendas = 0; 
     private static ArrayList<Producto> listaProducto;
     private ArrayList<Object[]> productosPorCategoria = new ArrayList<>(); // Lista de [Producto, Categoria]
-    private ArrayList<Producto> cantidadProductos;//duda aqui del integer con el UML
-    //lo que yo yhan considera que deberia ponerse:
-    // private List<String> categorias = new ArrayList<>();
-    //private List<Integer> conteoCategorias = new ArrayList<>();
+    private ArrayList<Producto> cantidadProductos;//duda aqui ya que puede ser un integer (con el UM).
+    //para la funcionalidad productosPorCategoria:
+    private List<String> categorias = new ArrayList<>();
+    private List<Integer> conteoCategorias = new ArrayList<>();
     // constructor
     public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
         this.nombre=nombre;
@@ -23,8 +23,8 @@ public class Tienda {
         this.cuentaBancaria=cuentaBancaria;
         numTiendas++;
         this.cantidadProductos=new ArrayList<>();
-        this.listaProducto=new ArrayList<>();
         this.productosDevueltos=new ArrayList<>();
+        Tienda.listaProducto=new ArrayList<>();
     }
     //getters y setters
 
@@ -108,22 +108,46 @@ public void agregarProductosPorCategoria(Producto producto, int categoria){
     Object[] productoCategoria = {producto, categoria};
     productosPorCategoria.add(productoCategoria);
 }
-/*public String mostrarProductos(){ //repetido mas arriba, a consideracion cual es mejor
-    String productos = "";
-    if (listaProducto == null || listaProducto.isEmpty()) {
-        return "No hay productos disponibles.";
-    }
-    for (Producto producto : listaProducto) {
-        productos += producto.getNombre() + "\n";
-    }
+
     return productos;*/
-public String productosPorCategoria(){
+/*public String productosPorCategoria(){
     if (productosPorCategoria.isEmpty()) {
         return "No hay productos registrados.";
     }
     String productos = "";
     for (Object[] productoCategoria : productosPorCategoria) {
         productos += ((Producto) productoCategoria[0]).getNombre() + " - Categoría: " + productoCategoria[1] + "\n";
-    }
-    return productos;//aun falta tener en cuenta el peso y precio como muestra en el case 2. esto se debia hacer con un diccionario en teoria.
+    }*/
+        // Método para calcular e imprimir productos por categoría
+        public void productosPorCategoria(List<Producto> productos) {
+            // Limpiar las listas antes de procesar(por si se manipulo anteriormente)
+            categorias.clear();
+            conteoCategorias.clear();
+    
+            // Procesar la lista de productos
+            for (Producto producto : productos) {
+                String categoria = producto.getCategoria(); // Obtener la categoría del producto
+    
+                int index = categorias.indexOf(categoria); // Buscar si la categoría ya existe
+                if (index == -1) {
+                    // Si no existe, agregarla junto con el conteo inicial
+                    categorias.add(categoria);
+                    conteoCategorias.add(1);
+                } else {
+                    // Si ya existe, incrementar el conteo correspondiente
+                    conteoCategorias.set(index, conteoCategorias.get(index) + 1);
+                }
+            }
+            // Construir el resultado(con el stringbuilder para manejar mejor la concatenación)
+            StringBuilder resultado = new StringBuilder();
+            for (int i = 0; i < categorias.size(); i++) {
+                resultado.append(categorias.get(i))
+                         .append(": ")
+                         .append(conteoCategorias.get(i))
+                         .append(" productos\n");
+            }
+            System.out.println("Productos por categoría:");
+            System.out.println(resultado.toString());
+        }
+    }    
 }
