@@ -2,6 +2,7 @@ package produccion;
 import gestion.Vendedor;
 import gestion.CuentaBancaria;
 import java.util.ArrayList;
+import java.util.List;
 public class Tienda {
     //atributos
     private String nombre;
@@ -12,8 +13,9 @@ public class Tienda {
     private static ArrayList<Producto> listaProducto;
     private ArrayList<Object[]> productosPorCategoria = new ArrayList<>(); // Lista de [Producto, Categoria]
     private ArrayList<Producto> cantidadProductos;//duda aqui del integer con el UML
-
-    //falta un map y hashmap que sale en el UML pero no es correcto usarlos
+    //lo que yo yhan considera que deberia ponerse:
+    // private List<String> categorias = new ArrayList<>();
+    //private List<Integer> conteoCategorias = new ArrayList<>();
     // constructor
     public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
         this.nombre=nombre;
