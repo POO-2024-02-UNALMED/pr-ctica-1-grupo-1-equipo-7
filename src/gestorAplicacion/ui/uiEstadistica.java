@@ -6,7 +6,8 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class uiEstadistica {
-    public static void main(String[] args) {
+    public static void main(String[] args) { //??? 
+                                            //El main no va aca, wtf
 
         //Esto será una parte de un nuevo metodo para factura
         Scanner scanner = new Scanner(System.in);

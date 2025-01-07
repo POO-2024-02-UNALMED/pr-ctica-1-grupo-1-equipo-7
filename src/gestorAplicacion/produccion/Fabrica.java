@@ -131,7 +131,7 @@ public class Fabrica {
     public void setProductosDisponibles(List<Producto> productosDisponibles) {
         this.productosDisponibles = productosDisponibles;
     }
-          public ArrayList<Tienda> getListaTiendas(){
+          public static ArrayList<Tienda> getListaTiendas(){
             return listaTienda;
     }
     public static ArrayList<Tienda> getListaTienda(){

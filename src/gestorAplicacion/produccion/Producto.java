@@ -9,7 +9,8 @@ public class Producto {
     public String estado; //disponible,vendido,devuelto
     private String tipo;
     private String categoria; 
-    private boolean devuelto; // Tipo de producto
+    private String motivoDevolucion=null; //No borren los atributos de los demas.
+    private boolean devuelto; // Tipo de producto //?
     //Constructores: 
     public Producto(String nombre, int precio, int cantidad, int id, String estado, String tipo, String categoria){
         this.nombre = nombre;
@@ -65,5 +66,11 @@ public class Producto {
         return this.devuelto;
     }public void setDevuelto(boolean devuelto){
         this.devuelto = devuelto;
+    }
+    public String getMotivoDevolucion(){
+        return this.motivoDevolucion;
+    }
+    public void setMotivoDevolucion(String motivoDevolucion){
+        this.motivoDevolucion = motivoDevolucion;
     }
 }
