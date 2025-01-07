@@ -28,7 +28,7 @@ public class Factura {
 //Funcionalidad a la que pertenece: Devoluciones
 //Método que se encarga de mostrar, por medio de un String, los productos de la factura, indicando si han sido devueltos o no. 
 
-  public static String mostrarProductos(Factura f){
+  public static String mostrarProductosFactura(Factura f){
     int n=1; 
     String texto="";
     for (Producto p: f.getListaProductos()){

@@ -36,7 +36,7 @@ public class uiDevolciones {
     
                     while (true) {
                         System.out.println("Seleccione el producto que desea devolver o presione 0 para regresar al menú anterior: ");
-                        Factura.mostrarProductos(factura);
+                        Factura.mostrarProductosFactura(factura);
     
                         int opcion2;
                         try {
@@ -62,11 +62,58 @@ public class uiDevolciones {
                                 System.out.println("El producto ya ha sido devuelto, elija otro.");
                             } else{
                                 System.out.println("Eligió el producto: " + producto.getNombre());
-                                
-                                double valorADevolver=Fabrica.descontarDineroCuenta(producto); // Se descuenta el dinero de la cuenta de la fábrica
-                                // y se obtiene el valor del producto a devolver.
+                                System.out.println("Indique el motivo de la devolución: ");
+                                System.out.println(">1. El producto no es lo que esperaba.\n>2. El producto llegó en mal estado.\n>3. Hubo un retraso en la entrega.\n>4. Otro.");
+                                int motivoDevolucion=sc.nextInt();
+                                switch (motivoDevolucion) {
+                                    case 1:
+                                        producto.setMotivoDevolucion("El producto no es lo que esperaba.");
+                                        break;
+                                    case 2:
+                                        producto.setMotivoDevolucion("El producto llegó en mal estado.");
+                                        break;
+                                    case 3:
+                                        producto.setMotivoDevolucion("Hubo un retraso en la entrega.");
+                                        break;
+                                    case 4:
+                                        String motivo = sc.nextLine();
+                                    producto.setMotivoDevolucion(motivo);
+                                    break;
+                                }
                                 Tienda tienda=factura.getTienda();
-                                Cliente cliente=tienda.devolverProducto(factura, producto); // Se devuelve el producto a la tienda y se obtiene el cliente.
+                                System.out.println("¿Desea cambiar el producto o que se le devuelva el dinero? \n1. Cambiar el producto \n2. Devolver el dinero");
+                                int opcion3;
+                                opcion3=sc.nextInt();
+                                switch (opcion3){
+                                    case 1:
+                             
+                                    Cliente cliente=tienda.devolverProducto(factura, producto);
+                                    double valorADevolver=Fabrica.descontarDineroCuenta(producto); // Se descuenta el dinero de la cuenta de la fábrica
+                                    // y se obtiene el valor del producto a devolver.
+                                    break ; 
+                                
+                                    case 2: 
+                                    String texto=tienda.mostrarProductosConExcedente(factura, producto);
+                                    System.out.println(texto);
+                                    int opcion4=sc.nextInt();
+                                    Producto p =tienda.seleccionarProducto(opcion4);
+                                    int excedenteAcumulado=producto.getPrecio()-p.getPrecio();
+                                    while() //PENDIENTE EL CICLO WHILE 
+                                    if (p.getPrecio()<producto.getPrecio()){
+                                        System.out.println("El producto que seleccionó tiene un preccio menor al que desea devolver, ¿Desea añadir otro? \nNota: El dinero restante NO se le devolverá y es posible que le toque pagar un excedente.\n 1. Sí \n 2. No");
+                                        int opcion5=sc.nextInt();
+                                        if (opcion5==1)
+
+                                        //QUE FALTA POR HACER: 
+                                        //CREAR EL METODO QUE CALCULE EL EXCEDENTE ACUMULADO DEL ARRAYLIST DE PRODUCTOS SELECCIONADOS POR EL CLIENTE 
+                                        //CREAR EL METODO QUE DEVUELVA EL DINERO AL CLIENTE
+                                    
+                                    }
+
+                                    break;
+                                }
+                              
+                                                                    // Se devuelve el producto a la tienda y se obtiene el cliente.
                                 Fabrica.cuentaBancaria.devolverDinero(valorADevolver, cliente); 
                                 cliente.removerProducto(producto); // Se remueve el producto de la lista de productos del cliente.
                                 System.out.println("El producto ha sido devuelto exitosamente.");
