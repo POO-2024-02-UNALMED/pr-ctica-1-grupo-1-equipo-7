@@ -9,6 +9,8 @@ public class Producto {
     public String estado; //disponible,vendido,devuelto
     private String tipo;
     private String categoria; 
+    private double peso; 
+    private double tamano;
     private String motivoDevolucion=null; //No borren los atributos de los demas.
     private boolean devuelto; // Tipo de producto //?
     //Constructores: 

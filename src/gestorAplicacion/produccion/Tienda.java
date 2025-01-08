@@ -14,22 +14,12 @@ public class Tienda {
     private CuentaBancaria cuentaBancaria;
     private ArrayList<Producto> productosDevueltos;
     private static int numTiendas = 0; 
-    private static  ArrayList<Producto> listaProducto; //Cada tienda tiene una lista de productos DIFERENTES, este atributo NO puede ser static. 
-
+    private ArrayList<Producto> listaProducto; //Cada tienda tiene una lista de productos DIFERENTES, este atributo NO puede ser static. 
     private ArrayList<Object[]> productosPorCategoria = new ArrayList<>(); // Lista de [Producto, Categoria]
-<<<<<<< HEAD
     private ArrayList<Producto> cantidadProductos;//duda aqui ya que puede ser un integer (con el UM).
-    //para la funcionalidad productosPorCategoria:
+    //para la funcionalidad asbatecer (productosPorCategoria):
     private List<String> categorias = new ArrayList<>();
     private List<Integer> conteoCategorias = new ArrayList<>();
-=======
-    private ArrayList<Producto> cantidadProductos;
-    Scanner sc = new Scanner(System.in);
-    //duda aqui del integer con el UML
-    //lo que yo yhan considera que deberia ponerse:
-    // private List<String> categorias = new ArrayList<>();
-    //private List<Integer> conteoCategorias = new ArrayList<>();
->>>>>>> ec36156a22893944b962e40802bb3ba07e87fd51
     // constructor
     public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
         this.nombre=nombre;
@@ -38,7 +28,7 @@ public class Tienda {
         numTiendas++;
         this.cantidadProductos=new ArrayList<>();
         this.productosDevueltos=new ArrayList<>();
-        Tienda.listaProducto=new ArrayList<>();
+        this.listaProducto=new ArrayList<>();
     }
     //getters y setters
 
@@ -101,7 +91,13 @@ public ArrayList<Producto> getCantidadProductos() {
 public void setCantidadProductos(ArrayList<Producto> cantidadProductos) {
     this.cantidadProductos = cantidadProductos;
     }  
+public List<String> getCategorias() {
+    return categorias;
+}
 
+public List<Integer> getConteoCategorias() {
+    return conteoCategorias;
+}
 
 public  void mostrarProductos(){
     if (this.listaProducto.isEmpty()) {
@@ -109,7 +105,7 @@ public  void mostrarProductos(){
         return;
     }
     for (int i = 0; i < listaProducto.size(); i++) {
-        System.out.println((i + 1) + ". " + this.listaProducto.get(i).getNombre());
+        System.out.println((i + 1) + ". " + this.listaProducto.get(i).getNombre());//este problema persistira hasta que se solucione el problema de la lista de productos(por no ser static).
     }
 }
 public String cantidadProductos(){
@@ -121,29 +117,15 @@ public String cantidadProductos(){
 public void agregarProductosPorCategoria(Producto producto, int categoria){
     Object[] productoCategoria = {producto, categoria};
     productosPorCategoria.add(productoCategoria);
-}
 
-    return productos;*/
+
+
+    return productos;
 <<<<<<< HEAD
-/*public String productosPorCategoria(){
-=======
 
-public Producto seleccionarProducto(int n){
-    return this.getListaProducto().get(n-1);
-}
-
-public String productosPorCategoria(){
->>>>>>> ec36156a22893944b962e40802bb3ba07e87fd51
-    if (productosPorCategoria.isEmpty()) {
-        return "No hay productos registrados.";
-    }
-    String productos = "";
-    for (Object[] productoCategoria : productosPorCategoria) {
-        productos += ((Producto) productoCategoria[0]).getNombre() + " - Categoría: " + productoCategoria[1] + "\n";
-    }*/
         // Método para calcular e imprimir productos por categoría
-        public void productosPorCategoria(List<Producto> productos) {
-            // Limpiar las listas antes de procesar(por si se manipulo anteriormente)
+        public String productosPorCategoria(List<Producto> productos) {
+            // Limpiar las listas antes de procesar
             categorias.clear();
             conteoCategorias.clear();
     
@@ -161,7 +143,8 @@ public String productosPorCategoria(){
                     conteoCategorias.set(index, conteoCategorias.get(index) + 1);
                 }
             }
-            // Construir el resultado(con el stringbuilder para manejar mejor la concatenación)
+    
+            // Construir el resultado
             StringBuilder resultado = new StringBuilder();
             for (int i = 0; i < categorias.size(); i++) {
                 resultado.append(categorias.get(i))
@@ -169,11 +152,9 @@ public String productosPorCategoria(){
                          .append(conteoCategorias.get(i))
                          .append(" productos\n");
             }
-            System.out.println("Productos por categoría:");
-            System.out.println(resultado.toString());
-        }
-    }    
-}
+    
+            return resultado.toString();
+    }
 //Funcionalidad a la que pertenece: Devoluciones
  public Cliente devolverProducto(Factura factura, Producto producto){
     productosDevueltos.add(producto);
