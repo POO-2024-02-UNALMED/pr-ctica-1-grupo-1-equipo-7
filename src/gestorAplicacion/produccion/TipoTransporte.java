@@ -1,15 +1,77 @@
 package produccion;
-
-public enum TipoTransporte {
-    CAMION,
-    AVION,
-    AUTOMOVIL,
-    CAMIONETA,
-    BICICLETA,
-    PATINES,
-    BARCO,
-    HELICOPTERO,
-    TREN,
-    CAMINANDO;
-
+    
+    import java.util.ArrayList;
+    import java.util.List;
+    
+    public enum TipoTransporte {
+        // Definición de los transportes con sus atributos
+        CAMION(15000, 16329, "Camion"),
+        AVION(30000, 64000, "Avion"),
+        AUTOMOVIL(9000, 500, "Automovil"),
+        CAMIONETA(12000, 650, "Camioneta"),
+        BICICLETA(5000, 35, "Bicicleta"),
+        PATINES(3000, 20, "Patines"),
+        BARCO(20000, 3356835, "Barco"),
+        HELICOPTERO(70000, 29000, "Helicoptero"),
+        TREN(20000, 30000, "Tren"),
+        CAMINANDO(5000, 15, "Caminando");
+        //atributos basados en lo concordado, y metodos de prouebas, se podrian modificar
+        private final int precioEnvio;
+        private final int capacidadMax;
+        private final String nombre;
+    
+        // Constructor
+        TipoTransporte(int precioEnvio, int capacidadMax, String nombre) {
+            this.precioEnvio = precioEnvio;
+            this.capacidadMax = capacidadMax;
+            this.nombre = nombre;
+        }
+    
+        // Getters
+        public int getPrecioEnvio() {
+            return precioEnvio;
+        }
+    
+        public int getCapacidadMax() {
+            return capacidadMax;
+        }
+    
+        public String getNombre() {
+            return nombre;
+        }
+    
+        // Método 1: Crear lista según la carga
+        public static ArrayList<TipoTransporte> crearTipoTransporteSegunCarga(int pesoTotalProductos) {
+            ArrayList<TipoTransporte> listaFiltrada = new ArrayList<>();
+            for (TipoTransporte transporte : TipoTransporte.values()) {
+                if (pesoTotalProductos <= transporte.getCapacidadMax()) {
+                    listaFiltrada.add(transporte);
+                }
+            }
+            return listaFiltrada;
+        }
+    
+        // Método 2: Mostrar opciones de transporte en formato String
+        public static String mostrarTipoTransporteSegunCarga(ArrayList<TipoTransporte> listaFiltrada) {
+            StringBuilder sb = new StringBuilder("Opciones de transporte disponibles:\n");
+            for (int i = 0; i < listaFiltrada.size(); i++) {
+                TipoTransporte transporte = listaFiltrada.get(i);
+                sb.append(i + 1).append(". ").append(transporte.getNombre())
+                  .append(" (Precio: ").append(transporte.getPrecioEnvio())
+                  .append(", Capacidad Máxima: ").append(transporte.getCapacidadMax())
+                  .append(")\n");
+            }
+            return sb.toString();
+        }
+    
+        // Método 3: Seleccionar un transporte de la lista
+        public static TipoTransporte seleccionarTransporte(ArrayList<TipoTransporte> listaFiltrada, int opcion) {
+            if (opcion > 0 && opcion <= listaFiltrada.size()) {
+                return listaFiltrada.get(opcion - 1); // Las opciones empiezan desde 1
+            } else {
+                throw new IllegalArgumentException("Opción no válida. Seleccione un número entre 1 y " + listaFiltrada.size());
+            }
+        }
+    }
+    
 }

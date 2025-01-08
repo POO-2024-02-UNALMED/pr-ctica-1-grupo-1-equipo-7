@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import gestion.CuentaBancaria;
 import gestion.Operario;
+import gestion.Persona;
 
 public class Fabrica {
 
@@ -30,6 +31,30 @@ public class Fabrica {
 
     //Metodos:
 
+    //Funcionalidad a la que pertenece: Pago trabajadores
+    //Se encarga de devolver una lista de las personas las cuales han realizado su trabajo para poder pagarles.
+
+    public static ArrayList<Persona> busquedaTrabajo(ArrayList<Persona> listaTrabajadores){
+        ArrayList<Persona> trabajadores = new ArrayList<>();
+        for(Persona e : listaTrabajadores){
+            if(e.getCantidadTrabajo() > 0){
+                trabajadores.add(e);
+            }
+        }
+        return trabajadores;
+    }
+
+    public static String mostrarPersonas(ArrayList<Persona> listaTrabajadores){
+        String texto = "";
+        int indice = 1;
+
+        for (Persona i: listaTrabajadores) {
+            texto += "\n" + "Trabajador "+ indice + i.toString();  //Uso de ligadura dinámica
+            indice++;               
+        }
+
+        return texto;
+    }
 
     //Funcionalidad a la que pertenece: Devoluciones 
     //Método que se encarga de descontar el dinero de la cuenta bancaria de la fábrica cuando se realiza una devolución 
@@ -106,7 +131,7 @@ public class Fabrica {
     public void setProductosDisponibles(List<Producto> productosDisponibles) {
         this.productosDisponibles = productosDisponibles;
     }
-          public ArrayList<Tienda> getListaTiendas(){
+          public static ArrayList<Tienda> getListaTiendas(){
             return listaTienda;
     }
     public static ArrayList<Tienda> getListaTienda(){
