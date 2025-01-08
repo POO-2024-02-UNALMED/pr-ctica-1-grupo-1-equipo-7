@@ -1,5 +1,5 @@
 
-package ui;
+package uiMain;
 import java.util.Scanner;
 
 import gestion.Factura;
