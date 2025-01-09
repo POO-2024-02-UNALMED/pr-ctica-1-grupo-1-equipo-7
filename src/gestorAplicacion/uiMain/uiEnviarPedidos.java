@@ -144,8 +144,14 @@ public class uiEnviarPedidos {
                     }
                 }
                 ArrayList<Producto> ListaProductosPedidos = new ArrayList<>();
+                for (int i = 0; i < cantidadProductos; i++) {
+                    
+
+
+                }
+                }
             }
         }
     }
-}
+
 
