@@ -1,4 +1,4 @@
-package ui;
+package uiMain;
 import java.util.ArrayList;
 import java.util.Scanner;
 import gestion.Cliente;

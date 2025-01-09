@@ -74,11 +74,12 @@ public class Fabrica {
         }
     }
 
-    public static void mostrarTiendas(){
-        System.out.println("Listado de Tiendas:");
+       public static String mostrarTiendas() {
+        String resultado = "Listado de Tiendas:\n";
         for (int i = 0; i < listaTienda.size(); i++) {
-            System.out.println((i + 1) + ". " + listaTienda.get(i).getNombre());
-            }
+            resultado += (i + 1) + ". " + listaTienda.get(i).getNombre() + "\n";
+        }
+        return resultado;
     }
 
 
