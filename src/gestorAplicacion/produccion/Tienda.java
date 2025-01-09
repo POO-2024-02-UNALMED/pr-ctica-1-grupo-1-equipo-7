@@ -6,7 +6,6 @@ import gestion.Factura;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 public class Tienda {
     //atributos
     private String nombre;
@@ -19,7 +18,9 @@ public class Tienda {
     private ArrayList<Producto> cantidadProductos;//duda aqui ya que puede ser un integer (con el UM).
     //para la funcionalidad asbatecer (productosPorCategoria):
     private List<String> categorias = new ArrayList<>();
-    private List<Integer> conteoCategorias = new ArrayList<>();
+    private List<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
+    private Integer cantidadMaximaPorCategoria;//Es la cantidad maxima de productos que puede tener una tienda por categoria. (Es atributo auxiliar para la funcionalidad de abastecer.)
+    
     // constructor
     public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
         this.nombre=nombre;
@@ -94,19 +95,27 @@ public void setCantidadProductos(ArrayList<Producto> cantidadProductos) {
 public List<String> getCategorias() {
     return categorias;
 }
-
 public List<Integer> getConteoCategorias() {
     return conteoCategorias;
 }
+public Integer getCantidadMaximaPorCategoria() {
+    return cantidadMaximaPorCategoria;
+}
+public void setCantidadMaximaPorCategoria(Integer cantidadMaximaPorCategoria) {
+    this.cantidadMaximaPorCategoria = cantidadMaximaPorCategoria;
+}
+//metodos
 
-public  void mostrarProductos(){
-    if (this.listaProducto.isEmpty()) {
-        System.out.println("No hay productos registrados.");
-        return;
+//cambio de mostrar productos ahora retorna un string.
+public String mostrarProductos() {
+    String productos = "";
+    if (this.listaProducto == null || this.listaProducto.isEmpty()) {
+        return "No hay productos registrados o disponibles.";
     }
-    for (int i = 0; i < listaProducto.size(); i++) {
-        System.out.println((i + 1) + ". " + this.listaProducto.get(i).getNombre());//este problema persistira hasta que se solucione el problema de la lista de productos(por no ser static).
+    for (Producto producto : this.listaProducto) {
+        productos += producto.getNombre() + "\n";
     }
+    return productos;
 }
 public String cantidadProductos(){
     if (listaProducto == null) {
