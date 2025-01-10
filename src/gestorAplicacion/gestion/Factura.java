@@ -1,14 +1,20 @@
 package gestion;
+
+//Se importan librerias para el uso de fechas con su respectivo formato
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import produccion.Producto;
 import produccion.Tienda;
 import produccion.Transporte;
 
+//JE quedo pendiente de hacer el constructor de Factura, con la conversion de fecha dentro de este
+
 public class Factura {
     private Tienda tienda; 
     private Cliente cliente; 
     private Transporte transporte; 
-    private int fecha; 
+    private LocalDate fecha; 
     private int id;
     private ArrayList<Producto> listaProductos;  
     private static int totalCreadas=0; 
@@ -71,5 +77,46 @@ public Tienda getTienda() {
 public Cliente getCliente(){
   return this.cliente;
   }
+
+//temporal, se usa como guia para los metodos necesarios en la funcionalidad Estadistica
+
+/*
+getFacturasEntreFechas(int fecha1, int fecha2): ArrayList<Factura> (static)
+
++getListaFechas(int fecha1, int fecha2): ArrayList<Integer> (static)
++getListaFechas(): ArrayList<Integer> (static)
+
++ gananciasDiscretas(int fecha1, int fecha2): HashMap<Integer, Double> (static)
++ gananciasDiscretas(ArrayList<Integer> fechas): HashMap<Integer, Double> (static)
+
++gananciasTotales(HashMap<Integer, Double> dictGananciasDiscretas): double (static)
+
++promedioPorDia(HashMap<Integer, Double> dictGananciasDiscretas): double (static)
+
++aumentoPorcentual(HashMap<Integer, Double> dictGananciasDiscretas): double (static)
+
+-masComun(List<T> list): T (static)
+
++moda(int fecha1, int fecha2, String atributo): Moda (static)
+
++getFechaMax(): int (static)
++getFechaMin(): int (static)
+ 
+
+ */
+
+//Se hace la conversion de tipo string a tipo LocalDate
+public static LocalDate convertirStrADate(String f) {
+  DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy"); // Formato de fecha: día/mes/año
+  
+  LocalDate fecha = LocalDate.parse(f, formatter);
+  return fecha;
+} 
+
+//Por completar. Crea una lista ordenada con una fecha de inicio y una fecha final
+public static ArrayList<Factura> getFacturasEntreFechas(LocalDate fecha1, LocalDate fecha2) {
+
+  return new ArrayList<>();
+}
  
 }
