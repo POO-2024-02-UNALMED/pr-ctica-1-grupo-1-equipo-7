@@ -27,15 +27,17 @@ public class Cliente {
     public Cliente(){}
 
     //Métodos: 
-    public static void mostrarClientes(){  //Imprime la lista de clientes, comenzando desde 1 para facilitar al usurario a la hora de escojer. La forma de imprimir es : 1.Cliente
+    public static String mostrarClientes(){  //Imprime la lista de clientes, comenzando desde 1 para facilitar al usurario a la hora de escojer. La forma de imprimir es : 1.Cliente
+        String texto = null;
         if (listaClientes.isEmpty()) {
-            System.out.println("No hay clientes registrados.");
-            return;
+            
+            return "No hay clientes registrados.";
         }
         for (int i = 0; i < listaClientes.size(); i++) {
-            System.out.println((i + 1) + ". " + listaClientes.get(i).getNombre());
+            texto += (i + 1) + ". " + listaClientes.get(i).getNombre() + "\n";
             }
-        }
+        return texto;
+    }
     public void removerProducto(Producto producto){ //Remueve un producto de la lista de productos del cliente.  Funcionalidad a la que pertenece: Devoluciones
         this.listaProductos.remove(producto);
     }

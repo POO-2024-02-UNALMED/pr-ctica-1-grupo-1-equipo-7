@@ -9,8 +9,7 @@ public class uiEnviarPedidos {
         while (true){
             System.out.println("Eligió la opción de envio de pedidos. \nSeleccione al cliente que realizó el pedido. Oprima  0 para salir.");
             System.out.println("0. Salir");
-            Cliente.mostrarClientes();
-            
+            System.out.println(Cliente.mostrarClientes());
             int seleccion = -1;
             while(true){
                 Cliente clienteSeleccionado;
@@ -60,7 +59,7 @@ public class uiEnviarPedidos {
                 System.out.println("Seleccione la tienda desde la cual se enviará el pedido. Si no desea continuar, presione 0 para salir.");
                 System.out.println("Listado de Tiendas:");
                 System.out.println("0. Salir");
-                Fabrica.mostrarTiendas();
+                System.out.plintln(Fabrica.mostrarTiendas());
 
                 int opcion = -1;
                 Tienda tiendaSeleccionada;
