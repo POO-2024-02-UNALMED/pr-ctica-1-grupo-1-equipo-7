@@ -75,4 +75,16 @@ public class Producto {
     public void setMotivoDevolucion(String motivoDevolucion){
         this.motivoDevolucion = motivoDevolucion;
     }
+    public double getPeso(){
+        return this.peso;
+    }
+    public void setPeso(double peso){
+        this.peso = peso;
+    }
+    public double getTamano(){
+        return this.tamano;
+    }
+    public void setTamano(double tamano){
+        this.tamano = tamano;
+    }
 }
