@@ -135,7 +135,7 @@ public void agregarProductosPorCategoria(Producto producto, int categoria){
     return productos;
 <<<<<<< HEAD
 
-        // Método para calcular e imprimir productos por categoría
+        // Método para calcular productos por categoría
         public String productosPorCategoria(List<Producto> productos) {
             // Limpiar las listas antes de procesar
             categorias.clear();
@@ -162,11 +162,14 @@ public void agregarProductosPorCategoria(Producto producto, int categoria){
                 resultado.append(categorias.get(i))
                          .append(": ")
                          .append(conteoCategorias.get(i))
+                         .append("/")
+                         .append(cantidadMaximaPorCategoria)
                          .append(" productos\n");
             }
     
             return resultado.toString();
-    }
+        }
+    
 //Funcionalidad a la que pertenece: Devoluciones
  public Cliente devolverProducto(Factura factura, Producto producto){
     productosDevueltos.add(producto);

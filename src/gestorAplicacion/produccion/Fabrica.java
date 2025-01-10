@@ -91,6 +91,15 @@ public class Fabrica {
         }
         return productos;
     }
+    public static ArrayList<Producto> cantidadProductos(Producto producto, int cantidadAEnviar) {
+        ArrayList<Producto> productosGenerados = new ArrayList<>();
+        for (int i = 0; i < cantidadAEnviar; i++) {
+            productosGenerados.add(producto);
+        }
+        return productosGenerados;
+    }
+
+
 
     // Getters y Setters
 
@@ -147,5 +156,6 @@ public class Fabrica {
     public static ArrayList<Tienda> getListaTienda(){
         return listaTienda;
     }
+
 }
 
