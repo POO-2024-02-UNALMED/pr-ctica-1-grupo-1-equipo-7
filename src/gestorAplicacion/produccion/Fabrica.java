@@ -15,7 +15,7 @@ public class Fabrica {
     public static  CuentaBancaria cuentaBancaria;  //se quito el static ya que solo existe 1 fabrica no hace falta que el atributo sea de clase
                                                 //RTA: Para la de devoluciones necesito que sea static:). Att: Andres.
     private  Operario operario;       //lo mismo para operario 
-    private  List<Producto> productosDisponibles;
+    private static List<Producto> productosDisponibles; //se traen todos productos que pueden ser producidos en la fabrica a partir de una lista que tiene la cual se le pasa en el constructor de la fábrica la cual contiene todos los productos que puede abastecer 
     private static ArrayList<Tienda> listaTienda = new ArrayList<Tienda>();
 
     // Constructor
@@ -25,7 +25,7 @@ public class Fabrica {
         this.direccion = direccion;
         cuentaBancaria = cuentaBancariaFabrica;
         this.operario = operario;
-        this.productosDisponibles = productosDisponibles;
+        Fabrica.productosDisponibles = productosDisponibles;
     }
     public Fabrica() {}
 
@@ -81,7 +81,16 @@ public class Fabrica {
         }
         return resultado;
     }
-
+    public static String mostrarProductos() {//Método que se encarga de mostrar los productos disponibles en la fábrica.
+        String productos = "";
+        if (Fabrica.productosDisponibles == null || Fabrica.productosDisponibles.isEmpty()) {
+            return "No hay productos registrados o disponibles.";
+        }
+        for (Producto producto : Fabrica.productosDisponibles) {
+            productos += producto.getNombre() + "\n";
+        }
+        return productos;
+    }
 
     // Getters y Setters
 
@@ -125,12 +134,12 @@ public class Fabrica {
         this.operario = operario;
     }
 
-    public List<Producto> getProductosDisponibles() {
+    public static List<Producto> getProductosDisponibles() {
         return productosDisponibles;
     }
 
-    public void setProductosDisponibles(List<Producto> productosDisponibles) {
-        this.productosDisponibles = productosDisponibles;
+    public static void setProductosDisponibles(List<Producto> productosDisponibles) {
+        Fabrica.productosDisponibles = productosDisponibles;
     }
           public static ArrayList<Tienda> getListaTiendas(){
             return listaTienda;

@@ -15,12 +15,15 @@ public class Tienda {
     private static int numTiendas = 0; 
     private ArrayList<Producto> listaProducto; //Cada tienda tiene una lista de productos DIFERENTES, este atributo NO puede ser static. 
     private ArrayList<Object[]> productosPorCategoria = new ArrayList<>(); // Lista de [Producto, Categoria]
-    private ArrayList<Producto> cantidadProductos;//duda aqui ya que puede ser un integer (con el UM).
+    private ArrayList<Producto> cantidadProductos;//
     //para la funcionalidad asbatecer (productosPorCategoria):
     private List<String> categorias = new ArrayList<>();
     private List<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
     private Integer cantidadMaximaPorCategoria;//Es la cantidad maxima de productos que puede tener una tienda por categoria. (Es atributo auxiliar para la funcionalidad de abastecer.)
-    
+    //para la funcionalidad abastecer:
+    private List<Producto> productosAbastecer = new ArrayList<>();//pueden ser remplazados estas dos listas por la logica del objet[].
+    private List<Integer> cantidadesAbastecer = new ArrayList<>();
+
     // constructor
     public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
         this.nombre=nombre;
@@ -190,4 +193,40 @@ public String mostrarProductosConExcedente(Factura factura, Producto producto){
 }
 return texto;
 }
+/*public String cantidadProductos(Producto producto, int cantidad) {
+    // Buscar si el producto ya existe en la lista
+    int index = productosAbastecer.indexOf(producto);
+
+    if (index == -1) {
+        // Si no existe, agregarlo con la cantidad inicial
+        productosAbastecer.add(producto);
+        cantidadesAbastecer.add(cantidad);
+    } else {
+        // Si ya existe, incrementar la cantidad correspondiente
+        cantidadesAbastecer.set(index, cantidadesAbastecer.get(index) + cantidad);
+    }
+
+    // Construir el resultado
+    StringBuilder resultado = new StringBuilder();
+    for (int i = 0; i < productosAbastecer.size(); i++) {
+        resultado.append(productosAbastecer.get(i).getNombre()) 
+                 .append(": ")
+                 .append(cantidadesAbastecer.get(i))
+                 .append(" unidades\n");
+    }
+
+    return resultado.toString(); // Retorna el resultado en lugar de imprimirlo
+}*/ //Deberia usarla logica de este metodo como mostrarProductoa sde la tienda, mas no asi.
+public void descargarProducto(Transporte transporteSeleccionado) {
+    ArrayList<Producto> productosTransportados = transporteSeleccionado.getListaDeProductos();
+    for (Producto producto : productosTransportados) {
+        this.listaProducto.add(producto);
+    }
+    transporteSeleccionado.getListaDeProductos().clear(); // Vaciar la lista de productos del transporte
 }
+}
+
+
+
+
+

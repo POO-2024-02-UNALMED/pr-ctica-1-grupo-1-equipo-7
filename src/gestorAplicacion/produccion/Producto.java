@@ -87,4 +87,14 @@ public class Producto {
     public void setTamano(double tamano){
         this.tamano = tamano;
     }
+    @Override
+    public String toString(){
+        return "Nombre: "+this.nombre+
+        "\nPrecio: "+this.precio+
+        "\nCantidad: "+this.cantidad+
+        "\nId: "+this.id+
+        "\nEstado: "+this.estado+
+        "\nTipo: "+this.tipo+
+        "\nCategoria: "+this.categoria;
+    }
 }

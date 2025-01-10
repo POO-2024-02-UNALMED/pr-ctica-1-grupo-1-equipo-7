@@ -1,10 +1,12 @@
 package uiMain;
-import java.util.ArrayList;
 import java.util.Scanner;
 import produccion.Fabrica;
 import produccion.Tienda;
 import produccion.Producto;
 import produccion.TipoTransporte;
+import produccion.Transporte;
+
+import java.util.ArrayList;
 
 public class uiAbastacerTiedas {
     public static void abastecer() {
@@ -13,10 +15,10 @@ public class uiAbastacerTiedas {
         while (true) {
             System.out.println("Eligió la opción de abastecer tienda.\nSeleccione la Tienda que desea abastecer. Oprima 0 para salir.");
             System.out.println(" 0. Salir");
-            System.out.println(Fabrica.mostrarTiendas());
+            Fabrica.mostrarTiendas();
             int tiendaSeleccionadaIndex = -1;
             Tienda tiendaSeleccionada = null;
-//Duda: una cosa es la lista de productos que tiene la tienda y otra cosa es la lista de productos que tiene la fabrica(para abastecer((linea 18 clase fabrica))).
+
             // Bucle para seleccionar la tienda
             while (tiendaSeleccionadaIndex < 0 || tiendaSeleccionadaIndex > Fabrica.getListaTienda().size()) {
                 try {
@@ -48,12 +50,12 @@ public class uiAbastacerTiedas {
                 // Selección de producto
                 System.out.println("Seleccione el producto que desea mandar a la tienda. Oprima 0 para salir.");
                 System.out.println(" 0. Salir");
-                tiendaSeleccionada.mostrarProductos();
+                Fabrica.mostrarProductos();
                 int productoSeleccionadoIndex = -1;
                 Producto productoSeleccionado = null;
 
                 // Bucle para seleccionar el producto
-                while (productoSeleccionadoIndex < 0 || productoSeleccionadoIndex > tiendaSeleccionada.getListaProducto().size()) {
+                while (productoSeleccionadoIndex < 0 || productoSeleccionadoIndex > Fabrica.getProductosDisponibles().size()) {
                     try {
                         productoSeleccionadoIndex = sc.nextInt();
                         if (productoSeleccionadoIndex == 0) {
@@ -61,10 +63,10 @@ public class uiAbastacerTiedas {
                             sc.close();
                             return;
                         }
-                        if (productoSeleccionadoIndex < 1 || productoSeleccionadoIndex > tiendaSeleccionada.getListaProducto().size()) {
-                            System.out.println("Número inválido. Por favor, ingrese un número entre 1 y " + tiendaSeleccionada.getListaProducto().size() + ".");
+                        if (productoSeleccionadoIndex < 1 || productoSeleccionadoIndex > Fabrica.getProductosDisponibles().size()) {
+                            System.out.println("Número inválido. Por favor, ingrese un número entre 1 y " + Fabrica.getProductosDisponibles().size() + ".");
                         } else {
-                            productoSeleccionado = tiendaSeleccionada.getListaProducto().get(productoSeleccionadoIndex - 1);
+                            productoSeleccionado = Fabrica.getProductosDisponibles().get(productoSeleccionadoIndex - 1);
                             System.out.println("Producto seleccionado: " + productoSeleccionado.getNombre());
 
                             // Selección de cantidad de productos a enviar
@@ -132,7 +134,18 @@ public class uiAbastacerTiedas {
                     } else {
                         transporteSeleccionado = TipoTransporte.seleccionarTransporte(listaTransportes, transporteSeleccionadoIndex);
                         System.out.println("Transporte seleccionado: " + transporteSeleccionado.getNombre());
-                        // Aquí puedes agregar el código para procesar el envío con el transporte seleccionado
+                        //código para procesar el envío con el transporte seleccionado:
+                        // Crear instancia de Transporte y cargar productos
+                        Transporte transporte = new Transporte(transporteSeleccionado, 0, 0, null, tiendaSeleccionada);
+                        transporte.abastecerProducto(tiendaSeleccionada, productosSeleccionados);//falta crear la logica para añadir los productos seleccionados a una lista. 
+                        //puede ser realizado cuando se termine cantidadProductos en la clase tienda. duda aun si cantidadProductos esta en fabrica
+                        //necesito un cantidad productos que me retorne una lista de productos que se van a cargar en el transporte. mas no un string.
+                        //ese cantidadProductos lo llamare mas arriba cuando el usuario determine el producto a abstecer y a la cantidad de productos a abastecer.
+
+                        // Descargar productos en la tienda
+                        tiendaSeleccionada.descargarProducto(transporte);
+                        System.out.println("Productos descargados en la tienda " + tiendaSeleccionada.getNombre());
+
                     }
                 } catch (Exception e) {
                     System.out.println("Entrada inválida. Por favor, ingrese un número.");
