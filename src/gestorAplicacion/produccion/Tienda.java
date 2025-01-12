@@ -225,7 +225,7 @@ public void descargarProducto(Transporte transporteSeleccionado) {
     transporteSeleccionado.getListaDeProductos().clear(); // Vaciar la lista de productos del transporte
 }
 }
-
+}
 
 
 
