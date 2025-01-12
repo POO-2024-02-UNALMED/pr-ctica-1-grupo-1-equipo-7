@@ -6,9 +6,9 @@ import gestion.CuentaBancaria;
 public class Cliente {
     public static ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();//Lista de clientes
     private ArrayList<Factura> listaFacturas;
-    private ArrayList<Producto> listaProductos;
+    public ArrayList<Producto> listaProductos;
     private int id;
-    private CuentaBancaria cuentaBancaria;
+    public CuentaBancaria cuentaBancaria;
     private static int totalCreados=0;
     private String nombre;
     private int edad;
