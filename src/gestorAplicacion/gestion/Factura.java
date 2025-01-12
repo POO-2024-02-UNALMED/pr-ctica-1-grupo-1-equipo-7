@@ -280,7 +280,7 @@ public static Producto masComun(ArrayList<Producto> productos) {
 }
 
 //Obtiene la moda de una lista de productos
-public static Moda moda(LocalDate fecha1, LocalDate fecha2, String atributo) {
+/*public static Moda moda(LocalDate fecha1, LocalDate fecha2, String atributo) {
   ArrayList<Factura> facturas = getFacturasEntreFechas(fecha1, fecha2);
   ArrayList<Object> atributos = new ArrayList<>();
   for (Factura f: facturas) {
@@ -299,7 +299,7 @@ public static Moda moda(LocalDate fecha1, LocalDate fecha2, String atributo) {
   moda.add(atributos.size());
   return new Moda(moda);
 }
-
+*/
 
 
 //getters y setters
