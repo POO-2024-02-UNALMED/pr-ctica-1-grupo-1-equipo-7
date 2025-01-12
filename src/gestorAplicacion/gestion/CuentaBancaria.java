@@ -24,6 +24,11 @@ public class CuentaBancaria {
     public void descontarDinero(double valor){
         this.saldo -= valor;
     }
+    
+    public void transferirDinero(double valor, CuentaBancaria cuentaDestino){
+        this.saldo -= valor;
+        cuentaDestino.añadirDinero(valor);
+    }
 
     public int calcularPago(Persona persona){ // por cada trabajo se le sumaran 7000 al salario base
         int saldoTrabajo = persona.getCantidadTrabajo() * 7000;
@@ -33,7 +38,6 @@ public class CuentaBancaria {
     public void devolverDinero(double total, Cliente cliente){
         cliente.getCuentaBancaria().añadirDinero(total);                //REVISAR ESTE METODO DESPUES
                                                                         // R// Gracias por hacermelo, lo necesitaba. By: Andres.
-        
     }
 
 

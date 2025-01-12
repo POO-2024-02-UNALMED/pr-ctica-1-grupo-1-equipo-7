@@ -1,5 +1,6 @@
 package produccion;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 public class Producto {
     public String nombre;
     int precio;
@@ -13,6 +14,14 @@ public class Producto {
     private double tamano;
     private String motivoDevolucion=null; //No borren los atributos de los demas.
     private boolean devuelto; // Tipo de producto //?
+    public static ArrayList<String> motivosDevolucion  = new ArrayList<>(Arrays.asList(
+            "No llego a tiempo",
+            "Llego en mal estado",
+            "Se envio el producto equivocado",
+            "El cliente cambió de opinión con la compra",
+            "El producto no era lo que esperaba", 
+            "Otro motivo"
+        ));
     //Constructores: 
     public Producto(String nombre, int precio, int cantidad, int id, String estado, String tipo, String categoria){
         this.nombre = nombre;
@@ -25,11 +34,34 @@ public class Producto {
         totalCreados++;
         
     }
-    public Producto(){}
+    public Producto(){
+        totalCreados++;
+    }
+
+   // Metodos
+   public static String mostrarMotivosDeDevolucion() {
+    StringBuilder resultado = new StringBuilder();
+
+    for (int i = 0; i < motivosDevolucion.size(); i++) {
+        resultado.append(i + 1).append(". ").append(motivosDevolucion.get(i));
+        if (i < motivosDevolucion.size() - 1) {
+            resultado.append("\n"); // Agregar nueva línea excepto en el último elemento
+        }
+    }
+
+    return resultado.toString();
+}
+public static String obtenerMotivoDeDevolucion(int index) {
+    if (index < 1 || index > motivosDevolucion.size()) {
+        return "Motivo no encontrado.";
+    }
+    return motivosDevolucion.get(index - 1);
+}
 
     //getters y setters
     public String getNombre() {
         return nombre; }
+
     public void setNombre(String nombre){
             this.nombre = nombre;
      }

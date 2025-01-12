@@ -90,5 +90,10 @@ public class Transporte {
      public void abastecerProducto(Tienda tiendaSeleccionada, ArrayList<Producto> productosSeleccionados) {
         this.listaDeProductos.addAll(productosSeleccionados);
         this.tienda = tiendaSeleccionada;
-    }   
-}
+     }
+     public ArrayList<Producto> cantidadProductos(Producto producto ,int cantidadAenviar){
+        for (int i=0; i<=int cantidadAEnviar; i++){
+            productosSeleccionados.add(producto);
+        }
+     }
+}   

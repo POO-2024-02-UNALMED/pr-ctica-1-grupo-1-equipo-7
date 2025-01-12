@@ -66,6 +66,21 @@ public class Fabrica {
         Fabrica.cuentaBancaria.setSaldo(nuevoSaldo);
         return precio; 
     }
+
+    //Funcionalidad a la que pertenece: Devoluciones
+    //Método que calcula el excedente que debe pagar el cliente (si debe hacerlo) al realizar un cambio de productos.
+    public static double calcularExcedente(ArrayList<Producto> productos, double valor) {
+        double subtotal = 0;
+        for (Producto producto : productos) {
+            subtotal += producto.getPrecio();
+        }
+        if (subtotal <= valor) {
+            return 0;
+        }
+        return subtotal - valor;
+    }
+
+
     public void AgregarListaTienda(Tienda tienda){
         if (tienda != null && !listaTienda.contains(tienda)) { // Validación para evitar duplicados
             listaTienda.add(tienda);
@@ -91,6 +106,15 @@ public class Fabrica {
         }
         return productos;
     }
+    public static ArrayList<Producto> cantidadProductos(Producto producto, int cantidadAEnviar) {
+        ArrayList<Producto> productosGenerados = new ArrayList<>();
+        for (int i = 0; i < cantidadAEnviar; i++) {
+            productosGenerados.add(producto);
+        }
+        return productosGenerados;
+    }
+
+
 
     // Getters y Setters
 
@@ -147,5 +171,6 @@ public class Fabrica {
     public static ArrayList<Tienda> getListaTienda(){
         return listaTienda;
     }
+
 }
 

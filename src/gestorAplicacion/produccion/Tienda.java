@@ -6,6 +6,7 @@ import gestion.Factura;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 public class Tienda {
     //atributos
     private String nombre;
@@ -116,10 +117,12 @@ public String mostrarProductos() {
         return "No hay productos registrados o disponibles.";
     }
     for (Producto producto : this.listaProducto) {
-        productos += producto.getNombre() + "\n";
+        productos += producto.getNombre() + "-Precio: $"+producto.getPrecio()+"\n";
     }
     return productos;
 }
+
+
 public String cantidadProductos(){
     if (listaProducto == null) {
         return "El inventario no está disponible.";
@@ -129,13 +132,8 @@ public String cantidadProductos(){
 public void agregarProductosPorCategoria(Producto producto, int categoria){
     Object[] productoCategoria = {producto, categoria};
     productosPorCategoria.add(productoCategoria);
-
-
-
-    return productos;
-<<<<<<< HEAD
-
-        // Método para calcular e imprimir productos por categoría
+}
+        // Método para calcular productos por categoría
         public String productosPorCategoria(List<Producto> productos) {
             // Limpiar las listas antes de procesar
             categorias.clear();
@@ -162,11 +160,14 @@ public void agregarProductosPorCategoria(Producto producto, int categoria){
                 resultado.append(categorias.get(i))
                          .append(": ")
                          .append(conteoCategorias.get(i))
+                         .append("/")
+                         .append(cantidadMaximaPorCategoria)
                          .append(" productos\n");
             }
     
             return resultado.toString();
-    }
+        }
+    
 //Funcionalidad a la que pertenece: Devoluciones
  public Cliente devolverProducto(Factura factura, Producto producto){
     productosDevueltos.add(producto);
@@ -175,24 +176,49 @@ public void agregarProductosPorCategoria(Producto producto, int categoria){
     productosDevueltos.add(producto);
     return factura.getCliente();
 }
-//Funcionalidad a la que pertenece: Devoluciones
-public String mostrarProductosConExcedente(Factura factura, Producto producto){
-    
-  int precio=producto.getPrecio();
-  Tienda tienda=factura.getTienda();
-  String texto="";
-  int n=1;
-  for (Producto p: listaProducto){
-    int excedente=p.getPrecio()-producto.getPrecio();
-    if (excedente>0){
-      texto+=n+". "+p.getNombre()+"(excedente:$"+excedente+")\n";
+
+ /**
+  * Funcionalidad: Devoluciones
+     * Método principal para gestionar los productos seleccionados para un cambio.
+     * 
+     * @param valor              El valor máximo permitido para el cambio.
+     * @param seleccionProductos Lista de índices seleccionados por el cliente.
+     * @return ArrayList de productos seleccionados para el cambio.
+     */
+    public ArrayList<Producto> añadirProductosParaCambio(double valor, ArrayList<Integer> seleccionProductos) {
+        ArrayList<Producto> productosParaCambio = new ArrayList<>();
+        double subtotal = 0;
+
+        for (int indice : seleccionProductos) {
+            // Validar si el índice está dentro del rango permitido
+            if (indice < 1 || indice > listaProducto.size()) {
+                continue; // Ignorar índices fuera de rango
+            }
+
+            Producto productoSeleccionado = listaProducto.get(indice - 1);
+
+            // Si el producto seleccionado excede el valor permitido
+            if ((subtotal + productoSeleccionado.getPrecio()) > valor) {
+                // Añadir el producto como último y terminar el proceso
+                productosParaCambio.add(productoSeleccionado);
+                break;
+            }
+
+            // Añadir el producto al carrito si no excede el valor permitido
+            productosParaCambio.add(productoSeleccionado);
+            subtotal += productoSeleccionado.getPrecio();
+
+            // Si el subtotal alcanza el valor máximo permitido, terminar el proceso
+            if (subtotal >= valor) {
+                break;
+            }
+        }
+
+        // Retornar la lista final de productos seleccionados
+        return productosParaCambio;
     }
-    else{
-        texto+=n+". "+p.getNombre()+"\n";
-    }  
-}
-return texto;
-}
+
+
 /*public String cantidadProductos(Producto producto, int cantidad) {
     // Buscar si el producto ya existe en la lista
     int index = productosAbastecer.indexOf(producto);
@@ -217,6 +243,8 @@ return texto;
 
     return resultado.toString(); // Retorna el resultado en lugar de imprimirlo
 }*/ //Deberia usarla logica de este metodo como mostrarProductoa sde la tienda, mas no asi.
+
+
 public void descargarProducto(Transporte transporteSeleccionado) {
     ArrayList<Producto> productosTransportados = transporteSeleccionado.getListaDeProductos();
     for (Producto producto : productosTransportados) {
@@ -226,7 +254,4 @@ public void descargarProducto(Transporte transporteSeleccionado) {
 }
 }
 }
-
-
-
 
