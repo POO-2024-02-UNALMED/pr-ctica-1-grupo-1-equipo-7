@@ -59,7 +59,7 @@ public class uiEnviarPedidos {
                 System.out.println("Seleccione la tienda desde la cual se enviará el pedido. Si no desea continuar, presione 0 para salir.");
                 System.out.println("Listado de Tiendas:");
                 System.out.println("0. Salir");
-                System.out.plintln(Fabrica.mostrarTiendas());
+                System.out.println(Fabrica.mostrarTiendas());
 
                 int opcion = -1;
                 Tienda tiendaSeleccionada;

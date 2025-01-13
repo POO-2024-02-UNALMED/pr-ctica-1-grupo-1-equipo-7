@@ -170,16 +170,6 @@ public static ArrayList<LocalDate> getListaFechas(LocalDate fecha1, LocalDate fe
 }
 
 //Funcionalidad a la que pertenece: Estadistica
-//Crea un array con las fechas de las facturas que se encuentran entre la fecha minima y maxima
-public static ArrayList<LocalDate> getListaFechas() {
-  ArrayList<LocalDate> fechas = new ArrayList<>();
-  for (Factura f: listaFacturas) {
-    fechas.add(f.getFecha());
-  }
-  return fechas;
-}
-
-//Funcionalidad a la que pertenece: Estadistica
 //Obtiene las ganancias discretas de las facturas entre dos fechas
 public static ArrayList<Object> gananciasDiscretas(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<Factura> facturas = getFacturasEntreFechas(fecha1, fecha2);
@@ -232,7 +222,7 @@ public static double gananciasTotales() {
 
 //Funcionalidad a la que pertenece: Estadistica
 //Obtiene el promedio de las ganancias de las facturas entre dos fechas
-public static double promedioPorDia(LocalDate fecha1, LocalDate fecha2) {
+public static double promedioGanancias(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<Object> ganancias = gananciasDiscretas(fecha1, fecha2);
   double total = 0;
   for (Object g: ganancias) {
@@ -242,17 +232,6 @@ public static double promedioPorDia(LocalDate fecha1, LocalDate fecha2) {
   return total / ganancias.size();
 }
 
-//Funcionalidad a la que pertenece: Estadistica
-//Obtiene el promedio de las ganancias de las facturas entre la fecha minima y maxima
-public static double promedioPorDia() {
-  ArrayList<Object> ganancias = gananciasDiscretas();
-  double total = 0;
-  for (Object g: ganancias) {
-    ArrayList<Object> ganancia = (ArrayList<Object>) g;
-    total += (double) ganancia.get(1);
-  }
-  return total / ganancias.size();
-}
 
 //Funcionalidad a la que pertenece: Estadistica
 //Obtiene el aumento porcentual de las ganancias de las facturas entre dos fechas
@@ -262,13 +241,6 @@ public static double aumentoPorcentual(LocalDate fecha1, LocalDate fecha2) {
   return ((ganancias2 - ganancias1) / ganancias1) * 100;
 }
 
-//Funcionalidad a la que pertenece: Estadistica
-//Obtiene el aumento porcentual de las ganancias de las facturas entre la fecha minima y maxima
-public static double aumentoPorcentual() {
-  double ganancias1 = gananciasTotales();
-  double ganancias2 = gananciasTotales();
-  return ((ganancias2 - ganancias1) / ganancias1) * 100;
-}
 
 //Funcionalidad a la que pertenece: Estadistica
 //Obtiene el producto mas comun de una lista de productos
