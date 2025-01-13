@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import produccion.Producto;
 import produccion.Tienda;
 import produccion.Transporte;
+import gestion.Moda;
 
 public class Factura {
     private Tienda tienda; 
@@ -44,7 +45,6 @@ public class Factura {
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
             if (listaFacturas.get(j).getFecha().isAfter(listaFacturas.get(j + 1).getFecha())) {
-                // Intercambiar listaFacturas[j] y listaFacturas[j + 1]
                 Factura temp = listaFacturas.get(j);
                 listaFacturas.set(j, listaFacturas.get(j + 1));
                 listaFacturas.set(j + 1, temp);
@@ -73,8 +73,8 @@ public class Factura {
     return totalParcial + calcularValorEnvio();
 }
 
-    //Funcionalidad a la que pertenece: Devoluciones
-    //Se encarga de imprimir la lista de las facturas que contiene la tienda, con el nombre del cliente y el id de la factura.
+//Funcionalidad a la que pertenece: Devoluciones
+//Se encarga de imprimir la lista de las facturas que contiene la tienda, con el nombre del cliente y el id de la factura.
 public static String mostrarFacturas(){
     int n=1; 
     String texto="";
@@ -145,7 +145,7 @@ public static LocalDate getFechaMin(){
   }
   return fechaMin;
 }
-
+//Funcionalidad a la que pertenece: Estadistica
 //Crea un array con las facturas que se encuentran entre dos fechas
 public static ArrayList<Factura> getFacturasEntreFechas(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<Factura> facturas = new ArrayList<>();
@@ -157,6 +157,8 @@ public static ArrayList<Factura> getFacturasEntreFechas(LocalDate fecha1, LocalD
   return facturas;
 }
 
+//Funcionalidad a la que pertenece: Estadistica
+//Crea un array con las fechas de las facturas que se encuentran entre dos fechas
 public static ArrayList<LocalDate> getListaFechas(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<LocalDate> fechas = new ArrayList<>();
   for (Factura f: listaFacturas) {
@@ -167,7 +169,8 @@ public static ArrayList<LocalDate> getListaFechas(LocalDate fecha1, LocalDate fe
   return fechas;
 }
 
-
+//Funcionalidad a la que pertenece: Estadistica
+//Crea un array con las fechas de las facturas que se encuentran entre la fecha minima y maxima
 public static ArrayList<LocalDate> getListaFechas() {
   ArrayList<LocalDate> fechas = new ArrayList<>();
   for (Factura f: listaFacturas) {
@@ -176,6 +179,7 @@ public static ArrayList<LocalDate> getListaFechas() {
   return fechas;
 }
 
+//Funcionalidad a la que pertenece: Estadistica
 //Obtiene las ganancias discretas de las facturas entre dos fechas
 public static ArrayList<Object> gananciasDiscretas(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<Factura> facturas = getFacturasEntreFechas(fecha1, fecha2);
@@ -188,7 +192,7 @@ public static ArrayList<Object> gananciasDiscretas(LocalDate fecha1, LocalDate f
   }
   return ganancias;
 }
-
+//Funcionalidad a la que pertenece: Estadistica
 //Obtiene las ganancias discretas de las facturas entre la fecha minima y maxima
 public static ArrayList<Object> gananciasDiscretas() {
   ArrayList<Factura> facturas = listaFacturas;
@@ -202,6 +206,7 @@ public static ArrayList<Object> gananciasDiscretas() {
   return ganancias;
 }
 
+//Funcionalidad a la que pertenece: Estadistica
 //Obtiene las ganancias totales de las facturas entre dos fechas
 public static double gananciasTotales(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<Object> ganancias = gananciasDiscretas(fecha1, fecha2);
@@ -213,6 +218,7 @@ public static double gananciasTotales(LocalDate fecha1, LocalDate fecha2) {
   return total;
 }
 
+//Funcionalidad a la que pertenece: Estadistica
 //Obtiene las ganancias totales de las facturas entre la fecha minima y maxima
 public static double gananciasTotales() {
   ArrayList<Object> ganancias = gananciasDiscretas();
@@ -224,6 +230,7 @@ public static double gananciasTotales() {
   return total;
 }
 
+//Funcionalidad a la que pertenece: Estadistica
 //Obtiene el promedio de las ganancias de las facturas entre dos fechas
 public static double promedioPorDia(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<Object> ganancias = gananciasDiscretas(fecha1, fecha2);
@@ -235,6 +242,7 @@ public static double promedioPorDia(LocalDate fecha1, LocalDate fecha2) {
   return total / ganancias.size();
 }
 
+//Funcionalidad a la que pertenece: Estadistica
 //Obtiene el promedio de las ganancias de las facturas entre la fecha minima y maxima
 public static double promedioPorDia() {
   ArrayList<Object> ganancias = gananciasDiscretas();
@@ -246,6 +254,7 @@ public static double promedioPorDia() {
   return total / ganancias.size();
 }
 
+//Funcionalidad a la que pertenece: Estadistica
 //Obtiene el aumento porcentual de las ganancias de las facturas entre dos fechas
 public static double aumentoPorcentual(LocalDate fecha1, LocalDate fecha2) {
   double ganancias1 = gananciasTotales(fecha1, fecha2);
@@ -253,6 +262,7 @@ public static double aumentoPorcentual(LocalDate fecha1, LocalDate fecha2) {
   return ((ganancias2 - ganancias1) / ganancias1) * 100;
 }
 
+//Funcionalidad a la que pertenece: Estadistica
 //Obtiene el aumento porcentual de las ganancias de las facturas entre la fecha minima y maxima
 public static double aumentoPorcentual() {
   double ganancias1 = gananciasTotales();
@@ -260,13 +270,14 @@ public static double aumentoPorcentual() {
   return ((ganancias2 - ganancias1) / ganancias1) * 100;
 }
 
+//Funcionalidad a la que pertenece: Estadistica
 //Obtiene el producto mas comun de una lista de productos
-public static Producto masComun(ArrayList<Producto> productos) {
-  Producto masComun = productos.get(0);
+public static Object masComun(ArrayList<Object> productos) {
+  Object masComun = productos.get(0);
   int max = 0;
-  for (Producto p: productos) {
+  for (Object p: productos) {
     int count = 0;
-    for (Producto p2: productos) {
+    for (Object p2: productos) {
       if (p.equals(p2)) {
         count++;
       }
@@ -279,30 +290,33 @@ public static Producto masComun(ArrayList<Producto> productos) {
   return masComun;
 }
 
+//Funcionalidad a la que pertenece: Estadistica
 //Obtiene la moda de una lista de productos
-/*public static Moda moda(LocalDate fecha1, LocalDate fecha2, String atributo) {
+public static Object modaProductos(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<Factura> facturas = getFacturasEntreFechas(fecha1, fecha2);
-  ArrayList<Object> atributos = new ArrayList<>();
+  ArrayList<Object> productos = new ArrayList<>();
   for (Factura f: facturas) {
-    if (atributo.equals("productos")) {
-      for (Producto p: f.getListaProductos()) {
-        atributos.add(p);
-      }
-    } else if (atributo.equals("clientes")) {
-      atributos.add(f.getCliente());
-    } else if (atributo.equals("tiendas")) {
-      atributos.add(f.getTienda());
+    for (Producto p: f.getListaProductos()) {
+      productos.add(p);
     }
   }
-  ArrayList<Object> moda = new ArrayList<>();
-  moda.add(masComun(atributos));
-  moda.add(atributos.size());
-  return new Moda(moda);
+  return masComun(productos);
 }
-*/
+
+//Funcionalidad a la que pertenece: Estadistica
+//Obtiene la moda de una lista de clientes
+public static Object modaClientes(LocalDate fecha1, LocalDate fecha2) {
+  return new Object();
+}
+
+//Funcionalidad a la que pertenece: Estadistica
+//Obtiene la moda de una lista de tiendas
+public static Object modaTiendas(LocalDate fecha1, LocalDate fecha2) {
+  return new Object();
+}
 
 
-//getters y setters
+//getters
 public ArrayList<Producto> getListaProductos(){
   return listaProductos;
 }
@@ -328,6 +342,59 @@ public double getTotal() {
 
 public static int getTotalCreadas() {
   return totalCreadas;
+}
+
+public static ArrayList<Factura> getListaFacturas() {
+  return listaFacturas;
+}
+
+
+
+//setters
+
+public void setTienda(Tienda tienda) {
+  this.tienda = tienda;
+
+}
+
+public void setCliente(Cliente cliente) {
+  this.cliente = cliente;
+
+}
+
+public void setTransporte(Transporte transporte) {
+  this.transporte = transporte;
+
+}
+
+public void setFecha(LocalDate fecha) {
+  this.fecha = fecha;
+
+}
+
+public void setId(int id) {
+  this.id = id;
+
+}
+
+public void setTotal(double total) {
+  this.total = total;
+
+}
+
+public void setListaProductos(ArrayList<Producto> listaProductos) {
+  this.listaProductos = listaProductos;
+
+}
+
+public static void setTotalCreadas(int totalCreadas) {
+  Factura.totalCreadas = totalCreadas;
+
+}
+
+public static void setListaFacturas(ArrayList<Factura> listaFacturas) {
+  Factura.listaFacturas = listaFacturas;
+
 }
 
 }

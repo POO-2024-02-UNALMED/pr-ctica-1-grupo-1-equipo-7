@@ -7,47 +7,55 @@ import java.util.Scanner;
 
 import gestion.Factura;
 
+//Este es un modelo para el uiEstadistica, no es el definitivo
+
 public class uiEstadistica {
-    public static void mostrar() { 
-                                            
-
-        //Esto será una parte de un nuevo metodo para factura
-        Scanner scanner = new Scanner(System.in);
-
-        LocalDate fecha1 = null;
-        boolean fechaValida1 = false;
-
-        while (!fechaValida1) {
-            System.out.print("Ingrese una fecha (dd/MM/yyyy): ");
-            String entradaFecha1 = scanner.nextLine();
-            fecha1 = Factura.convertirStrADate(entradaFecha1);
-
-            try {
-                
-                fechaValida1 = true;
-            } catch (DateTimeParseException e) {
-                System.out.println("Formato de fecha inválido. Intente nuevamente.");
-            }
-        }
-
-        LocalDate fecha2 = null;
-        boolean fechaValida2 = false;
-
-        while (!fechaValida2) {
-            System.out.print("Ingrese una fecha (dd/MM/yyyy): ");
-            String entradaFecha2 = scanner.nextLine();
-            fecha2 = Factura.convertirStrADate(entradaFecha2);
-
-            try {
-                
-                fechaValida2 = true;
-            } catch (DateTimeParseException e) {
-                System.out.println("Formato de fecha inválido. Intente nuevamente.");
-            }
-        }
-
-         ArrayList<Factura> listaFacturas = Factura.getFacturasEntreFechas(fecha1, fecha2);
     
-    scanner.close();
+    private static Scanner scanner = new Scanner(System.in);
+
+
+
+    public static void main(String[] args) {
+        int opcion;
+        do {
+            mostrarMenu();
+            opcion = scanner.nextInt();
+            scanner.nextLine(); // Limpiar el buffer
+
+            switch (opcion) {
+                case 1:
+                    mostrarGananciasDiscretas();
+                    break;
+                case 2:
+                    mostrarGananciasTotales();
+                    break;
+                case 3:
+                    mostrarPromedioPorDia();
+                    break;
+                case 4:
+                    mostrarAumentoPorcentual();
+                    break;
+                case 5:
+                    mostrarModaProductos();
+                    break;
+                case 6:
+                    System.out.println("Saliendo...");
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intente de nuevo.");
+            }
+        } while (opcion != 6);
     }
+
+    private static void mostrarMenu() {
+        System.out.println("=== Menú de Estadísticas ===");
+        System.out.println("1. Mostrar ganancias discretas entre fechas");
+        System.out.println("2. Mostrar ganancias totales entre fechas");
+        System.out.println("3. Mostrar promedio de ganancias por día entre fechas");
+        System.out.println("4. Mostrar aumento porcentual de ganancias entre fechas");
+        System.out.println("5. Mostrar moda de productos entre fechas");
+        System.out.println("6. Salir");
+        System.out.print("Seleccione una opción: ");
+    }
+
 }
