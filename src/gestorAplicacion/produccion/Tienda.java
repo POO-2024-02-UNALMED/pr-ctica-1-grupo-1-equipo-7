@@ -22,8 +22,8 @@ public class Tienda {
     private List<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
     private Integer cantidadMaximaPorCategoria;//Es la cantidad maxima de productos que puede tener una tienda por categoria. (Es atributo auxiliar para la funcionalidad de abastecer.)
     //para la funcionalidad abastecer:
-    private List<Producto> productosAbastecer = new ArrayList<>();//pueden ser remplazados estas dos listas por la logica del objet[].
-    private List<Integer> cantidadesAbastecer = new ArrayList<>();
+    private List<Producto> productosAbastecer = new ArrayList<>();//no se van a usar
+    private List<Integer> cantidadesAbastecer = new ArrayList<>();//tampoco por ahora
 
     // constructor
     public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
@@ -102,6 +102,9 @@ public List<String> getCategorias() {
 public List<Integer> getConteoCategorias() {
     return conteoCategorias;
 }
+public void setConteoCategorias(List<Integer> conteoCategorias) {
+    this.conteoCategorias = conteoCategorias;
+}
 public Integer getCantidadMaximaPorCategoria() {
     return cantidadMaximaPorCategoria;
 }
@@ -123,7 +126,7 @@ public String mostrarProductos() {
 }
 
 
-public String cantidadProductos(){
+public String cantidadProductosTotal(){
     if (listaProducto == null) {
         return "El inventario no está disponible.";
     }
@@ -167,7 +170,33 @@ public void agregarProductosPorCategoria(Producto producto, int categoria){
     
             return resultado.toString();
         }
+        public String productosPorCategoria(List<Producto> productos, List<Integer> conteoTemporal) {
+            // Limpiar las listas antes de procesar
+            categorias.clear();
     
+            // Procesar la lista de productos
+            for (Producto producto : productos) {
+                String categoria = producto.getCategoria(); // Obtener la categoría del producto
+    
+                if (!categorias.contains(categoria)) {
+                    // Si no existe, agregarla
+                    categorias.add(categoria);
+                }
+            }
+    
+            // Construir el resultado
+            StringBuilder resultado = new StringBuilder();
+            for (int i = 0; i < categorias.size(); i++) {
+                resultado.append(categorias.get(i))
+                         .append(": ")
+                         .append(conteoTemporal.get(i))
+                         .append("/")
+                         .append(cantidadMaximaPorCategoria)
+                         .append(" productos\n");
+            }
+    
+            return resultado.toString();
+        }
 //Funcionalidad a la que pertenece: Devoluciones
  public Cliente devolverProducto(Factura factura, Producto producto){
     productosDevueltos.add(producto);
@@ -219,30 +248,24 @@ public void agregarProductosPorCategoria(Producto producto, int categoria){
     }
 
 
-/*public String cantidadProductos(Producto producto, int cantidad) {
-    // Buscar si el producto ya existe en la lista
-    int index = productosAbastecer.indexOf(producto);
-
-    if (index == -1) {
-        // Si no existe, agregarlo con la cantidad inicial
-        productosAbastecer.add(producto);
-        cantidadesAbastecer.add(cantidad);
-    } else {
-        // Si ya existe, incrementar la cantidad correspondiente
-        cantidadesAbastecer.set(index, cantidadesAbastecer.get(index) + cantidad);
-    }
-
+public String cantidadProductos() {
     // Construir el resultado
     StringBuilder resultado = new StringBuilder();
-    for (int i = 0; i < productosAbastecer.size(); i++) {
-        resultado.append(productosAbastecer.get(i).getNombre()) 
+    for (Producto producto : listaProducto) {
+        int cantidad = 0;
+        for (Producto p : listaProducto) {
+            if (p.equals(producto)) {
+                cantidad++;
+            }
+        }
+        resultado.append(producto.getNombre())
                  .append(": ")
-                 .append(cantidadesAbastecer.get(i))
+                 .append(cantidad)
                  .append(" unidades\n");
     }
 
-    return resultado.toString(); // Retorna el resultado en lugar de imprimirlo
-}*/ //Deberia usarla logica de este metodo como mostrarProductoa sde la tienda, mas no asi.
+    return resultado.toString(); // Retorna el resultado 
+} 
 
 
 public void descargarProducto(Transporte transporteSeleccionado) {
@@ -253,5 +276,5 @@ public void descargarProducto(Transporte transporteSeleccionado) {
     transporteSeleccionado.getListaDeProductos().clear(); // Vaciar la lista de productos del transporte
 }
 }
-}
+
 
