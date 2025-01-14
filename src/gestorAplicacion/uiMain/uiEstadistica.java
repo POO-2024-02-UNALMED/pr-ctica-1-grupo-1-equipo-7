@@ -49,8 +49,8 @@ public class uiEstadistica {
     }
 
     private static void mostrarMenu() {
-        System.out.println("=== Opciones ===");
         asignarFecha();
+        System.out.println("=== Opciones ===");
         System.out.println("1. Mostrar ganancias discretas entre fechas");
         System.out.println("2. Mostrar ganancias totales entre fechas");
         System.out.println("3. Mostrar promedio de ganancias por día entre fechas");
