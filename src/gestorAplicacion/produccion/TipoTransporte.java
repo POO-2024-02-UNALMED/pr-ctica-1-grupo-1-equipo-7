@@ -1,7 +1,6 @@
 package produccion;
     
     import java.util.ArrayList;
-    import java.util.List;
     
     public enum TipoTransporte {
         // Definición de los transportes con sus atributos
@@ -72,6 +71,6 @@ package produccion;
                 throw new IllegalArgumentException("Opción no válida. Seleccione un número entre 1 y " + listaFiltrada.size());
             }
         }
+        
     }
     
-}

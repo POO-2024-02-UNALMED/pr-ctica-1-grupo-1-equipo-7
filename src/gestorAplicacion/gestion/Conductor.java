@@ -8,11 +8,14 @@ public class Conductor extends Persona {
     private Fabrica fabrica;
     private static ArrayList<Conductor> listaConductores = new ArrayList<>();
     private ArrayList<Meta> metaConductor;
+    private int pesoTransportado;
 
     public Conductor(String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria, Fabrica fabrica, Transporte transporte){
         this.transporte = transporte;
         this.fabrica = fabrica;
         this.metaConductor = new ArrayList<>();
+        this.pesoTransportado=0;
+
     }
 
 
@@ -62,6 +65,12 @@ public class Conductor extends Persona {
 
     public void setConductor(Meta meta){     
         this.metaConductor.add(meta);          
+    }
+    public void setpesoTransportado(int peso){
+        this.pesoTransportado=peso;
+    }
+    public int getpesoTransportado(){
+        return this.pesoTransportado;
     }
 }
 

@@ -1,10 +1,14 @@
 package uiMain;
-import java.util.ArrayList;
 import java.util.Scanner;
 import produccion.Fabrica;
 import produccion.Tienda;
 import produccion.Producto;
 import produccion.TipoTransporte;
+import produccion.Transporte;
+import gestion.Conductor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class uiAbastacerTiedas {
     public static void abastecer() {
@@ -13,10 +17,10 @@ public class uiAbastacerTiedas {
         while (true) {
             System.out.println("Eligió la opción de abastecer tienda.\nSeleccione la Tienda que desea abastecer. Oprima 0 para salir.");
             System.out.println(" 0. Salir");
-            System.out.println(Fabrica.mostrarTiendas());
+            Fabrica.mostrarTiendas();
             int tiendaSeleccionadaIndex = -1;
             Tienda tiendaSeleccionada = null;
-//Duda: una cosa es la lista de productos que tiene la tienda y otra cosa es la lista de productos que tiene la fabrica(para abastecer((linea 18 clase fabrica))).
+
             // Bucle para seleccionar la tienda
             while (tiendaSeleccionadaIndex < 0 || tiendaSeleccionadaIndex > Fabrica.getListaTienda().size()) {
                 try {
@@ -42,18 +46,23 @@ public class uiAbastacerTiedas {
             System.out.println("Productos por categoría en la tienda seleccionada:");
             System.out.println(tiendaSeleccionada.productosPorCategoria(tiendaSeleccionada.getListaProducto()));
 
+            // Lista para almacenar los productos seleccionados y sus cantidades
+            ArrayList<Producto> productosGenerados = new ArrayList<>();
+            // Lista temporal para almacenar los cambios en la cantidad de productos por categoría
+            List<Integer> conteoCategoriasTemporal = new ArrayList<>(tiendaSeleccionada.getConteoCategorias());
+
             // Bucle para añadir productos al abastecimiento
             int pesoTotalProductos = 0;
             while (true) {
                 // Selección de producto
                 System.out.println("Seleccione el producto que desea mandar a la tienda. Oprima 0 para salir.");
                 System.out.println(" 0. Salir");
-                tiendaSeleccionada.mostrarProductos();
+                Fabrica.mostrarProductos();
                 int productoSeleccionadoIndex = -1;
                 Producto productoSeleccionado = null;
 
                 // Bucle para seleccionar el producto
-                while (productoSeleccionadoIndex < 0 || productoSeleccionadoIndex > tiendaSeleccionada.getListaProducto().size()) {
+                while (productoSeleccionadoIndex < 0 || productoSeleccionadoIndex > Fabrica.getProductosDisponibles().size()) {
                     try {
                         productoSeleccionadoIndex = sc.nextInt();
                         if (productoSeleccionadoIndex == 0) {
@@ -61,16 +70,16 @@ public class uiAbastacerTiedas {
                             sc.close();
                             return;
                         }
-                        if (productoSeleccionadoIndex < 1 || productoSeleccionadoIndex > tiendaSeleccionada.getListaProducto().size()) {
-                            System.out.println("Número inválido. Por favor, ingrese un número entre 1 y " + tiendaSeleccionada.getListaProducto().size() + ".");
+                        if (productoSeleccionadoIndex < 1 || productoSeleccionadoIndex > Fabrica.getProductosDisponibles().size()) {
+                            System.out.println("Número inválido. Por favor, ingrese un número entre 1 y " + Fabrica.getProductosDisponibles().size() + ".");
                         } else {
-                            productoSeleccionado = tiendaSeleccionada.getListaProducto().get(productoSeleccionadoIndex - 1);
+                            productoSeleccionado = Fabrica.getProductosDisponibles().get(productoSeleccionadoIndex - 1);
                             System.out.println("Producto seleccionado: " + productoSeleccionado.getNombre());
 
                             // Selección de cantidad de productos a enviar
                             String categoriaProducto = productoSeleccionado.getCategoria();
                             int indexCategoria = tiendaSeleccionada.getCategorias().indexOf(categoriaProducto);
-                            int cantidadActual = tiendaSeleccionada.getConteoCategorias().get(indexCategoria);
+                            int cantidadActual = conteoCategoriasTemporal.get(indexCategoria);
                             int cantidadMaxima = tiendaSeleccionada.getCantidadMaximaPorCategoria();
                             int cantidadDisponible = cantidadMaxima - cantidadActual;
 
@@ -85,10 +94,15 @@ public class uiAbastacerTiedas {
                                         System.out.println("Cantidad inválida. Por favor, ingrese un número entre 0 y " + cantidadDisponible + ".");
                                     } else {
                                         System.out.println("Enviando " + cantidadAEnviar + " productos de la categoría " + categoriaProducto + " a la tienda " + tiendaSeleccionada.getNombre());
-                                        // Aquí puedes agregar el código para actualizar la cantidad de productos en la tienda
+                                        
+                                        // Generar los productos y agregarlos a la lista
+                                        productosGenerados.addAll(Fabrica.cantidadProductos(productoSeleccionado, cantidadAEnviar));
 
                                         // Calcular el peso total de los productos seleccionados
                                         pesoTotalProductos += productoSeleccionado.getPeso() * cantidadAEnviar;
+
+                                        // Actualizar la cantidad de productos en la lista temporal
+                                        conteoCategoriasTemporal.set(indexCategoria, cantidadActual + cantidadAEnviar);
                                     }
                                 } catch (Exception e) {
                                     System.out.println("Entrada inválida. Por favor, ingrese un número.");
@@ -101,6 +115,10 @@ public class uiAbastacerTiedas {
                         sc.nextLine(); // Limpiar el buffer
                     }
                 }
+
+                // Mostrar productos por categoría actualizados
+                System.out.println("Productos por categoría en la tienda seleccionada:");
+                System.out.println(tiendaSeleccionada.productosPorCategoria(tiendaSeleccionada.getListaProducto(), conteoCategoriasTemporal));
 
                 // Preguntar si desea añadir más productos
                 System.out.println("¿Desea añadir más productos a la tienda? (s/n)");
@@ -132,13 +150,66 @@ public class uiAbastacerTiedas {
                     } else {
                         transporteSeleccionado = TipoTransporte.seleccionarTransporte(listaTransportes, transporteSeleccionadoIndex);
                         System.out.println("Transporte seleccionado: " + transporteSeleccionado.getNombre());
-                        // Aquí puedes agregar el código para procesar el envío con el transporte seleccionado
+                        
+                        // Buscar un conductor con el transporte seleccionado
+                        Conductor conductorSeleccionado = null;
+                        for (Conductor conductor : Conductor.getListaConductores()) {
+                            if (conductor.getTransporte().getTipoTransporte().equals(transporteSeleccionado)) {
+                                conductorSeleccionado = conductor;
+                                break;
+                            }
+                        }
+
+                        if (conductorSeleccionado == null) {
+                            System.out.println("No se encontró un conductor con el transporte seleccionado.");
+                            continue;
+                        }
+
+                        // Confirmar el abastecimiento
+                        System.out.println("¿Desea confirmar el abastecimiento? (s/n)");
+                        String confirmar = sc.next();
+                        if (confirmar.equalsIgnoreCase("s")) {
+                            // Aplicar los cambios a la tienda
+                            tiendaSeleccionada.setConteoCategorias(conteoCategoriasTemporal);
+
+                            // Cargar productos en el transporte del conductor seleccionado
+                            Transporte transporte = conductorSeleccionado.getTransporte();
+                            transporte.abastecerProducto(tiendaSeleccionada, productosGenerados);
+
+                            // Descargar productos en la tienda
+                            tiendaSeleccionada.descargarProducto(transporte);
+                            System.out.println("Productos descargados en la tienda " + tiendaSeleccionada.getNombre());
+                            System.out.println("Ha seleccionado el transporte:  " + transporteSeleccionadoIndex);
+                            System.out.println("La tienda " + tiendaSeleccionada.getNombre() + " se abastecera por: "+ transporteSeleccionado.getNombre());
+                            System.out.println("El producto fue enviado con exito ahora la tienda tiene");
+                            System.out.println("       PRODUCTOS:");
+                            System.out.println(tiendaSeleccionada.cantidadProductos());//se tiene que mostrar cantidadProductos
+                        } else {
+                            System.out.println("Abastecimiento cancelado.");
+                        }
                     }
                 } catch (Exception e) {
                     System.out.println("Entrada inválida. Por favor, ingrese un número.");
                     sc.nextLine(); // Limpiar el buffer
                 }
             }
+
+            // Preguntar si desea volver al menú principal o realizar otro proceso de abastecer
+            System.out.println("¿Desea volver al menú principal o realizar otro proceso de abastecer alguna tienda?");
+            System.out.println("1. Volver al menú principal");
+            System.out.println("0. Realizar otro proceso de abastecemiento de tiendas");
+            int opcion = sc.nextInt();
+            if (opcion == 1) {
+                System.out.println("Volviendo al menú principal...");
+                break;
+            } else if (opcion == 0) {
+                System.out.println("Realizando otro proceso de abastecer alguna tienda...");
+                // Continuar con el bucle para realizar otro proceso de abastecer
+            } else {
+                System.out.println("Opción inválida. Volviendo al menú principal...");
+                break;
+            }
         }
+        sc.close();
     }
 }
