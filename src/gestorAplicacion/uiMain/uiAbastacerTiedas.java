@@ -15,7 +15,7 @@ public class uiAbastacerTiedas {
         Scanner sc = new Scanner(System.in);
 
         while (true) {
-            System.out.println("Eligió la opción de abastecer tienda.\nSeleccione la Tienda que desea abastecer. Oprima 0 para salir.");
+            System.out.println("¡HOLA! Eligió la opción de abastecer tienda.\nSeleccione la Tienda que desea abastecer.\n NOTA: Para realizar una eleccion ingresar el indice(numero) correspondiente \n Oprima 0 para salir.");
             System.out.println(" 0. Salir");
             Fabrica.mostrarTiendas();
             int tiendaSeleccionadaIndex = -1;
@@ -43,7 +43,7 @@ public class uiAbastacerTiedas {
             }
 
             // Mostrar productos por categoría
-            System.out.println("Productos por categoría en la tienda seleccionada:");
+            System.out.println("Estos son los productos divididos por categoría en la tienda seleccionada:");
             System.out.println(tiendaSeleccionada.productosPorCategoria(tiendaSeleccionada.getListaProducto()));
 
             // Lista para almacenar los productos seleccionados y sus cantidades
@@ -116,12 +116,12 @@ public class uiAbastacerTiedas {
                     }
                 }
 
-                // Mostrar productos por categoría actualizados
+                // Mostrar productos por categoría ACTUALIZADOS
                 System.out.println("Productos por categoría en la tienda seleccionada:");
                 System.out.println(tiendaSeleccionada.productosPorCategoria(tiendaSeleccionada.getListaProducto(), conteoCategoriasTemporal));
 
                 // Preguntar si desea añadir más productos
-                System.out.println("¿Desea añadir más productos a la tienda? (s/n)");
+                System.out.println("¿Desea añadir más productos a la tienda? Escriba la letra (s) para confirmar y cualquier letra para cancelar.");
                 String respuesta = sc.next();
                 if (!respuesta.equalsIgnoreCase("s")) {
                     break;
@@ -166,14 +166,15 @@ public class uiAbastacerTiedas {
                         }
 
                         // Confirmar el abastecimiento
-                        System.out.println("¿Desea confirmar el abastecimiento? (s/n)");
+                        System.out.println("¿Desea confirmar el abastecimiento? Escriba la letra (s) para confirmar y cualquier letra para cancelar.");
                         String confirmar = sc.next();
                         if (confirmar.equalsIgnoreCase("s")) {
-                            // Aplicar los cambios a la tienda
+                            // Aplicar los cambios en categorias a la tienda
                             tiendaSeleccionada.setConteoCategorias(conteoCategoriasTemporal);
 
                             // Cargar productos en el transporte del conductor seleccionado
                             Transporte transporte = conductorSeleccionado.getTransporte();
+                            conductorSeleccionado.setpesoTransportado(pesoTotalProductos);
                             transporte.abastecerProducto(tiendaSeleccionada, productosGenerados);
 
                             // Descargar productos en la tienda
