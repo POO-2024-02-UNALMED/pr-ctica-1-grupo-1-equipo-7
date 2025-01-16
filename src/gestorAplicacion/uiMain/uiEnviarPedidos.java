@@ -203,6 +203,16 @@ public class uiEnviarPedidos {
                         }
                     }
                 }
+                double totalPeso = 0.0;
+                for (Producto producto : listaProductosPedidos) {
+                    double peso = tiendaSeleccionada.venderProducto(producto);
+                    if (peso > 0) { // Validamos que el peso sea positivo
+                        totalPeso += peso;
+                    } else {
+                        System.out.println("Error: Peso inválido para el producto " + producto.getNombre());
+                    }
+                }
+                
                 
             }
         }
