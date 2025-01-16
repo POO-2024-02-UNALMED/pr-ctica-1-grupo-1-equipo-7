@@ -62,7 +62,7 @@ public class uiEnviarPedidos {
                 System.out.println(Fabrica.mostrarTiendas());
 
                 int opcion = -1;
-                Tienda tiendaSeleccionada;
+                Tienda tiendaSeleccionada = null;
                 int confirmacionTienda = 0;
                 while(confirmacionTienda == 0){
                     while (true) {
@@ -108,19 +108,19 @@ public class uiEnviarPedidos {
                     }
                 }
                 System.out.println("Indique la cantidad de productos que desea enviar (máximo 5).");
-                int cantidadProductos = -1;
+                int cantidadProductosSeleccionados = -1;
                 int confirmacionCantidadProductos = 0;
                 while (confirmacionCantidadProductos == 0) {
                     try {
-                        cantidadProductos = sc.nextInt();
-                        if (cantidadProductos > 0 && cantidadProductos<=5) {
-                            System.out.println("Ha ingresado que desea enviar "+ cantidadProductos +" productos. Para confirmar, ingrese 'Aceptar'. Si desea cambiar la cantidad, ingrese 'Regresar'");
+                        cantidadProductosSeleccionados = sc.nextInt();
+                        if (cantidadProductosSeleccionados > 0 && cantidadProductosSeleccionados<=5) {
+                            System.out.println("Ha ingresado que desea enviar "+ cantidadProductosSeleccionados +" productos. Para confirmar, ingrese 'Aceptar'. Si desea cambiar la cantidad, ingrese 'Regresar'");
                             while (true) {
                                 String eleccion = sc.next().toLowerCase();
 
                                 if (eleccion.equals("aceptar")) {
                                     tiendaSeleccionada = Fabrica.getListaTienda().get(opcion - 1);
-                                    System.out.println("Ha confirmado que desea enviar "+ cantidadProductos+" productos.");
+                                    System.out.println("Ha confirmado que desea enviar "+ cantidadProductosSeleccionados+" productos.");
                                     confirmacionTienda = 1;
                                     break;
                                 } 
@@ -142,15 +142,73 @@ public class uiEnviarPedidos {
                         sc.nextLine();
                     }
                 }
-                ArrayList<Producto> ListaProductosPedidos = new ArrayList<>();
-                for (int i = 0; i < cantidadProductos; i++) {
-                    
+                ArrayList<Producto> listaProductosPedidos = new ArrayList<>();
+                ArrayList<Object[]> listaFiltrada = new ArrayList<>();
 
+                 // Filtra los productos con cantidad mayor a 0
+                for (Object[] listaAux : tiendaSeleccionada.getCantidadProductos()) {
+                    int cantidad = (int) listaAux[1];
+                    if (cantidad > 0) {
+                        listaFiltrada.add(listaAux);
+                    }
+                }
 
+                 // Valida si hay productos disponibles
+                if (listaFiltrada.isEmpty()) {
+                    System.out.println("No hay productos disponibles para seleccionar.");
+                    return;
                 }
+
+                // Itera segun la cantidad de productos seleccionados por el usuario
+                for (int i = 0; i < cantidadProductosSeleccionados; i++) {
+                    System.out.println("Por favor, seleccione los productos de manera individual. Si desea cancelar el envío, ingrese 0.");
+                    while (true) {
+                        System.out.println("0. Salir");
+                        try {
+                            // Mostrar los productos filtrados
+                            for (int j = 0; j < listaFiltrada.size(); j++) {
+                                Producto prod = (Producto) listaFiltrada.get(j)[0];
+                                System.out.println((j + 1) + ". " + prod.getNombre());
+                            }
+                
+                            int eleccion = sc.nextInt();
+                
+                            if (eleccion == 0) {
+                                System.out.println("Saliendo...");
+                                sc.close(); 
+                                return;
+                            } else if (eleccion > 0 && eleccion <= listaFiltrada.size()) {
+                                Producto productoSeleccionado = (Producto) listaFiltrada.get(eleccion - 1)[0];
+                                System.out.println("Para confirmar, ingrese 0. Si desea volver a ingresar el producto, ingrese 1.");
+                
+                                while (true) {
+                                    int confirmacionProductoSeleccionado = sc.nextInt();
+                                    if (confirmacionProductoSeleccionado == 0) {
+                                        listaProductosPedidos.add(productoSeleccionado);
+                                        System.out.println("Producto agregado: " + productoSeleccionado.getNombre());
+                                        break;
+                                    } else if (confirmacionProductoSeleccionado == 1) {
+                                        break; // Permitir al usuario seleccionar otro producto
+                                    } else {
+                                        System.out.println("Por favor, ingrese 0 para confirmar su selección o 1 para volver a ingresar el producto.");
+                                    }
+                                }
+                                break; // Salir del bucle principal tras confirmar o rechazar el producto
+                            } else {
+                                System.out.println("Número fuera de rango. Por favor, elija un producto válido.");
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                            sc.nextLine(); 
+                        }
+                    }
                 }
+                
             }
         }
     }
-
-
+}
+                
+                
+                                
+                  

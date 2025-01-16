@@ -89,12 +89,19 @@ public class Fabrica {
         }
     }
 
-       public static String mostrarTiendas() {
-        String resultado = "Listado de Tiendas:\n";
-        for (int i = 0; i < listaTienda.size(); i++) {
-            resultado += (i + 1) + ". " + listaTienda.get(i).getNombre() + "\n";
+    public static String mostrarTiendas() {
+        if (listaTienda.isEmpty()) {
+            return "No hay tiendas disponibles.";
         }
-        return resultado;
+
+        StringBuilder resultado = new StringBuilder("Listado de Tiendas:\n");
+        for (int i = 0; i < listaTienda.size(); i++) {
+            Tienda tienda = listaTienda.get(i);
+            resultado.append((i + 1)).append(". ").append(tienda.getNombre()).append("\n");
+            resultado.append("Productos actuales:\n");
+            resultado.append(tienda.cantidadProductos()).append("\n"); // Usar el nuevo método cantidadProductos
+        }
+        return resultado.toString();
     }
     public static String mostrarProductos() {//Método que se encarga de mostrar los productos disponibles en la fábrica.
         String productos = "";
