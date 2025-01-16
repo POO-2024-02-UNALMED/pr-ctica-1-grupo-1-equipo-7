@@ -13,6 +13,10 @@ public class Vendedor extends Persona {
 
     }
 
+    public Vendedor() {
+        //TODO Auto-generated constructor stub
+    }
+
     @Override
     public String toString(){
         String texto = "Nombre:" + this.getNombre() +

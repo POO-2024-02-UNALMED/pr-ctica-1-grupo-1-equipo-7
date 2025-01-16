@@ -13,6 +13,10 @@ public class Operario extends Persona {
         this.metaOperario = new ArrayList<>();
     }
 
+    public Operario() {
+        //TODO Auto-generated constructor stub
+    }
+
     @Override
     public String toString(){
         String texto = "Nombre:" + this.getNombre() +

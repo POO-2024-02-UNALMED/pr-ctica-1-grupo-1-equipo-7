@@ -82,7 +82,7 @@ public class uiAbastacerTiedas {
                             int cantidadActual = conteoCategoriasTemporal.get(indexCategoria);
                             int cantidadMaxima = tiendaSeleccionada.getCantidadMaximaPorCategoria();
                             int cantidadDisponible = cantidadMaxima - cantidadActual;
-
+                            
                             System.out.println("Cantidad máxima de productos que se pueden enviar en la categoría " + categoriaProducto + ": " + cantidadDisponible);
                             System.out.println("Ingrese la cantidad de productos a enviar:");
 

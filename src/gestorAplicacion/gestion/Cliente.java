@@ -5,8 +5,8 @@ import gestion.CuentaBancaria;
 
 public class Cliente {
     public static ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();//Lista de clientes
-    private ArrayList<Factura> listaFacturas;
-    public ArrayList<Producto> listaProductos;
+    private ArrayList<Factura> listaFacturas= new ArrayList<Factura>();
+    public ArrayList<Producto> listaProductos= new ArrayList<Producto>();
     private int id;
     public CuentaBancaria cuentaBancaria;
     private static int totalCreados=0;
@@ -51,7 +51,18 @@ public class Cliente {
     public int getEdad() {
         return edad;
     }
-    
+    public ArrayList<Factura> getListaFacturas(){
+        return listaFacturas;
+    }
+    public void setListaFacturas(ArrayList<Factura> listaFacturas){
+        this.listaFacturas = listaFacturas;
+    }
+    public ArrayList<Producto> getListaProductos(){
+        return listaProductos;
+    }
+    public void setListaProductos(ArrayList<Producto> listaProductos){
+        this.listaProductos = listaProductos;
+    }
     public void setEdad(int edad) {
         this.edad = edad;
     }
