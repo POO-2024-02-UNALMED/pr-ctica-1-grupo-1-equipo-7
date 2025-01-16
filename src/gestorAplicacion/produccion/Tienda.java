@@ -217,6 +217,28 @@ public void agregarProductosPorCategoria(Producto producto, int categoria){
         // Retornar la lista final de productos seleccionados
         return productosParaCambio;
     }
+//Funcionalidad a la que pertencece: Devoluciones 
+
+//Método que se encarga de filtrar los productos que puede seleccionar el usuario para cambiar
+//Devuelve un ArrayList con los productos disponibles para la venta de la tienda, menos el producto que desea cambiar y mostrando primero los productos
+//de la misma categoria que el que se desea cambiar. 
+
+public ArrayList<Producto> mostrarProductosFiltrados(Producto producto) {
+    ArrayList<Producto> productosFiltrados = new ArrayList<>();
+    for (Producto p : this.getListaProducto()) {
+        // Comparar por ID para omitir el producto seleccionado
+        if (p.getId()==(producto.getId())) {
+            continue;
+        }
+        // Comparar tipos después de eliminar espacios
+        if (p.getTipo().trim().equals(producto.getTipo().trim())) {
+            productosFiltrados.add(0, p); // Productos de la misma categoría van primero
+        } else {
+            productosFiltrados.add(p);
+        }
+    }
+    return productosFiltrados;
+}
 
 
 /*public String cantidadProductos(Producto producto, int cantidad) {
@@ -251,7 +273,6 @@ public void descargarProducto(Transporte transporteSeleccionado) {
         this.listaProducto.add(producto);
     }
     transporteSeleccionado.getListaDeProductos().clear(); // Vaciar la lista de productos del transporte
-}
 }
 }
 

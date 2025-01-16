@@ -5,7 +5,7 @@ public class Producto {
     public String nombre;
     int precio;
     private int cantidad;
-    private int id; 
+    private int id=0; 
     private static int totalCreados=0;
     public String estado; //disponible,vendido,devuelto
     private String tipo;
@@ -27,12 +27,11 @@ public class Producto {
         this.nombre = nombre;
         this.precio = precio;
         this.cantidad = cantidad;
-        this.id = id;
         this.estado = estado;
         this.tipo = tipo;
         this.categoria = categoria;
         totalCreados++;
-        
+        this.id=id;
     }
     public Producto(){
         totalCreados++;
@@ -53,7 +52,7 @@ public class Producto {
 }
 public static String obtenerMotivoDeDevolucion(int index) {
     if (index < 1 || index > motivosDevolucion.size()) {
-        return "Motivo no encontrado.";
+        return "Motivo no válido.";
     }
     return motivosDevolucion.get(index - 1);
 }
