@@ -23,7 +23,7 @@ public class uiAbastacerTiedas {
 
             int tiendaSeleccionadaIndex = -1;
             Tienda tiendaSeleccionada = null;
-
+//salir es para regresar al menu principal y el otro(return) es para romper el bucle.(truque escrii mal). deberia implementarse la opcion de volver al menu principal o realizar el abastecimientod desde cero
             // Bucle para seleccionar la tienda
             while (tiendaSeleccionadaIndex < 0 || tiendaSeleccionadaIndex > Fabrica.getListaTienda().size()) {
                 try {
@@ -107,6 +107,7 @@ public class uiAbastacerTiedas {
                             System.out.println("Ingrese la cantidad de productos a enviar:");
 
                             int cantidadAEnviar = -1;
+                            //Bucle para seleccionar cantidad de productos a enviar
                             while (cantidadAEnviar < 0 || cantidadAEnviar > cantidadDisponible) {
                                 try {
                                     cantidadAEnviar = sc.nextInt();
@@ -143,7 +144,7 @@ public class uiAbastacerTiedas {
                 System.out.println(tiendaSeleccionada.productosPorCategoria(tiendaSeleccionada.getListaProducto(), conteoCategoriasTemporal)); // Usar productosPorCategoria
 
                 // Preguntar si desea añadir más productos
-                System.out.println("¿Desea añadir más productos? Escriba la letra (s) para confirmar, (v) para volver al paso anterior y cualquier otra para continuar.");
+                System.out.println("¿Desea añadir más productos? Escriba la letra (s) para confirmar, (v) para volver a elegir los productos de nuevo y cualquier otra para continuar.");
                 try {
                     String respuesta = sc.next();
                     if (respuesta.equalsIgnoreCase("v")) {
@@ -214,6 +215,12 @@ public class uiAbastacerTiedas {
                             // Cargar productos en el transporte del conductor seleccionado
                             Transporte transporte = conductorSeleccionado.getTransporte();
                             transporte.abastecerProducto(tiendaSeleccionada, productosGenerados);
+                            
+                            //Cumplir con la meta del conductor y del operario
+                            conductorSeleccionado.setIndiceMeta(pesoTotalProductos);
+                            conductorSeleccionado.cantidadTrabajo += 1;
+                            Fabrica.getOperario().setIndiceMeta(Fabrica.getOperario().getIndiceMeta() + 1);
+                            Fabrica.getOperario().cantidadTrabajo += 1;
 
                             // Descargar productos en la tienda
                             tiendaSeleccionada.descargarProducto(transporte);
@@ -222,7 +229,7 @@ public class uiAbastacerTiedas {
                             System.out.println("La tienda " + tiendaSeleccionada.getNombre() + " se abastecera por: "+ transporteSeleccionado.getNombre());
                             System.out.println("El producto fue enviado con exito ahora la tienda tiene");
                             System.out.println("       PRODUCTOS:");
-                            System.out.println(tiendaSeleccionada.cantidadProductos()); // Usar el nuevo método cantidadProductos
+                            System.out.println(tiendaSeleccionada.cantidadProductos()); // Sobrecarga de método cantidadProductos
                         } else {
                             System.out.println("Abastecimiento cancelado.");
                         }
@@ -240,9 +247,11 @@ public class uiAbastacerTiedas {
             System.out.println("¿Desea volver al menú principal o realizar otro proceso de abastecer alguna tienda?");
             System.out.println("1. Volver al menú principal");
             System.out.println("0. Realizar otro proceso de abastecer alguna tienda");
+            System.out.println("Cualquier otro número: Salir del programa");
             try {
                 int opcion = sc.nextInt();
                 if (opcion == 1) {
+                    System.out.println("ABASTECIMIENTO FINALIZADO");
                     System.out.println("Volviendo al menú principal...");
                     salir = true;
                 } else if (opcion == 0) {
