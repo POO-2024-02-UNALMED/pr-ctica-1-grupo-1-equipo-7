@@ -14,7 +14,7 @@ public class Fabrica {
     private  String direccion;
     public static  CuentaBancaria cuentaBancaria;  //se quito el static ya que solo existe 1 fabrica no hace falta que el atributo sea de clase
                                                 //RTA: Para la de devoluciones necesito que sea static:). Att: Andres.
-    private  Operario operario;       //lo mismo para operario 
+    private static Operario operario;       //lo mismo para operario 
     private static List<Producto> productosDisponibles; //se traen todos productos que pueden ser producidos en la fabrica a partir de una lista que tiene la cual se le pasa en el constructor de la fábrica la cual contiene todos los productos que puede abastecer 
     private static ArrayList<Tienda> listaTienda = new ArrayList<Tienda>();
 
@@ -24,7 +24,7 @@ public class Fabrica {
         this.nombre = nombre;
         this.direccion = direccion;
         cuentaBancaria = cuentaBancariaFabrica;
-        this.operario = operario;
+        Fabrica.operario = operario;
         Fabrica.productosDisponibles = productosDisponibles;
     }
     public Fabrica() {}
@@ -113,14 +113,13 @@ public class Fabrica {
         }
         return productos;
     }
-    public static ArrayList<Producto> cantidadProductos(Producto producto, int cantidadAEnviar) {
+       public static ArrayList<Producto> cantidadProductos(Producto producto, int cantidadAEnviar) {
         ArrayList<Producto> productosGenerados = new ArrayList<>();
         for (int i = 0; i < cantidadAEnviar; i++) {
-            productosGenerados.add(producto);//pregunta, para añadir el producto no hay que hacer un new Producto()?
+            productosGenerados.add(new Producto(producto)); // Crear una nueva instancia de Producto
         }
         return productosGenerados;
     }
-
 
 
     // Getters y Setters
@@ -157,12 +156,12 @@ public class Fabrica {
         cuentaBancaria = nuevaCuentaBancaria;
     }
 
-    public Operario getOperario() {
+    public static Operario getOperario() {
         return operario;
     }
 
     public void setOperario(Operario operario) {
-        this.operario = operario;
+        Fabrica.operario = operario;
     }
 
     public static List<Producto> getProductosDisponibles() {

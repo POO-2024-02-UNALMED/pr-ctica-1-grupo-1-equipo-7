@@ -36,6 +36,21 @@ public class Producto {
     public Producto(){
         totalCreados++;
     }
+    public Producto(Producto producto){//este es un constructor de copia
+        this.nombre = producto.nombre;
+        this.precio = producto.precio;
+        this.cantidad = producto.cantidad;
+        this.estado = producto.estado;
+        this.tipo = producto.tipo;
+        this.categoria = producto.categoria;
+        this.peso = producto.peso;
+        this.tamano = producto.tamano;
+        this.motivoDevolucion = producto.motivoDevolucion;
+        this.devuelto = producto.devuelto;
+        totalCreados++;
+        this.id=totalCreados;
+    }
+
 
    // Metodos
    public static String mostrarMotivosDeDevolucion() {
