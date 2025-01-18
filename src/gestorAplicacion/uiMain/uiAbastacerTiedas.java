@@ -13,11 +13,14 @@ import java.util.List;
 public class uiAbastacerTiedas {
     public static void abastecer() {
         Scanner sc = new Scanner(System.in);
+        boolean salir = false;
+        
 
-        while (true) {
+        while (!salir) {
             System.out.println("¡HOLA! Eligió la opción de abastecer tienda.\nSeleccione la Tienda que desea abastecer.\n NOTA: Para realizar una eleccion ingresar el indice(numero) correspondiente \n Oprima 0 para salir.");
             System.out.println(" 0. Salir");
-            Fabrica.mostrarTiendas();
+            System.out.println(Fabrica.mostrarTiendas()); // Mostrar el resultado retornado por el método
+
             int tiendaSeleccionadaIndex = -1;
             Tienda tiendaSeleccionada = null;
 
@@ -35,6 +38,20 @@ public class uiAbastacerTiedas {
                     } else {
                         tiendaSeleccionada = Fabrica.getListaTienda().get(tiendaSeleccionadaIndex - 1);
                         System.out.println("Tienda seleccionada: " + tiendaSeleccionada.getNombre());
+
+                        // Preguntar si desea regresar o continuar
+                        try {
+                            System.out.println("¿Desea volver al paso anterior? Escriba la letra (v) para volver o cualquier otra tecla para continuar.");
+                            String respuestaTienda = sc.next();
+                            if (respuestaTienda.equalsIgnoreCase("v")) {
+                                tiendaSeleccionada = null;
+                                tiendaSeleccionadaIndex = -1;
+                                continue;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Entrada inválida. Por favor, ingrese una letra.");
+                            sc.nextLine(); // Limpiar el buffer
+                        }
                     }
                 } catch (Exception e) {
                     System.out.println("Entrada inválida. Por favor, ingrese un número.");
@@ -42,9 +59,11 @@ public class uiAbastacerTiedas {
                 }
             }
 
+            if (salir) break; // Esta línea se utiliza para verificar si salir se ha establecido en true en cualquier punto del bucle.
+
             // Mostrar productos por categoría
             System.out.println("Estos son los productos divididos por categoría en la tienda seleccionada:");
-            System.out.println(tiendaSeleccionada.productosPorCategoria(tiendaSeleccionada.getListaProducto()));
+            System.out.println(tiendaSeleccionada.productosPorCategoria(tiendaSeleccionada.getListaProducto())); // Usar productosPorCategoria
 
             // Lista para almacenar los productos seleccionados y sus cantidades
             ArrayList<Producto> productosGenerados = new ArrayList<>();
@@ -57,7 +76,8 @@ public class uiAbastacerTiedas {
                 // Selección de producto
                 System.out.println("Seleccione el producto que desea mandar a la tienda. Oprima 0 para salir.");
                 System.out.println(" 0. Salir");
-                Fabrica.mostrarProductos();
+                System.out.println(Fabrica.mostrarProductos()); // Mostrar el resultado retornado por el método
+
                 int productoSeleccionadoIndex = -1;
                 Producto productoSeleccionado = null;
 
@@ -82,7 +102,7 @@ public class uiAbastacerTiedas {
                             int cantidadActual = conteoCategoriasTemporal.get(indexCategoria);
                             int cantidadMaxima = tiendaSeleccionada.getCantidadMaximaPorCategoria();
                             int cantidadDisponible = cantidadMaxima - cantidadActual;
-                            
+
                             System.out.println("Cantidad máxima de productos que se pueden enviar en la categoría " + categoriaProducto + ": " + cantidadDisponible);
                             System.out.println("Ingrese la cantidad de productos a enviar:");
 
@@ -96,7 +116,7 @@ public class uiAbastacerTiedas {
                                         System.out.println("Enviando " + cantidadAEnviar + " productos de la categoría " + categoriaProducto + " a la tienda " + tiendaSeleccionada.getNombre());
                                         
                                         // Generar los productos y agregarlos a la lista
-                                        productosGenerados.addAll(Fabrica.cantidadProductos(productoSeleccionado, cantidadAEnviar));
+                                        productosGenerados.addAll(Fabrica.cantidadProductos(productoSeleccionado, cantidadAEnviar));//aqui cantidadProductos crea nuevos prodcutos asi que no se debe hacer ya que aun no se confirma el abastecimiento
 
                                         // Calcular el peso total de los productos seleccionados
                                         pesoTotalProductos += productoSeleccionado.getPeso() * cantidadAEnviar;
@@ -116,17 +136,33 @@ public class uiAbastacerTiedas {
                     }
                 }
 
-                // Mostrar productos por categoría ACTUALIZADOS
+                if (salir) break; // Esta línea se utiliza para verificar si salir se ha establecido en true en cualquier punto del bucle.
+
+                // Mostrar productos por categoría actualizados
                 System.out.println("Productos por categoría en la tienda seleccionada:");
-                System.out.println(tiendaSeleccionada.productosPorCategoria(tiendaSeleccionada.getListaProducto(), conteoCategoriasTemporal));
+                System.out.println(tiendaSeleccionada.productosPorCategoria(tiendaSeleccionada.getListaProducto(), conteoCategoriasTemporal)); // Usar productosPorCategoria
 
                 // Preguntar si desea añadir más productos
-                System.out.println("¿Desea añadir más productos a la tienda? Escriba la letra (s) para confirmar y cualquier letra para cancelar.");
-                String respuesta = sc.next();
-                if (!respuesta.equalsIgnoreCase("s")) {
-                    break;
+                System.out.println("¿Desea añadir más productos? Escriba la letra (s) para confirmar, (v) para volver al paso anterior y cualquier otra para continuar.");
+                try {
+                    String respuesta = sc.next();
+                    if (respuesta.equalsIgnoreCase("v")) {
+                        productosGenerados.clear();
+                        conteoCategoriasTemporal = new ArrayList<>(tiendaSeleccionada.getConteoCategorias());
+                        pesoTotalProductos = 0; //si se vuelve al paso anterior se borra el peso aunque en el primer producto si se alla confirmado
+                        break;
+                    }
+                    if (!respuesta.equalsIgnoreCase("s")) {
+                        break;
+                    }
+                } catch (Exception e) {
+                    System.out.println("Entrada inválida. Por favor, ingrese una letra.");
+                    sc.nextLine(); // Limpiar el buffer
                 }
             }
+
+            if (salir) break; // Esta línea se utiliza para verificar si salir se ha establecido en true en cualquier punto del bucle.
+            
 
             // Crear lista de transportes según el peso total de los productos
             ArrayList<TipoTransporte> listaTransportes = TipoTransporte.crearTipoTransporteSegunCarga(pesoTotalProductos);
@@ -166,15 +202,17 @@ public class uiAbastacerTiedas {
                         }
 
                         // Confirmar el abastecimiento
-                        System.out.println("¿Desea confirmar el abastecimiento? Escriba la letra (s) para confirmar y cualquier letra para cancelar.");
+                        System.out.println("¿Desea confirmar el abastecimiento? Escriba la letra (s) para confirmar, (v) para volver al paso anterior y cualquier letra para cancelar.");
                         String confirmar = sc.next();
+                        if (confirmar.equalsIgnoreCase("v")) {
+                            break;
+                        }
                         if (confirmar.equalsIgnoreCase("s")) {
-                            // Aplicar los cambios en categorias a la tienda
+                            // Aplicar los cambios a la tienda
                             tiendaSeleccionada.setConteoCategorias(conteoCategoriasTemporal);
 
                             // Cargar productos en el transporte del conductor seleccionado
                             Transporte transporte = conductorSeleccionado.getTransporte();
-                            conductorSeleccionado.setpesoTransportado(pesoTotalProductos);
                             transporte.abastecerProducto(tiendaSeleccionada, productosGenerados);
 
                             // Descargar productos en la tienda
@@ -184,7 +222,7 @@ public class uiAbastacerTiedas {
                             System.out.println("La tienda " + tiendaSeleccionada.getNombre() + " se abastecera por: "+ transporteSeleccionado.getNombre());
                             System.out.println("El producto fue enviado con exito ahora la tienda tiene");
                             System.out.println("       PRODUCTOS:");
-                            System.out.println(tiendaSeleccionada.cantidadProductos());//se tiene que mostrar cantidadProductos
+                            System.out.println(tiendaSeleccionada.cantidadProductos()); // Usar el nuevo método cantidadProductos
                         } else {
                             System.out.println("Abastecimiento cancelado.");
                         }
@@ -195,20 +233,29 @@ public class uiAbastacerTiedas {
                 }
             }
 
+            if (salir) break; // Esta línea se utiliza para verificar si salir se ha establecido en true en cualquier punto del bucle.
+
+
             // Preguntar si desea volver al menú principal o realizar otro proceso de abastecer
             System.out.println("¿Desea volver al menú principal o realizar otro proceso de abastecer alguna tienda?");
             System.out.println("1. Volver al menú principal");
-            System.out.println("0. Realizar otro proceso de abastecemiento de tiendas");
-            int opcion = sc.nextInt();
-            if (opcion == 1) {
-                System.out.println("Volviendo al menú principal...");
-                break;
-            } else if (opcion == 0) {
-                System.out.println("Realizando otro proceso de abastecer alguna tienda...");
-                // Continuar con el bucle para realizar otro proceso de abastecer
-            } else {
-                System.out.println("Opción inválida. Volviendo al menú principal...");
-                break;
+            System.out.println("0. Realizar otro proceso de abastecer alguna tienda");
+            try {
+                int opcion = sc.nextInt();
+                if (opcion == 1) {
+                    System.out.println("Volviendo al menú principal...");
+                    salir = true;
+                } else if (opcion == 0) {
+                    System.out.println("Realizando otro proceso de abastecer alguna tienda...");
+                    // Continuar con el bucle para realizar otro proceso de abastecer
+                } else {
+                    System.out.println("Opción inválida. Volviendo al menú principal...");
+                    salir = true;
+                }
+            } catch (Exception e) {
+                System.out.println("Entrada inválida. Volviendo al menú principal...");
+                salir = true;
+                sc.nextLine(); // Limpiar el buffer
             }
         }
         sc.close();
