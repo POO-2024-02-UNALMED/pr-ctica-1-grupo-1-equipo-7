@@ -4,11 +4,13 @@ public class Meta {
     private String nivelDeDificultad;
     private double indice;
     private double pago;
+    private boolean verificador;
 
     public Meta(String nivelDeDificultad, double indice, double pago){
         this.nivelDeDificultad = nivelDeDificultad;
         this.indice = indice;
         this.pago = pago;
+        this.verificador = false;
     }
 
     public boolean cumpleMeta(double indiceDeTrabajo){
@@ -31,13 +33,22 @@ public class Meta {
 
     @Override
     public String toString(){
-        return "Meta:\nNivel de dificultad:" + this.nivelDeDificultad +
+        return "\nNivel de dificultad:" + this.nivelDeDificultad +
         "\nIndice requerido para cumplir la meta:" + this.indice + 
         "\nRecompensa por meta lograda:" + this.pago;
     }
 
 
     // Getter y Setter
+
+    //Getter y Setter para verificador
+    public boolean getVerificador(){
+        return this.verificador;
+    }
+
+    public void setVerificador(boolean bool){
+        this.verificador = bool;
+    }
 
     // Getter y Setter para nivelDeDificultad
     public String getNivelDeDificultad() { 

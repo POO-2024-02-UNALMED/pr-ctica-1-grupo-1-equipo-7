@@ -17,6 +17,20 @@ public class Vendedor extends Persona {
         //TODO Auto-generated constructor stub
     }
 
+    public String mostrarMetas(){
+        String texto = "";
+        int indice = 1;
+
+        for (Meta i: this.metaVendedor) {
+            if(i.getVerificador() == false){
+                texto += "\n" + "Meta "+ indice + i.toString();  //Uso de ligadura dinámica
+                indice++;  
+            }             
+        }
+
+        return texto;
+    }
+   
     @Override
     public String toString(){
         String texto = "Nombre:" + this.getNombre() +
@@ -28,6 +42,7 @@ public class Vendedor extends Persona {
 
         public void recibirSueldo(double valor){
             this.getCuentaBancaria().añadirDinero(valor);
+            this.setCantidadTrabajo(0);
     }
 
     // Getter y Setter 'Tienda'
@@ -40,7 +55,7 @@ public class Vendedor extends Persona {
     }
 
     //Getter 'metaVendedor'
-    public ArrayList<Meta> getMetaVendedor(){
+    public ArrayList<Meta> getMeta(){
         return this.metaVendedor;
     }
 

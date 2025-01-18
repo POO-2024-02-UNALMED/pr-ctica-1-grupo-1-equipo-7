@@ -18,6 +18,20 @@ public class Conductor extends Persona {
 
     }
 
+    public String mostrarMetas(){
+        String texto = "";
+        int indice = 1;
+
+        for (Meta i: this.metaConductor) {
+            if(i.getVerificador() == false){
+                texto += "\n" + "Meta "+ indice + i.toString();  //Uso de ligadura dinámica
+                indice++;  
+            }             
+        }
+
+        return texto;
+    }
+      
 
     @Override
     public String toString(){
@@ -30,6 +44,7 @@ public class Conductor extends Persona {
 
     public void recibirSueldo(double valor){
         this.getCuentaBancaria().añadirDinero(valor);
+        this.setCantidadTrabajo(0);
     }
 
 
@@ -59,7 +74,7 @@ public class Conductor extends Persona {
     }
 
     // Para el atributo metaConductor
-    public ArrayList<Meta> getMetaConductor() { 
+    public ArrayList<Meta> getMeta() { 
         return metaConductor;
     }
 
