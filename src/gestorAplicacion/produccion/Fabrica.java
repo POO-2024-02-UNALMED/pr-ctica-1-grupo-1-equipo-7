@@ -116,7 +116,7 @@ public class Fabrica {
     public static ArrayList<Producto> cantidadProductos(Producto producto, int cantidadAEnviar) {
         ArrayList<Producto> productosGenerados = new ArrayList<>();
         for (int i = 0; i < cantidadAEnviar; i++) {
-            productosGenerados.add(producto);
+            productosGenerados.add(producto);//pregunta, para añadir el producto no hay que hacer un new Producto()?
         }
         return productosGenerados;
     }
