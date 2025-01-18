@@ -23,19 +23,21 @@ public class Meta {
 
     public String porcentajeCumplidos(double indiceDeTrabajo){
         double porcentajeIndice = (indiceDeTrabajo * 100)/this.indice;
-        String mensaje = "Porcentaje de la meta logrado:" + porcentajeIndice + "%";
+        porcentajeIndice = Math.round(porcentajeIndice * 100.0) / 100.0;
+        String mensaje = "Porcentaje de la meta logrado: " + porcentajeIndice + "%";
         if(porcentajeIndice < 100){
-            mensaje += "\nPorcentaje faltante: " + (100-porcentajeIndice) + "%";
+            double porcentajeFaltante = Math.round((100 - porcentajeIndice) * 100.0) / 100.0;
+            mensaje += "\nPorcentaje faltante: " + porcentajeFaltante + "%";
             mensaje += "\nCantidad faltante del indice indicado: " + (this.indice - indiceDeTrabajo); 
         }
         return mensaje;
     }
-
+    
     @Override
     public String toString(){
-        return "\nNivel de dificultad:" + this.nivelDeDificultad +
-        "\nIndice requerido para cumplir la meta:" + this.indice + 
-        "\nRecompensa por meta lograda:" + this.pago;
+        return "\nNivel de dificultad: " + this.nivelDeDificultad +
+        "\nIndice requerido para cumplir la meta: " + this.indice + 
+        "\nRecompensa por meta lograda: " + this.pago;
     }
 
 

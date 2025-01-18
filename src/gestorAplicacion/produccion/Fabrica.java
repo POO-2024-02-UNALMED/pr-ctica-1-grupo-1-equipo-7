@@ -49,7 +49,7 @@ public class Fabrica {
         int indice = 1;
 
         for (Persona i: listaTrabajadores) {
-            texto += "\n" + "Trabajador "+ indice + i.toString();  //Uso de ligadura dinámica
+            texto += "\n" + "Trabajador "+ indice + i.toString()+"\n";  //Uso de ligadura dinámica
             indice++;               
         }
 

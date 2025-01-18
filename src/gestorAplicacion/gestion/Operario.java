@@ -5,12 +5,14 @@ import produccion.Fabrica;
 
 public class Operario extends Persona {
     private Fabrica fabrica;
+    private static ArrayList<Persona> listaOperario = new ArrayList<>();
     private ArrayList<Meta> metaOperario;
 
     public Operario(String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria, Fabrica fabrica){
         super(nombre, cedula, edad, cuentaBancaria);
         this.fabrica = fabrica;
         this.metaOperario = new ArrayList<>();
+        listaOperario.add(this);
     }
 
     public Operario() {
@@ -23,7 +25,7 @@ public class Operario extends Persona {
 
         for (Meta i: this.metaOperario) {
             if(i.getVerificador() == false){
-                texto += "\n" + "Meta "+ indice + i.toString();  //Uso de ligadura dinámica
+                texto += "\n" + "Meta "+ indice + i.toString() + "\n";  //Uso de ligadura dinámica
                 indice++;  
             }             
         }
@@ -33,7 +35,7 @@ public class Operario extends Persona {
    
     @Override
     public String toString(){
-        String texto = "Nombre:" + this.getNombre() +
+        String texto = "\nNombre:" + this.getNombre() +
                        "\nCedula:" + this.getCedula() +     //toString Operario
                        "\nEdad:" + this.getEdad() +
                        "\nFabrica" + this.getFabrica();
@@ -59,7 +61,12 @@ public class Operario extends Persona {
         return this.metaOperario;
     }
 
-    public void setOperario(Meta meta){     
+    public void setMetaOperario(Meta meta){     
         this.metaOperario.add(meta);          
+    }
+
+    //Getter y Setter 'listaOperario'
+    public static ArrayList<Persona> getListaOperario(){
+        return Operario.listaOperario;
     }
 }
