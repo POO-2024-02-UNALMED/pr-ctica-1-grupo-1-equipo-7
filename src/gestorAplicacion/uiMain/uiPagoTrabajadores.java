@@ -15,7 +15,7 @@ public class uiPagoTrabajadores {
         // Etiqueta del primer loop
         LOOP_PRINCIPAL:
         while (true) {
-            ArrayList<Persona> listaTrabajadores = null;  // Se crea para usarla cuando se verifique el tipo de empleado que escogió.
+            ArrayList<Persona> listaTrabajadores = new ArrayList<>();  // Se crea para usarla cuando se verifique el tipo de empleado que escogió.
             System.out.println("Seleccione el tipo de empleado que desea pagarle.");
             System.out.println("1. Operarios \n2. Conductores \n3. Vendedores\n0. Volver al menú.");
             int opcion;
@@ -51,7 +51,9 @@ public class uiPagoTrabajadores {
                         listaTrabajadores = Operario.getListaOperario();
                         break;
                     case 2:
-                        listaTrabajadores = Conductor.getListaConductores();
+                        for(Conductor i : Conductor.getListaConductores()){
+                            listaTrabajadores.add(i);
+                        }
                         break;
                     case 3:
                         listaTrabajadores = Vendedor.getListaVendedores();

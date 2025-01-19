@@ -25,9 +25,10 @@ public class Tienda {
     private List<Integer> cantidadesAbastecer = new ArrayList<>();//tampoco por ahora
 
     // constructor
-    public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
+    public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria){ //borre el atributo numtiendas ya que no hacia nada excepto dentro
         this.nombre=nombre;
         this.vendedor=vendedor;
+        setVendedor(vendedor); 
         this.cuentaBancaria=cuentaBancaria;
         numTiendas++;
         this.cantidadProductos=new ArrayList<>();
@@ -51,8 +52,14 @@ public Vendedor getVendedor() {
     return vendedor;
 }
 
+/*public void setVendedor(Vendedor vendedor) {
+    this.vendedor = vendedor;
+}*/
 public void setVendedor(Vendedor vendedor) {
     this.vendedor = vendedor;
+    if (vendedor.getTienda() != this) { // Evitar referencias duplicadas
+        vendedor.setTienda(this);
+    }
 }
 
 // Atributo cuentaBancaria

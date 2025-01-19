@@ -224,14 +224,14 @@ public class uiAbastacerTiedas {
                         // Confirmar el abastecimiento
                         System.out.println("========================================");
                         System.out.println("¿Desea confirmar el abastecimiento?");
-                        System.out.println("(s) para sí, v para volver al paso anterior, cualquier otra tecla para cancelar):");
+                        System.out.println("(s) para sí, (v) para volver al paso anterior, cualquier otra tecla para cancelar):");
                         System.out.println("========================================");
                         String confirmar = sc.next();
                         if (confirmar.equalsIgnoreCase("v")) {
                             conductorSeleccionado= null;
                             transporteSeleccionado=null;
                             continue;
-                        }
+                        }   
                         if (confirmar.equalsIgnoreCase("s")) {
                             // Aplicar los cambios a la tienda
                             tiendaSeleccionada.setConteoCategorias(conteoCategoriasTemporal);
@@ -258,7 +258,7 @@ public class uiAbastacerTiedas {
                             System.out.println("========================================"); 
                         } else {
                             System.out.println("Abastecimiento cancelado.");
-                            break;
+                            continue;
                         }
                     }
                 } catch (Exception e) {
