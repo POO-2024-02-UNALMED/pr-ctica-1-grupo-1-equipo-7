@@ -4,12 +4,14 @@ import java.util.ArrayList;
 
 public class Vendedor extends Persona {
     private Tienda tienda;
+    private static ArrayList<Persona> listaVendedores = new ArrayList<>();
     private ArrayList<Meta> metaVendedor;
 
      public Vendedor (String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria, Tienda tienda){
         super(nombre, cedula, edad, cuentaBancaria);
         this.tienda = tienda;
         this.metaVendedor = new ArrayList<>();
+        listaVendedores.add(this);
 
     }
 
@@ -23,7 +25,7 @@ public class Vendedor extends Persona {
 
         for (Meta i: this.metaVendedor) {
             if(i.getVerificador() == false){
-                texto += "\n" + "Meta "+ indice + i.toString();  //Uso de ligadura dinámica
+                texto += "\n" + "Meta "+ indice + i.toString() + "\n";  //Uso de ligadura dinámica
                 indice++;  
             }             
         }
@@ -33,7 +35,7 @@ public class Vendedor extends Persona {
    
     @Override
     public String toString(){
-        String texto = "Nombre:" + this.getNombre() +
+        String texto = "\nNombre:" + this.getNombre() +
                        "\nCedula:" + this.getCedula() +
                        "\nEdad:" + this.getEdad() +
                        "\nTienda" + this.getTienda();
@@ -59,9 +61,12 @@ public class Vendedor extends Persona {
         return this.metaVendedor;
     }
 
-    public void setVendedor(Meta meta){     
+    public void setMetaVendedor(Meta meta){     
         this.metaVendedor.add(meta);          
     }
 
-
+    //Getter y Setter 'listavendedores'
+    public static ArrayList<Persona> getListaVendedores(){
+        return Vendedor.listaVendedores;
+    }
 }
