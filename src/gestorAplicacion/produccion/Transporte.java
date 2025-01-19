@@ -94,10 +94,10 @@ public class Transporte {
      }
     
 
-     public ArrayList<Producto> cantidadProductos(Producto producto ,int cantidadAEnviar){
+     /*public ArrayList<Producto> cantidadProductos(Producto producto ,int cantidadAEnviar){
         for (int i=0; i<=cantidadAEnviar; i++){
             productosSeleccionados.add(producto);
         }
      
-    }
+    }*/
 }
