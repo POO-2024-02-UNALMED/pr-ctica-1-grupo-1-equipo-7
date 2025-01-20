@@ -91,9 +91,10 @@ public class Transporte {
         this.listaDeProductos.addAll(productosSeleccionados);
         this.tienda = tiendaSeleccionada;
      }
-     public ArrayList<Producto> cantidadProductos(Producto producto ,int cantidadAenviar){
+/*      public ArrayList<Producto> cantidadProductos(Producto producto ,int cantidadAenviar){
         for (int i=0; i<=int cantidadAEnviar; i++){
             productosSeleccionados.add(producto);
         }
      }
+*/
 }   

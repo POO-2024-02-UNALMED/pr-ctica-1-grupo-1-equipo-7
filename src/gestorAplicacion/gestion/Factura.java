@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import produccion.Producto;
 import produccion.Tienda;
 import produccion.Transporte;
-import gestion.Moda;
+//import gestion.Moda;
 
 public class Factura {
     private Tienda tienda; 
@@ -18,16 +18,16 @@ public class Factura {
     private double total;
     private ArrayList<Producto> listaProductos;  
     private static int totalCreadas=0; 
-    public static ArrayList<Factura> listaFacturas; 
+    public static ArrayList<Factura> listaFacturas = new ArrayList<Factura>(); 
 
     public Factura(Tienda tienda, Cliente cliente, Transporte transporte, ArrayList<Producto> listaProductos, LocalDate fecha) {
         this.tienda = tienda;
         this.cliente = cliente;
         this.transporte = transporte;
         this.listaProductos = listaProductos;
-        if (Factura.listaFacturas.size() > 2) {
+        /*if (!Factura.listaFacturas.isEmpty()) {
           Factura.ordenarFacturasPorFecha();
-        }
+        }*/
 
         this.fecha = fecha;
 

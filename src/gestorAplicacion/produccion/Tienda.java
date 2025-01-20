@@ -6,7 +6,7 @@ import gestion.Factura;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+//import java.util.Scanner;
 public class Tienda {
     //atributos
     private String nombre;
@@ -22,13 +22,15 @@ public class Tienda {
     private List<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
     private Integer cantidadMaximaPorCategoria;//Es la cantidad maxima de productos que puede tener una tienda por categoria. (Es atributo auxiliar para la funcionalidad de abastecer.)
     //para la funcionalidad abastecer:
-    private List<Producto> productosAbastecer = new ArrayList<>();//no se van a usar
-    private List<Integer> cantidadesAbastecer = new ArrayList<>();//tampoco por ahora
+    //private List<Producto> productosAbastecer = new ArrayList<>();//no se van a usar
+    //private List<Integer> cantidadesAbastecer = new ArrayList<>();//tampoco por ahora
 
     // constructor
     public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
+        //El numero de tiendas no deberia de ser un parametro del constructor, ya que este se incrementa automaticamente.
         this.nombre=nombre;
         this.vendedor=vendedor;
+        this.vendedor.setTienda(this); //Se asigna la tienda al vendedor 
         this.cuentaBancaria=cuentaBancaria;
         numTiendas++;
         this.cantidadProductos=new ArrayList<>();
