@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 public class Vendedor extends Persona {
     private Tienda tienda;
+    private static ArrayList<Persona> listaVendedores = new ArrayList<>();
     private ArrayList<Meta> metaVendedor;
 
     //Se coloca de esta forma para que el constructor de la clase 'Persona' pueda ser llamado desde un objeto de tipo 'Tienda'
@@ -21,12 +22,31 @@ public class Vendedor extends Persona {
         super(nombre, cedula, edad, cuentaBancaria);
         this.tienda = tienda;
         this.metaVendedor = new ArrayList<>();
+        listaVendedores.add(this);
 
     }
 
+    public Vendedor() {
+        //TODO Auto-generated constructor stub
+    }
+
+    public String mostrarMetas(){
+        String texto = "";
+        int indice = 1;
+
+        for (Meta i: this.metaVendedor) {
+            if(i.getVerificador() == false){
+                texto += "\n" + "Meta "+ indice + i.toString() + "\n";  //Uso de ligadura dinámica
+                indice++;  
+            }             
+        }
+
+        return texto;
+    }
+   
     @Override
     public String toString(){
-        String texto = "Nombre:" + this.getNombre() +
+        String texto = "\nNombre:" + this.getNombre() +
                        "\nCedula:" + this.getCedula() +
                        "\nEdad:" + this.getEdad() +
                        "\nTienda" + this.getTienda();
@@ -35,6 +55,7 @@ public class Vendedor extends Persona {
 
         public void recibirSueldo(double valor){
             this.getCuentaBancaria().añadirDinero(valor);
+            this.setCantidadTrabajo(0);
     }
 
     // Getter y Setter 'Tienda'
@@ -47,11 +68,11 @@ public class Vendedor extends Persona {
     }
 
     //Getter 'metaVendedor'
-    public ArrayList<Meta> getMetaVendedor(){
+    public ArrayList<Meta> getMeta(){
         return this.metaVendedor;
     }
 
-    public void setVendedor(Meta meta){     
+    public void setMetaVendedor(Meta meta){     
         this.metaVendedor.add(meta);          
     }
 
@@ -60,4 +81,8 @@ public class Vendedor extends Persona {
         return factura;
     }
 
+    //Getter y Setter 'listavendedores'
+    public static ArrayList<Persona> getListaVendedores(){
+        return Vendedor.listaVendedores;
+    }
 }

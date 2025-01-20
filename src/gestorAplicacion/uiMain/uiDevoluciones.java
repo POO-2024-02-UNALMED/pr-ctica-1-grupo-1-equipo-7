@@ -1,212 +1,215 @@
 package uiMain;
-
 import java.util.ArrayList;
 import java.util.Scanner;
+
 import gestion.Factura;
 import produccion.*;
 import gestion.Cliente;
 
 public class uiDevoluciones {
 
-    /**
-     * Este es el punto de entrada principal para gestionar las devoluciones.
-     * Permite al usuario seleccionar una factura para proceder con las devoluciones o intercambios.
-     */
-    public static void devolver() {
-        Scanner sc = new Scanner(System.in);
-
-        while (true) {
-            System.out.println("Eligió la opción de devoluciones.");
-            System.out.println("Seleccione la factura que desea consultar. Oprima 0 para salir.");
-            Factura.mostrarFacturas();
-
-            int opcion = leerOpcion(sc);
-            if (opcion == 0) {
-                System.out.println("Saliendo del menú de devoluciones.");
-                break;
-            }
-
-            if (opcion > 0 && opcion <= Factura.listaFacturas.size()) {
-                Factura factura = Factura.seleccionarFactura(opcion);
-                manejarFactura(sc, factura);
-
-                // Preguntar si desea realizar otra operación después de completar
-                System.out.println("¿Desea realizar otra operación? (1: Sí, 0: No)");
-                int continuar = leerOpcion(sc);
-                if (continuar == 0) {
+        public static void devolver() {
+            Scanner sc = new Scanner(System.in);
+    
+            while (true) {
+                System.out.println("Eligió la opción de devoluciones.\nSeleccione la factura que desea consultar. Oprima 0 para salir.");
+                System.out.println("0. Salir");
+                String txt=Factura.mostrarFacturas();
+                System.out.println(txt);
+    
+                int opcion;
+                try {
+                    opcion = sc.nextInt();
+                } catch (Exception e) {
+                    System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                    sc.nextLine(); // Limpiar el buffer
+                    continue;
+                }
+    
+                if (opcion == 0) {
                     System.out.println("Saliendo del menú de devoluciones.");
                     break;
                 }
-            } else {
-                System.out.println("Opción inválida. Intente nuevamente.");
-            }
-        }
-    }
+    
+                if (opcion > 0 && opcion <= Factura.listaFacturas.size()) {
+                    System.out.println("Eligió la factura con el número: " + opcion);
+                    Factura factura = Factura.seleccionarFactura(opcion);
+                    Tienda tienda=factura.getTienda();
 
-    /**
-     * Gestiona la lógica de selección de productos dentro de una factura.
-     * Proporciona al usuario la opción de regresar al menú de facturas.
-     * 
-     * @param sc Scanner para leer entradas del usuario.
-     * @param factura Factura seleccionada por el usuario.
-     */
-    private static void manejarFactura(Scanner sc, Factura factura) {
-        while (true) {
-            System.out.println("Seleccione el producto que desea devolver o presione 0 para regresar al menú anterior: ");
-            Factura.mostrarProductosFactura(factura);
+    
+                    while (true) {
+                        System.out.println("Seleccione el producto que desea devolver o presione 0 para regresar al menú anterior: ");
+                        String productos=Factura.mostrarProductosFactura(factura);
+                        System.out.println(productos);
+    
+                        int opcion2;
+                        try {
+                            opcion2 = sc.nextInt();
+                        } catch (Exception e) {
+                            System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                            sc.nextLine(); // Limpiar el buffer
+                            continue;
+                        }
+    
+                        if (opcion2 == 0) {
+                            System.out.println("Regresando al menú de facturas.");
+                            break;
+                        }
+    
+                        if (opcion2 > 0 && opcion2 <= factura.getListaProductos().size()) {
+                            if (Factura.todosDevueltos(factura.getListaProductos())) {
+                                System.out.println("Todos los productos de esta factura ya han sido devueltos.");
+                                break;
+                            }
+                            Producto producto = factura.seleccionarProducto(opcion2);
+                            if (producto.getEstado().equals("DEVUELTO")) {
+                                System.out.println("El producto ya ha sido devuelto, elija otro.");
+                            } else{
+                                System.out.println("Eligió el producto: " + producto.getNombre());
+                                System.out.println("Indique el motivo de la devolución: ");
+                                String motivosDevolucion=Producto.mostrarMotivosDeDevolucion();
+                                System.out.println("Motivos de devolución: \n" + motivosDevolucion);
+                                int motivoDevolucion=sc.nextInt();
+                                String motivo=Producto.obtenerMotivoDeDevolucion(motivoDevolucion);
+                                producto.setMotivoDevolucion(motivo);
 
-            int opcionProducto = leerOpcion(sc);
-            if (opcionProducto == 0) {
-                System.out.println("Regresando al menú de facturas.");
-                break;
-            }
 
-            if (opcionProducto > 0 && opcionProducto <= factura.getListaProductos().size()) {
-                Producto producto = factura.seleccionarProducto(opcionProducto - 1);
-                manejarProducto(sc, factura, producto);
+                                if (motivoDevolucion ==1 || motivoDevolucion==2 || motivoDevolucion==3 ){
 
-                // Preguntar si desea realizar otra operación después de completar
-                System.out.println("¿Desea realizar otra operación? (1: Sí, 0: No)");
-                int continuar = leerOpcion(sc);
-                if (continuar == 0) {
-                    System.out.println("Regresando al menú de facturas.");
-                    break;
+                                    System.out.println("Por el motivo indicado, se le hará el reembolso del dinero.");
+                                    Cliente cliente=tienda.devolverProducto(factura, producto);
+                                    double valorADevolver=Fabrica.descontarDineroCuenta(producto); // Se descuenta el dinero de la cuenta de la fábrica
+                                    // y se obtiene el valor del producto a devolver.
+                                    Fabrica.cuentaBancaria.devolverDinero(valorADevolver, cliente); 
+                                    cliente.removerProducto(producto); // Se remueve el producto de la lista de productos del cliente.
+                                    System.out.println("El producto ha sido devuelto exitosamente.");
+                                    System.out.println("¿Qué desea hacer? \n1. Devolver otro producto \n0. Regresar al menú de facturas");
+                                    int opcion3;
+                                    switch (opcion3 = sc.nextInt()) {
+                                        case 0:
+                                            System.out.println("Saliendo del menú de devoluciones.");
+                                            break;
+                                        case 1:
+                                            uiMain.uiDevoluciones.devolver();
+                                        default:
+                                            System.out.println("Opción inválida. Intente nuevamente.");
+                                            break;
+                                    }
+                
+                                }
+                                else if (motivoDevolucion==Producto.motivosDevolucion.size()){
+                                        System.out.println("Especifique su causa de la devolución: ");
+                                        sc.nextLine(); // Limpiar el buffer antes de leer el motivo
+                                        String causa =sc.nextLine();
+                                        producto.setMotivoDevolucion(causa);
+                                        Producto.motivosDevolucion.add(Producto.motivosDevolucion.size()-1, causa);
+                                    }
+                                    System.out.println("Por el motivo indicado, se le hará el cambio del producto.");
+                                    System.out.println("Si el producto que seleccione tiene un precio mayor al que desea cambiar, puede agregar otro producto para completar el valor restante. Es posible que tenga que pagar un excedente.\nNO se le devolverá el dinero restante.");
+                                    System.out.println("Seleccione el producto por el cual desea cambiar: ");
+                                    double precio = producto.getPrecio();
+                                    System.out.println("El precio de su producto es de: $" + precio);
+                                
+                                    ArrayList<Integer> seleccionProductos = new ArrayList<>();
+                                    ArrayList<Producto> carrito = new ArrayList<>();
+                                    double subtotal = 0;
+                                
+                                    while (true) {
+                                        // Mostrar los productos disponibles para cambio
+                                        System.out.println("\nProductos disponibles para cambio:");
+                                        ArrayList<Producto> productosDisponibles = tienda.mostrarProductosFiltrados(producto);
+                                    
+                                        for (int i = 0; i < productosDisponibles.size(); i++) {
+                                            Producto p = productosDisponibles.get(i);
+                                            if (carrito.contains(p)){
+                                                productosDisponibles.remove(p);
+                                                continue;
+                                            }
+                                            System.out.println((i + 1) + ". " + p.getNombre() + " - Precio: $" + p.getPrecio());
+                                        }
+                                
+                                        // Pedir al usuario que seleccione un producto
+                                        System.out.println("Ingrese el número del producto que desea añadir al carrito (o 0 para finalizar):");
+                                        int opcion4 = sc.nextInt();
+                                
+                                        // Salir si el cliente no quiere añadir más productos
+                                        if (opcion4 == 0) {
+                                            System.out.println("Ha decidido no añadir más productos.");
+                                            break;
+                                        }
+                                
+                                        // Validar índice seleccionado
+                                        if (opcion4 < 1 || opcion4 > productosDisponibles.size()) {
+                                            System.out.println("Opción inválida. Por favor, seleccione un índice válido.");
+                                            continue;
+                                        }
+                                
+                                        // Agregar la selección a la lista
+                                        seleccionProductos.add(opcion4);
+                                
+                                        // Llamar al método de la tienda para procesar la selección
+                                        carrito = tienda.agregarProductosParaCambio(precio, seleccionProductos);
+                                
+                                        // Mostrar los productos seleccionados
+                                        System.out.println("\nResumen del cambio:");
+                                        subtotal = 0;
+                                        for (Producto p : carrito) {
+                                            System.out.println("- " + p.getNombre() + ": $" + p.getPrecio());
+                                            subtotal += p.getPrecio();
+                                        }
+                                        System.out.println("Subtotal actual: $" + subtotal);
+                                
+                                        // Verificar si el subtotal excede el valor permitido
+                                        if (subtotal > precio) {
+                                            System.out.println("El subtotal ha excedido el valor permitido. No se pueden añadir más productos.");
+                                            break;
+                                        }
+                                
+                                        // Preguntar si desea continuar
+                                        System.out.println("¿Desea continuar añadiendo productos? (1: Sí, 0: No)");
+                                        int continuar = sc.nextInt();
+                                        if (continuar == 0) {
+                                            System.out.println("Proceso finalizado. Su carrito de cambio está listo.");
+                                            break;
+                                        }
+                                    }
+                                
+                                    double excedente = Fabrica.calcularExcedente(carrito, precio); // Calcula el excedente que debe pagar el cliente
+                                    if (excedente > 0) {
+                                        System.out.println("El valor total de los productos seleccionados supera el precio del producto a cambiar.");
+                                        System.out.println("El excedente a pagar es de: $" + excedente);
+                                    } else {
+                                        System.out.println("El valor total de los productos seleccionados no supera el precio del producto a cambiar. Le recordamos que no se le devolverá el dinero restante.");
+                                    }
+                                
+                                    Cliente cliente = factura.getCliente();
+                                    cliente.cuentaBancaria.transferirDinero(excedente, Fabrica.cuentaBancaria); // Transferir excedente a la fábrica
+                                    cliente.removerProducto(producto); // Remover el producto de la lista de productos del cliente
+                                    for (Producto p : carrito) {
+                                        cliente.listaProductos.add(p); // Añadir los productos seleccionados al cliente
+                                    }
+                                
+                                    // Mostrar resumen final del cambio
+                                    System.out.println("\n----- Resumen final del cambio -----");
+                                    for (Producto p : carrito) {
+                                        System.out.println("- " + p.getNombre() + ": $" + p.getPrecio());
+                                    }
+                                    System.out.println("Total del carrito: $" + subtotal + "\nExcedente pagado: " + excedente);
+                                }
+                                
+                            }
+                                else{
+                                    System.out.println("Motivo de devolución inválido. Intente nuevamente.");
+                                }
+                            }
+                        } else {
+                            System.out.println("Opción inválida. Intente nuevamente.");
+                        }
+                    }
+                } 
+                 {
+                    System.out.println("Opción inválida. Intente nuevamente.");
                 }
-            } else {
-                System.out.println("Opción inválida. Intente nuevamente.");
             }
-        }
-    }
-
-    /**
-     * Gestiona la lógica de devolución de un producto específico.
-     * Diferencia entre reembolsos y cambios según el motivo indicado por el usuario.
-     * 
-     * @param sc Scanner para leer entradas del usuario.
-     * @param factura Factura a la que pertenece el producto.
-     * @param producto Producto seleccionado para la devolución.
-     */
-    private static void manejarProducto(Scanner sc, Factura factura, Producto producto) {
-        if (producto.getEstado().equals("DEVUELTO")) {
-            System.out.println("El producto ya ha sido devuelto. Elija otro producto.");
-            return;
-        }
-
-        System.out.println("Eligió el producto: " + producto.getNombre());
-        System.out.println("Indique el motivo de la devolución: ");
-        String motivosDevolucion = Producto.mostrarMotivosDeDevolucion();
-        System.out.println("Motivos de devolución: \n" + motivosDevolucion);
-
-        int motivoDevolucion = leerOpcion(sc);
-        String motivo = Producto.obtenerMotivoDeDevolucion(motivoDevolucion);
-
-        if (motivo == null) {
-            System.out.println("Motivo de devolución inválido. Intente nuevamente.");
-            return;
-        }
-
-        producto.setMotivoDevolucion(motivo);
-
-        if (motivoDevolucion == 1 || motivoDevolucion == 2 || motivoDevolucion == 3) {
-            procesarReembolso(sc, factura, producto);
-        } else if (motivoDevolucion == 4 || motivoDevolucion == 5) {
-            procesarCambio(sc, factura, producto);
-        } else {
-            System.out.println("Motivo de devolución no soportado. Intente nuevamente.");
-        }
-    }
-
-    /**
-     * Realiza el reembolso del dinero al cliente por el producto devuelto.
-     * Actualiza las cuentas y elimina el producto de la lista del cliente.
-     * 
-     * @param sc Scanner para leer entradas del usuario.
-     * @param factura Factura a la que pertenece el producto.
-     * @param producto Producto que se devuelve.
-     */
-    private static void procesarReembolso(Scanner sc, Factura factura, Producto producto) {
-        Tienda tienda = factura.getTienda();
-        Cliente cliente = tienda.devolverProducto(factura, producto);
-        double valorADevolver = Fabrica.descontarDineroCuenta(producto);
-        Fabrica.cuentaBancaria.devolverDinero(valorADevolver, cliente);
-        cliente.removerProducto(producto);
-
-        System.out.println("El producto ha sido devuelto exitosamente y se ha reembolsado el dinero.");
-    }
-
-    /**
-     * Administra el proceso de cambio de producto.
-     * Permite al usuario seleccionar productos de reemplazo respetando los límites de precio.
-     * 
-     * @param sc Scanner para leer entradas del usuario.
-     * @param factura Factura a la que pertenece el producto original.
-     * @param producto Producto que se desea cambiar.
-     */
-    private static void procesarCambio(Scanner sc, Factura factura, Producto producto) {
-        Tienda tienda = factura.getTienda();
-        double precio = producto.getPrecio();
-
-        System.out.println("Seleccione los productos por los cuales desea realizar el cambio.");
-        ArrayList<Integer> seleccionProductos = new ArrayList<>();
-        ArrayList<Producto> carrito;
-
-        while (true) {
-            System.out.println("Productos disponibles para cambio:");
-            tienda.mostrarProductos();
-
-            int opcionCambio = leerOpcion(sc);
-            if (opcionCambio == 0) {
-                System.out.println("Saliendo del menú de cambio.");
-                break;
-            }
-
-            seleccionProductos.add(opcionCambio);
-            carrito = tienda.añadirProductosParaCambio(precio, seleccionProductos);
-
-            double subtotal = 0;
-            System.out.println("\nResumen del cambio:");
-            for (Producto p : carrito) {
-                System.out.println("- " + p.getNombre() + ": $" + p.getPrecio());
-                subtotal += p.getPrecio();
-            }
-            System.out.println("Subtotal actual: $" + subtotal);
-
-            if (subtotal >= precio) {
-                System.out.println("El subtotal ha alcanzado o superado el valor límite. El proceso ha finalizado.");
-                break;
-            }
-
-            System.out.println("¿Desea continuar añadiendo productos? (1: Sí, 0: No)");
-            int continuar = leerOpcion(sc);
-            if (continuar == 0) {
-                System.out.println("Proceso finalizado. Su carrito de cambio está listo.");
-                break;
-            }
-        }
-
-        // Preguntar si desea realizar otra operación
-        System.out.println("¿Desea realizar otra operación? (1: Sí, 0: No)");
-        int continuar = leerOpcion(sc);
-        if (continuar == 0) {
-            System.out.println("Saliendo del menú de devoluciones.");
-            return;
-        }
-    }
-
-    /**
-     * Lee una opción ingresada por el usuario desde el teclado.
-     * Maneja entradas inválidas y proporciona un valor predeterminado en caso de error.
-     * 
-     * @param sc Scanner para leer entradas.
-     * @return Número entero ingresado por el usuario o -1 si ocurre un error.
-     */
-    private static int leerOpcion(Scanner sc) {
-        try {
-            return sc.nextInt();
-        } catch (Exception e) {
-            System.out.println("Entrada inválida. Por favor, ingrese un número.");
-            sc.nextLine(); // Limpiar el buffer
-            return -1;
-        }
-    }
-}
+        
+    

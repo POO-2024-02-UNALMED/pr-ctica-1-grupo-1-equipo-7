@@ -6,7 +6,7 @@ import produccion.Fabrica;
 public class Conductor extends Persona {
     private Transporte transporte;
     private Fabrica fabrica;
-    private static ArrayList<Conductor> listaConductores = new ArrayList<>();
+    private static ArrayList<Persona> listaConductores = new ArrayList<>();
     private ArrayList<Meta> metaConductor;
     private int pesoTransportado;
 
@@ -15,13 +15,28 @@ public class Conductor extends Persona {
         this.fabrica = fabrica;
         this.metaConductor = new ArrayList<>();
         this.pesoTransportado=0;
+        listaConductores.add(this);
 
     }
 
+    public String mostrarMetas(){
+        String texto = "";
+        int indice = 1;
+
+        for (Meta i: this.metaConductor) {
+            if(i.getVerificador() == false){
+                texto += "\n" + "Meta "+ indice + i.toString() + "\n";  //Uso de ligadura dinámica
+                indice++;  
+            }             
+        }
+
+        return texto;
+    }
+      
 
     @Override
     public String toString(){
-        String texto = "Nombre:" + this.getNombre() +
+        String texto = "\nNombre:" + this.getNombre() +
                        "\nCedula:" + this.getCedula() +
                        "\nEdad:" + this.getEdad() +
                        "\nTransporte" + this.getTransporte();
@@ -30,6 +45,7 @@ public class Conductor extends Persona {
 
     public void recibirSueldo(double valor){
         this.getCuentaBancaria().añadirDinero(valor);
+        this.setCantidadTrabajo(0);
     }
 
 
@@ -54,13 +70,17 @@ public class Conductor extends Persona {
     }
 
     // Para el atributo listaConductores (static) solo Getter
-    public static ArrayList<Conductor> getListaConductores() { 
+    public static ArrayList<Persona> getListaConductores() { 
         return listaConductores;
     }
 
     // Para el atributo metaConductor
-    public ArrayList<Meta> getMetaConductor() { 
+    public ArrayList<Meta> getMeta() { 
         return metaConductor;
+    }
+
+    public void setMetaConductor(Meta meta){
+        this.metaConductor.add(meta);
     }
 
     public void setConductor(Meta meta){     

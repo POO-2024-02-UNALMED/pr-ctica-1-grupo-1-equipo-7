@@ -5,7 +5,7 @@ public class Producto {
     public String nombre;
     int precio;
     private int cantidad;
-    private int id; 
+    private int id=0; 
     private static int totalCreados=0;
     public String estado; //disponible,vendido,devuelto
     private String tipo;
@@ -27,16 +27,30 @@ public class Producto {
         this.nombre = nombre;
         this.precio = precio;
         this.cantidad = cantidad;
-        this.id = id;
         this.estado = estado;
         this.tipo = tipo;
         this.categoria = categoria;
         totalCreados++;
-        
+        this.id=id;
     }
     public Producto(){
         totalCreados++;
     }
+    public Producto(Producto producto){//este es un constructor de copia
+        this.nombre = producto.nombre;
+        this.precio = producto.precio;
+        this.cantidad = producto.cantidad;
+        this.estado = producto.estado;
+        this.tipo = producto.tipo;
+        this.categoria = producto.categoria;
+        this.peso = producto.peso;
+        this.tamano = producto.tamano;
+        this.motivoDevolucion = producto.motivoDevolucion;
+        this.devuelto = producto.devuelto;
+        totalCreados++;
+        this.id=totalCreados;
+    }
+
 
    // Metodos
    public static String mostrarMotivosDeDevolucion() {
@@ -53,7 +67,7 @@ public class Producto {
 }
 public static String obtenerMotivoDeDevolucion(int index) {
     if (index < 1 || index > motivosDevolucion.size()) {
-        return "Motivo no encontrado.";
+        return "Motivo no válido.";
     }
     return motivosDevolucion.get(index - 1);
 }

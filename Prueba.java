@@ -81,7 +81,7 @@ public class Prueba {
                         LOOP_TERCIARIO:
                         while(true){
                             //Preguntar si quiere revisar metas o seguir con el pago.
-                            System.out.println("¿Desea continuar con el pago o desea revisar las metas del trabajador?.\n1. Si\n2. No\n3. Cambiar de Trabajador\n0. Volver al menu principal.");
+                            System.out.println("¿Quiere revisar las metas del trabajador?.\n1. Si\n2. No\n3. Cambiar de Trabajador\n0. Volver al menu principal.");
 
                             //Verificación de que se ingrese un número.
                             try {

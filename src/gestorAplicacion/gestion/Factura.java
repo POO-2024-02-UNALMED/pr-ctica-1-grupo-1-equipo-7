@@ -16,9 +16,9 @@ public class Factura {
     private LocalDate fecha; 
     private int id;
     private double total;
-    private ArrayList<Producto> listaProductos;  
+    private ArrayList<Producto> listaProductos=new ArrayList<>();  
     private static int totalCreadas=0; 
-    public static ArrayList<Factura> listaFacturas = new ArrayList<Factura>(); 
+    public static ArrayList<Factura> listaFacturas=new ArrayList<>(); 
 
     public Factura(Tienda tienda, Cliente cliente, Transporte transporte, ArrayList<Producto> listaProductos, LocalDate fecha) {
         this.tienda = tienda;

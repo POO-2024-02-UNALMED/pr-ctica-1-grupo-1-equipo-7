@@ -3,7 +3,7 @@ package gestion;
 import java.util.ArrayList;
 
 public abstract class Persona{
-    private static final int SALARIOBASE = 20000;  //Salario base que despues se modifica por cantidad de veces trabajadas y por bonos 
+    private static final int SALARIOBASE = 10000;  //Salario base que despues se modifica por cantidad de veces trabajadas y por bonos 
 
     private String nombre; 
     private int cedula; 
@@ -33,6 +33,10 @@ public abstract class Persona{
     public Persona(){}
 
     public abstract void recibirSueldo(double valor);  // se agrego el parametro para que no generara error en las clases hijas
+
+    public abstract String mostrarMetas();
+
+    public abstract ArrayList<Meta> getMeta();
 
     // Getters y Setters
 
