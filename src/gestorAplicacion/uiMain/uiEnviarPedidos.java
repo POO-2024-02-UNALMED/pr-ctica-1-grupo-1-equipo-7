@@ -1,7 +1,7 @@
 package uiMain;
 import java.util.ArrayList;
 import java.util.Scanner;
-import gestion.Cliente;
+import gestion.*;
 import produccion.*;
 public class uiEnviarPedidos {
     public static void enviar() {
@@ -212,8 +212,51 @@ public class uiEnviarPedidos {
                         System.out.println("Error: Peso inválido para el producto " + producto.getNombre());
                     }
                 }
+                ArrayList<TipoTransporte> listaPosibleTransporte = TipoTransporte.crearTipoTransporteSegunCarga(totalPeso);
+                ArrayList<TipoTransporte>listaTransporteFiltrada = new ArrayList<>();
+                for (Conductor conductor : Conductor.getListaConductores()) {
+                    TipoTransporte conductorTipoTransporte = conductor.getTransporte().getTipoTransporte();
+                    for (TipoTransporte posibleTransporte : listaPosibleTransporte) {
+                        if (conductorTipoTransporte.equals(posibleTransporte)) {
+                            listaTransporteFiltrada.add(conductor.getTransporte().getTipoTransporte());
+                        }
+                    }
+                }
+                boolean envioGratis = Transporte.enviarGratis(listaProductosPedidos);
+                System.out.println("Por favor, elija el transporte que desea utilizar para su envío:");
+                System.out.println("0. Salir");
+                System.out.println(TipoTransporte.mostrarTipoTransporteSegunCarga(listaTransporteFiltrada, envioGratis));
+                TipoTransporte transporteSeleccionado;
+                while (true) {
+                    try {
+                        opcion = sc.nextInt();
+                        if (opcion == 0) {
+                            System.out.println("Saliendo...");
+                            sc.close();
+                            return;
+                        } 
+                        else if (opcion > 0 && opcion <= listaTransporteFiltrada.size()){
+                            transporteSeleccionado = listaTransporteFiltrada.get(opcion -1);
+                            break;
+                        } 
+                        else {
+                            System.out.println("Número fuera de rango. Por favor, elija un transporte válido.");
+                        }
+                    } 
+                    catch (Exception e) {
+                        System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                        sc.nextLine();
+                    }
+                }
+                if(envioGratis==true){
+                    System.out.println("Ha escogido el transporte: " + transporteSeleccionado.getNombre() + "\n" + "- Precio: 0.0");
+                }
+                else{
+                    System.out.println("Ha escogido el transporte: " + transporteSeleccionado.getNombre() + "\n" + "- Precio: " + transporteSeleccionado.getPrecioEnvio());
+                }
                 
-                
+
+
             }
         }
     }

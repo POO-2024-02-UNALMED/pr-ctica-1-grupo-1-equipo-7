@@ -40,7 +40,7 @@ package produccion;
         }
     
         // Método 1: Crear lista según la carga
-        public static ArrayList<TipoTransporte> crearTipoTransporteSegunCarga(int pesoTotalProductos) {
+        public static ArrayList<TipoTransporte> crearTipoTransporteSegunCarga(double pesoTotalProductos) {
             ArrayList<TipoTransporte> listaFiltrada = new ArrayList<>();
             for (TipoTransporte transporte : TipoTransporte.values()) {
                 if (pesoTotalProductos <= transporte.getCapacidadMax()) {
@@ -52,14 +52,48 @@ package produccion;
     
         // Método 2: Mostrar opciones de transporte en formato String
         public static String mostrarTipoTransporteSegunCarga(ArrayList<TipoTransporte> listaFiltrada) {
+            return mostrarTipoTransporteSegunCarga(listaFiltrada, false); // Por defecto, el transporte recomendado no es gratis
+        }
+        
+        // Método principal con el parámetro booleano
+        public static String mostrarTipoTransporteSegunCarga(ArrayList<TipoTransporte> listaFiltrada, boolean envioGratisRecomendado) {
             StringBuilder sb = new StringBuilder("Opciones de transporte disponibles:\n");
+        
+            // Inicializa las variables para determinar el transporte con el precio más bajo
+            double precioMinimo = Double.MAX_VALUE;
+            TipoTransporte transporteRecomendado = null;
+        
+            // Busca el transporte con el precio más bajo
+            for (TipoTransporte transporte : listaFiltrada) {
+                if (transporte.getPrecioEnvio() < precioMinimo) {
+                    precioMinimo = transporte.getPrecioEnvio();
+                    transporteRecomendado = transporte;
+                }
+            }
+        
+            // Añade los detalles de cada transporte y marcar el recomendado
             for (int i = 0; i < listaFiltrada.size(); i++) {
                 TipoTransporte transporte = listaFiltrada.get(i);
                 sb.append(i + 1).append(". ").append(transporte.getNombre())
-                  .append(" (Precio: ").append(transporte.getPrecioEnvio())
-                  .append(", Capacidad Máxima: ").append(transporte.getCapacidadMax())
-                  .append(")\n");
+                  .append(" (Precio: ");
+        
+                // Si es el transporte recomendado y envioGratisRecomendado es true, hacer el envío gratis
+                if (transporte == transporteRecomendado && envioGratisRecomendado) {
+                    sb.append("0"); // Envío gratis para el recomendado
+                } else {
+                    sb.append(transporte.getPrecioEnvio());
+                }
+        
+                sb.append(", Capacidad Máxima: ").append(transporte.getCapacidadMax());
+        
+                // Si es el transporte recomendado, agregar la etiqueta "Recomendado"
+                if (transporte == transporteRecomendado) {
+                    sb.append(" ---- RECOMENDADO");
+                }
+        
+                sb.append(")\n");
             }
+        
             return sb.toString();
         }
     
@@ -71,6 +105,7 @@ package produccion;
                 throw new IllegalArgumentException("Opción no válida. Seleccione un número entre 1 y " + listaFiltrada.size());
             }
         }
+
         
     }
     

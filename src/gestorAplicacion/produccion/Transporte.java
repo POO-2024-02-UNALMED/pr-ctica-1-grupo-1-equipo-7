@@ -94,10 +94,22 @@ public class Transporte {
      }
     
 
-     public ArrayList<Producto> cantidadProductos(Producto producto ,int cantidadAEnviar){
+     /*public ArrayList<Producto> cantidadProductos(Producto producto ,int cantidadAEnviar){
         for (int i=0; i<=cantidadAEnviar; i++){
             productosSeleccionados.add(producto);
         }
      
+<<<<<<< HEAD
     }
+    public static boolean enviarGratis(ArrayList<Producto> listaProductos) {
+        int montoEnvioGratis = 500000;
+        int precioTotal = 0;
+        for (Producto producto : listaProductos) {
+            precioTotal += producto.getPrecio();
+        }
+        return precioTotal > montoEnvioGratis;
+    }
+=======
+    }*/
+>>>>>>> 793314906141152dec0eeb78eb90a6c228543359
 }

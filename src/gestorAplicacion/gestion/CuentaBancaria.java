@@ -30,14 +30,20 @@ public class CuentaBancaria {
         cuentaDestino.añadirDinero(valor);
     }
 
-    public int calcularPago(Persona persona){ // por cada trabajo se le sumaran 7000 al salario base
-        int saldoTrabajo = persona.getCantidadTrabajo() * 7000;
-        return saldoTrabajo;
+    public int calcularPago(Persona persona) {
+        int saldoTrabajo;
+        if (persona instanceof Operario) {
+            saldoTrabajo = persona.getCantidadTrabajo() * 7000;
+        } else if (persona instanceof Vendedor) {
+            saldoTrabajo = persona.getCantidadTrabajo() * 5500;
+        } else {
+            saldoTrabajo = persona.getCantidadTrabajo() * 4000;
+        }
+        return saldoTrabajo; 
     }
 
     public void devolverDinero(double total, Cliente cliente){
-        cliente.getCuentaBancaria().añadirDinero(total);                //REVISAR ESTE METODO DESPUES
-                                                                        // R// Gracias por hacermelo, lo necesitaba. By: Andres.
+        cliente.getCuentaBancaria().añadirDinero(total);                
     }
 
 
