@@ -7,7 +7,7 @@ public class Producto {
     private int cantidad;
     private int id=0; 
     private static int totalCreados=0;
-    public String estado; //disponible,vendido,devuelto
+    public estadosProducto estado; //disponible,vendido,devuelto
     private String tipo;
     private String categoria; 
     private double peso; 
@@ -23,7 +23,7 @@ public class Producto {
             "Otro motivo"
         ));
     //Constructores: 
-    public Producto(String nombre, int precio, int cantidad, int id, String estado, String tipo, String categoria){
+    public Producto(String nombre, int precio, int cantidad, int id, estadosProducto estado, String tipo, String categoria){
         this.nombre = nombre;
         this.precio = precio;
         this.cantidad = cantidad;
@@ -80,11 +80,11 @@ public static String obtenerMotivoDeDevolucion(int index) {
             this.nombre = nombre;
      }
    
-    public String getEstado() {
+    public estadosProducto getEstado() {
         return estado;
     }
    
-    public void setEstado(String estado) {
+    public void setEstado(estadosProducto estado) {
         this.estado = estado;
     }
     public int getPrecio() {

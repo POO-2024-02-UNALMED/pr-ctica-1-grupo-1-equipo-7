@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import produccion.Producto;
 import produccion.Tienda;
 import produccion.Transporte;
+import produccion.estadosProducto;
 import gestion.Moda;
 
 public class Factura {
@@ -91,7 +92,7 @@ public static String mostrarFacturas(){
     int n=1; 
     String texto="";
     for (Producto p: f.getListaProductos()){
-      if (p.estado.equals("DEVUELTO")){
+      if (p.estado.equals(estadosProducto.DEVUELTO)){
       texto+=n+". "+p.nombre + "(devuelto)"+"\n";
       }
       else{
@@ -112,7 +113,7 @@ public Producto seleccionarProducto(int n){
 //Método que se encarga de verificar si todos los productos de una factura han sido devueltos o no.
 public static boolean todosDevueltos(ArrayList<Producto> listaProductos){
   for (Producto p: listaProductos){
-    if (!p.estado.equals("DEVUELTO")){
+    if (!p.estado.equals(estadosProducto.DEVUELTO)){
       return false;
     }
   }

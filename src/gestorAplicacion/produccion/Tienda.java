@@ -206,7 +206,7 @@ public String productosPorCategoria(List<Producto> productos, List<Integer> cont
 public Cliente devolverProducto(Factura factura, Producto producto){
     productosDevueltos.add(producto);
     
-    producto.setEstado("DEVUELTO");
+    producto.setEstado(estadosProducto.DEVUELTO);
     productosDevueltos.add(producto);
     return factura.getCliente();
 }
@@ -219,17 +219,17 @@ public Cliente devolverProducto(Factura factura, Producto producto){
   * @param seleccionProductos Lista de índices seleccionados por el cliente.
   * @return ArrayList de productos seleccionados para el cambio.
   */
-  public ArrayList<Producto> agregarProductosParaCambio(double precioCambio, ArrayList<Integer> seleccionProductos) {
+  public ArrayList<Producto> agregarProductosParaCambio(double precioCambio, ArrayList<Integer> seleccionProductos, ArrayList<Producto> productosDisponibles) {
     ArrayList<Producto> productosSeleccionados = new ArrayList<>();
     double subtotal = 0;
 
     for (int indice : seleccionProductos) {
         // Validar índice y obtener el producto correspondiente
-        if (indice < 1 || indice > listaProducto.size()) {
+        if (indice < 1 || indice > productosDisponibles.size()) {
             continue; // Ignorar índices inválidos
         }
 
-        Producto productoSeleccionado = listaProducto.get(indice - 1);
+        Producto productoSeleccionado = productosDisponibles.get(indice - 1); //Probar con indice normal. 
 
         // Evitar agregar productos duplicados
         if (!productosSeleccionados.contains(productoSeleccionado)) {
@@ -255,23 +255,19 @@ public Cliente devolverProducto(Factura factura, Producto producto){
 //Devuelve un ArrayList con los productos disponibles para la venta de la tienda, menos el producto que desea cambiar y mostrando primero los productos
 //de la misma categoria que el que se desea cambiar. 
 
-public ArrayList<Producto> mostrarProductosFiltrados(Producto producto) {
-    ArrayList<Producto> productosFiltrados = new ArrayList<>();
+public ArrayList<Producto> mostrarProductos(Producto producto) {
+    ArrayList<Producto> productosParaMostrar=new ArrayList<>();
     for (Producto p : this.getListaProducto()) {
         // Comparar por ID para omitir el producto seleccionado
         if (p.getId()==(producto.getId())) {
             continue;
         }
-        // Comparar tipos después de eliminar espacios
-        if (p.getTipo().trim().equals(producto.getTipo().trim())) {
-            productosFiltrados.add(0, p); // Productos de la misma categoría van primero
-        } else {
-            productosFiltrados.add(p);
+        else{
+            productosParaMostrar.add(p);
         }
     }
-    return productosFiltrados;
+    return productosParaMostrar;
 }
-
 
 public String cantidadProductos() {
     // Construir el resultado
