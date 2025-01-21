@@ -25,18 +25,11 @@ public class Tienda {
     //private List<Integer> cantidadesAbastecer = new ArrayList<>();//tampoco por ahora
 
     // constructor
-<<<<<<< HEAD
-    public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria){ //borre el atributo numtiendas ya que no hacia nada excepto dentro
-        this.nombre=nombre;
-        this.vendedor=vendedor;
-        setVendedor(vendedor); 
-=======
     public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
         //El numero de tiendas no deberia de ser un parametro del constructor, ya que este se incrementa automaticamente.
         this.nombre=nombre;
         this.vendedor=vendedor;
         this.vendedor.setTienda(this); //Se asigna la tienda al vendedor 
->>>>>>> 96acfdcba9aa1ed73a25cb1472606c775ee61e00
         this.cuentaBancaria=cuentaBancaria;
         numTiendas++;
         this.cantidadProductos=new ArrayList<>();

@@ -135,7 +135,7 @@ public class uiDevoluciones {
                                         seleccionProductos.add(opcion4);
                             
                                         // Llamar al método de la tienda para procesar la selección.
-                                        carrito = tienda.añadirProductosParaCambio(precio, seleccionProductos);
+                                        carrito = tienda.agregarProductosParaCambio(precio, seleccionProductos);
                             
                                         // Mostrar los productos seleccionados
                                         System.out.println("\nResumen del cambio:");
