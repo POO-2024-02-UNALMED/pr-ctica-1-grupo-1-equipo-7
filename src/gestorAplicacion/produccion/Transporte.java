@@ -24,7 +24,6 @@ public class Transporte {
         this.listaDeProductos = new ArrayList<>();
 
     }
-    public Transporte(){}
 
     // Getters y setters
 
@@ -93,14 +92,24 @@ public class Transporte {
     }
 
      // Método para cargar productos en el transporte y asignar la tienda de destino
-     public void abastecerProducto(Tienda tiendaSeleccionada, ArrayList<Producto> productosSeleccionados) {
+    public void abastecerProducto(Tienda tiendaSeleccionada, ArrayList<Producto> productosSeleccionados) {
         this.listaDeProductos.addAll(productosSeleccionados);
         this.tienda = tiendaSeleccionada;
      }
+    public static boolean enviarGratis(ArrayList<Producto> listaProductos) {
+        int montoEnvioGratis = 500000;
+        int precioTotal = 0;
+        for (Producto producto : listaProductos) {
+            precioTotal += producto.getPrecio();
+        }
+        return precioTotal > montoEnvioGratis;
+    }
+
 /*      public ArrayList<Producto> cantidadProductos(Producto producto ,int cantidadAenviar){
         for (int i=0; i<=int cantidadAEnviar; i++){
             productosSeleccionados.add(producto);
         }
      }
 */
-}   
+    
+}

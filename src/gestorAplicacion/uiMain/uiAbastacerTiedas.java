@@ -183,6 +183,7 @@ public class uiAbastacerTiedas {
 
             // Crear lista de transportes según el peso total de los productos
             ArrayList<TipoTransporte> listaTransportes = TipoTransporte.crearTipoTransporteSegunCarga(pesoTotalProductos);
+            //Realizar ajuste a tipotransporte para que se pueda seleccionar el transporte segun el peso de los productos
             System.out.println("========================================");
             System.out.println(TipoTransporte.mostrarTipoTransporteSegunCarga(listaTransportes));
             System.out.println("========================================");
