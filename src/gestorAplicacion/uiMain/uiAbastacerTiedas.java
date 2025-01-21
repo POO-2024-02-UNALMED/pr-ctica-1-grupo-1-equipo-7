@@ -81,7 +81,7 @@ public class uiAbastacerTiedas {
             List<Integer> conteoCategoriasTemporal = new ArrayList<>(tiendaSeleccionada.getConteoCategorias());
 
             // Bucle para añadir productos al abastecimiento
-            int pesoTotalProductos = 0;
+            Double pesoTotalProductos = 0d;
             while (true) {
                 // Selección de producto
                 System.out.println("========================================");
@@ -166,7 +166,7 @@ public class uiAbastacerTiedas {
                     if (respuesta.equalsIgnoreCase("v")) {
                         productosGenerados.clear();
                         conteoCategoriasTemporal = new ArrayList<>(tiendaSeleccionada.getConteoCategorias());
-                        pesoTotalProductos = 0; //si se vuelve al paso anterior se borra el peso aunque en el primer producto si se alla confirmado
+                        pesoTotalProductos = 0d; //si se vuelve al paso anterior se borra el peso aunque en el primer producto si se alla confirmado
                         continue;
                     }
                     if (!respuesta.equalsIgnoreCase("s")) {
