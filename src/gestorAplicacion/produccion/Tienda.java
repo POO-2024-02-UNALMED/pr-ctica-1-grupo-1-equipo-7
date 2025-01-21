@@ -6,7 +6,7 @@ import gestion.Factura;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+//import java.util.Scanner;
 public class Tienda {
     //atributos
     private String nombre;
@@ -21,14 +21,22 @@ public class Tienda {
     private List<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
     private Integer cantidadMaximaPorCategoria;//Es la cantidad maxima de productos que puede tener una tienda por categoria. (Es atributo auxiliar para la funcionalidad de abastecer.)
     //para la funcionalidad abastecer:
-    private List<Producto> productosAbastecer = new ArrayList<>();//no se van a usar
-    private List<Integer> cantidadesAbastecer = new ArrayList<>();//tampoco por ahora
+    //private List<Producto> productosAbastecer = new ArrayList<>();//no se van a usar
+    //private List<Integer> cantidadesAbastecer = new ArrayList<>();//tampoco por ahora
 
     // constructor
+<<<<<<< HEAD
     public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria){ //borre el atributo numtiendas ya que no hacia nada excepto dentro
         this.nombre=nombre;
         this.vendedor=vendedor;
         setVendedor(vendedor); 
+=======
+    public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
+        //El numero de tiendas no deberia de ser un parametro del constructor, ya que este se incrementa automaticamente.
+        this.nombre=nombre;
+        this.vendedor=vendedor;
+        this.vendedor.setTienda(this); //Se asigna la tienda al vendedor 
+>>>>>>> 96acfdcba9aa1ed73a25cb1472606c775ee61e00
         this.cuentaBancaria=cuentaBancaria;
         numTiendas++;
         this.cantidadProductos=new ArrayList<>();
@@ -210,46 +218,44 @@ public Cliente devolverProducto(Factura factura, Producto producto){
     return factura.getCliente();
 }
 
- /**
+/**
   * Funcionalidad: Devoluciones
-     * Método principal para gestionar los productos seleccionados para un cambio.
-     * 
-     * @param valor              El valor máximo permitido para el cambio.
-     * @param seleccionProductos Lista de índices seleccionados por el cliente.
-     * @return ArrayList de productos seleccionados para el cambio.
-     */
-    public ArrayList<Producto> añadirProductosParaCambio(double valor, ArrayList<Integer> seleccionProductos) {
-        ArrayList<Producto> productosParaCambio = new ArrayList<>();
-        double subtotal = 0;
+  * Método principal para gestionar los productos seleccionados para un cambio.
+  * 
+  * @param valor              El valor máximo permitido para el cambio.
+  * @param seleccionProductos Lista de índices seleccionados por el cliente.
+  * @return ArrayList de productos seleccionados para el cambio.
+  */
+  public ArrayList<Producto> agregarProductosParaCambio(double precioCambio, ArrayList<Integer> seleccionProductos) {
+    ArrayList<Producto> productosSeleccionados = new ArrayList<>();
+    double subtotal = 0;
 
-        for (int indice : seleccionProductos) {
-            // Validar si el índice está dentro del rango permitido
-            if (indice < 1 || indice > listaProducto.size()) {
-                continue; // Ignorar índices fuera de rango
-            }
-
-            Producto productoSeleccionado = listaProducto.get(indice - 1);
-
-            // Si el producto seleccionado excede el valor permitido
-            if ((subtotal + productoSeleccionado.getPrecio()) > valor) {
-                // Añadir el producto como último y terminar el proceso
-                productosParaCambio.add(productoSeleccionado);
-                break;
-            }
-
-            // Añadir el producto al carrito si no excede el valor permitido
-            productosParaCambio.add(productoSeleccionado);
-            subtotal += productoSeleccionado.getPrecio();
-
-            // Si el subtotal alcanza el valor máximo permitido, terminar el proceso
-            if (subtotal >= valor) {
-                break;
-            }
+    for (int indice : seleccionProductos) {
+        // Validar índice y obtener el producto correspondiente
+        if (indice < 1 || indice > listaProducto.size()) {
+            continue; // Ignorar índices inválidos
         }
 
-        // Retornar la lista final de productos seleccionados
-        return productosParaCambio;
+        Producto productoSeleccionado = listaProducto.get(indice - 1);
+
+        // Evitar agregar productos duplicados
+        if (!productosSeleccionados.contains(productoSeleccionado)) {
+            productosSeleccionados.add(productoSeleccionado);
+            subtotal += productoSeleccionado.getPrecio();
+        }
+
+        // Verificar si el subtotal supera el precio permitido después de añadir al menos un producto
+        if (subtotal > precioCambio) {
+            System.out.println("El subtotal ha excedido el valor límite después de añadir: " + productoSeleccionado.getNombre());
+            break;
+        }
     }
+
+    return productosSeleccionados;
+}
+
+    
+    
 //Funcionalidad a la que pertencece: Devoluciones 
 
 //Método que se encarga de filtrar los productos que puede seleccionar el usuario para cambiar
