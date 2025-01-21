@@ -11,6 +11,7 @@ public class Conductor extends Persona {
     private int pesoTransportado;
 
     public Conductor(String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria, Fabrica fabrica, Transporte transporte){
+        super(nombre,cedula,edad,cuentaBancaria);
         this.transporte = transporte;
         setTransporte(transporte);
         this.fabrica = fabrica;
@@ -19,6 +20,8 @@ public class Conductor extends Persona {
         listaConductores.add(this);
 
     }
+
+   public Conductor(){}
 
     public String mostrarMetas(){
         String texto = "";

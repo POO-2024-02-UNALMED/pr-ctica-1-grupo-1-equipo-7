@@ -24,6 +24,7 @@ public class Transporte {
         this.listaDeProductos = new ArrayList<>();
 
     }
+    public Transporte(){}
 
     // Getters y setters
 
