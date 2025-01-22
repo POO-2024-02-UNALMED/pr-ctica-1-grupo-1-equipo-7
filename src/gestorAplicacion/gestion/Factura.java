@@ -16,7 +16,7 @@ public class Factura {
     private Transporte transporte; 
     private LocalDate fecha; 
     private int id;
-    private double total;
+    private double total; //Precio total de la factura. 
     private ArrayList<Producto> listaProductos=new ArrayList<>();  
     private static int totalCreadas=0; 
     public static ArrayList<Factura> listaFacturas=new ArrayList<>(); 
@@ -72,6 +72,7 @@ public class Factura {
     }
 
     return totalParcial + calcularValorEnvio();
+    //Calcular envio no se usara en el total factura
 }
 
 //Funcionalidad a la que pertenece: Devoluciones
@@ -208,6 +209,7 @@ public static double gananciasTotales(LocalDate fecha1, LocalDate fecha2) {
   }
   return total;
 }
+
 
 //Funcionalidad a la que pertenece: Estadistica
 //Obtiene las ganancias totales de las facturas entre la fecha minima y maxima

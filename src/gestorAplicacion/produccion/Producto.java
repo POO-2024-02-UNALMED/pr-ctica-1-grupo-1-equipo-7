@@ -11,7 +11,6 @@ public class Producto {
     private String tipo;
     private String categoria; 
     private double peso; 
-    private double tamano;
     private String motivoDevolucion=null; //No borren los atributos de los demas.
     private boolean devuelto; // Tipo de producto //?
     public static ArrayList<String> motivosDevolucion  = new ArrayList<>(Arrays.asList(
@@ -23,7 +22,7 @@ public class Producto {
             "Otro motivo"
         ));
     //Constructores: 
-    public Producto(String nombre, int precio, int cantidad, int id, estadosProducto estado, String tipo, String categoria){
+    public Producto(String nombre, int precio, int cantidad,  estadosProducto estado, String tipo, String categoria,double peso){
         this.nombre = nombre;
         this.precio = precio;
         this.cantidad = cantidad;
@@ -31,7 +30,8 @@ public class Producto {
         this.tipo = tipo;
         this.categoria = categoria;
         totalCreados++;
-        this.id=id;
+        this.id=totalCreados;
+        this.peso=peso;
     }
     public Producto(){
         totalCreados++;
@@ -44,7 +44,6 @@ public class Producto {
         this.tipo = producto.tipo;
         this.categoria = producto.categoria;
         this.peso = producto.peso;
-        this.tamano = producto.tamano;
         this.motivoDevolucion = producto.motivoDevolucion;
         this.devuelto = producto.devuelto;
         totalCreados++;
@@ -127,12 +126,7 @@ public static String obtenerMotivoDeDevolucion(int index) {
     public void setPeso(double peso){
         this.peso = peso;
     }
-    public double getTamano(){
-        return this.tamano;
-    }
-    public void setTamano(double tamano){
-        this.tamano = tamano;
-    }
+  
     @Override
     public String toString(){
         return "Nombre: "+this.nombre+
