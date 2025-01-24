@@ -76,7 +76,8 @@ public class Main {
 
     public static void estadisticas() {
         // Implementar la funcionalidad de estadísticas
-        uiMain.uiEstadistica.mostar();
+        uiMain.uiEstadistica.bienvenida();
+        uiMain.uiEstadistica.mostrar();
     }
 
     // Crear cuentas bancarias
