@@ -11,7 +11,6 @@ public class Operario extends Persona {
     public Operario(String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria, Fabrica fabrica){
         super(nombre, cedula, edad, cuentaBancaria);
         this.fabrica = fabrica;
-        fabrica.setOperario(this);
         this.metaOperario = new ArrayList<>();
         listaOperario.add(this);
     }

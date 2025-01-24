@@ -142,7 +142,7 @@ public class Main {
         System.out.println("Fábrica: " + fabrica);
         System.out.println("Tiendas: ");
         listaTiendas.forEach(System.out::println);
-        System.out.println("Productos en la fábrica: ");
+        System.out.println("\nProductos en la fábrica: ");
         productosFabrica.forEach(System.out::println);
     }
 }
