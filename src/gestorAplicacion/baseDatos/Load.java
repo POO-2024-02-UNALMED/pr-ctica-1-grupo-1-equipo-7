@@ -1,9 +1,8 @@
-package baseDatos.temp;
+package baseDatos;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import baseDatos.Serializador;
 import gestion.Cliente;
 import gestion.Conductor;
 import gestion.Factura;

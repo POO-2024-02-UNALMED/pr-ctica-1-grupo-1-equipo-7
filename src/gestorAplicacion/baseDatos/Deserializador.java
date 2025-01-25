@@ -1,4 +1,4 @@
-package baseDatos.temp;
+package baseDatos;
 
 import java.io.ObjectInputStream;
 import java.util.ArrayList;

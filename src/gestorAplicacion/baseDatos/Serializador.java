@@ -1,8 +1,6 @@
 package baseDatos;
 import java.io.*;
 
-import baseDatos.temp.Load;
-
 public class Serializador {
     
     public static void serializar(Object objeto, String nombreArchivo) {
