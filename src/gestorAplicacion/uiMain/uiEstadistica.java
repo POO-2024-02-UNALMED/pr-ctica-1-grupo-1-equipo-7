@@ -15,8 +15,12 @@ public class uiEstadistica {
     private static LocalDate fechaInicio;
     private static LocalDate fechaFin;
 
+    public static void bienvenida() {
+        System.out.println("=== Bienvenido al módulo de estadísticas ===");
+
+    }
+
     public static void asignarFecha() {
-        System.out.println("Bienvenido al menú de Estadísticas. la fecha de inicio general de facturación es: " + Factura.getFechaMin() + " y la fecha de fin general de facturación es: " + Factura.getFechaMax());
 
         System.out.println("Usar fechas por defecto? (s/n): ");
 
@@ -60,7 +64,7 @@ public class uiEstadistica {
         System.out.print("Seleccione una opción: ");
     }
 
-    public static void mostar() {
+    public static void mostrar() {
         int opcion;
         do {
             mostrarMenu();
@@ -98,6 +102,16 @@ public class uiEstadistica {
                 default:
                     System.out.println("Opción no válida. Intente de nuevo.");
             }
+            
+            System.out.println("Desea realizar otra operación? (s/n): ");
+            String respuesta = scanner.nextLine().toLowerCase();
+            if (!respuesta.equalsIgnoreCase("s") & !respuesta.equalsIgnoreCase("n")) {
+                mostrar();
+            } else {
+                System.out.println("Saliendo...");
+                opcion = 6;
+            }
+
         } while (opcion != 6);
     }
 
