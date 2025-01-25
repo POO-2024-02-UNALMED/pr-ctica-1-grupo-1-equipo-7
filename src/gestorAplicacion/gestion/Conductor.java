@@ -4,19 +4,25 @@ import java.util.ArrayList;
 import produccion.Fabrica;
 
 public class Conductor extends Persona {
+    private static ArrayList<Conductor> listaConductores = new ArrayList<>();//me genera error en un metodo ya que una lista de conductos no es una lista de conductores V:
     private Transporte transporte;
     private Fabrica fabrica;
-    private static ArrayList<Conductor> listaConductores = new ArrayList<>();//me genera error en un metodo ya que una lista de conductos no es una lista de conductores V:
     private ArrayList<Meta> metaConductor;
+    private int pesoTransportado;
+    private String licencia;
 
     public Conductor(String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria, Fabrica fabrica, Transporte transporte){
         super(nombre,cedula,edad,cuentaBancaria);
         this.transporte = transporte;
-        setTransporte(transporte);
+        transporte.setConductor(this);        
         this.fabrica = fabrica;
         this.metaConductor = new ArrayList<>();
         listaConductores.add(this);
-
+    }
+    public Conductor(String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria, Fabrica fabrica, Transporte transporte,String licencia){
+    this(nombre,cedula,edad,cuentaBancaria,fabrica,transporte);
+    this.licencia=licencia;
+    
     }
 
    public Conductor(){}
@@ -60,7 +66,7 @@ public class Conductor extends Persona {
 
     public void setTransporte(Transporte transporte) { 
         this.transporte = transporte;
-        transporte.setConductor(this);
+        //transporte.setConductor(this);
     }
 
     // Para el atributo fabrica

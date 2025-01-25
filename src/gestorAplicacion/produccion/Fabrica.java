@@ -16,17 +16,20 @@ public class Fabrica {
                                                 //RTA: Para la de devoluciones necesito que sea static:). Att: Andres.
     private static Operario operario;       //lo mismo para operario 
     private static ArrayList <Producto> productosDisponibles; //Catalogo de productos disponibles en la fábrica
+    private static Operario operario;  
+    private static ArrayList <Producto> productosDisponibles; //se traen todos productos que pueden ser producidos en la fabrica a partir de una lista que tiene la cual se le pasa en el constructor de la fábrica la cual contiene todos los productos que puede abastecer 
     private static ArrayList<Tienda> listaTienda = new ArrayList<Tienda>();
 
     // Constructor
-    public Fabrica(String idFabrica, String nombre, String direccion, CuentaBancaria cuentaBancariaFabrica, Operario operario, ArrayList<Producto> productosDisponibles,ArrayList<Tienda> listaTienda) {
+    public Fabrica(String idFabrica, String nombre, String direccion, CuentaBancaria cuentaBancariaFabrica,  ArrayList<Producto> productosDisponibles,ArrayList<Tienda> listaTienda, Operario operario) {
         this.idFabrica = idFabrica;
         this.nombre = nombre;
         this.direccion = direccion;
         cuentaBancaria = cuentaBancariaFabrica;
-        Fabrica.operario = operario;
         Fabrica.productosDisponibles = productosDisponibles;
         Fabrica.listaTienda = listaTienda;
+        operario.setFabrica(this);
+        
     }
     public Fabrica() {}
 
@@ -90,29 +93,40 @@ public class Fabrica {
         }
     }
 
-    public static String mostrarTiendas() {
+       public static String mostrarTiendas() {
         if (listaTienda.isEmpty()) {
             return "No hay tiendas disponibles.";
         }
-
+    
         StringBuilder resultado = new StringBuilder("Listado de Tiendas:\n");
         for (int i = 0; i < listaTienda.size(); i++) {
             Tienda tienda = listaTienda.get(i);
-            resultado.append((i + 1)).append(". ").append(tienda.getNombre()).append("\n");
-            resultado.append("Productos actuales:\n");
-            resultado.append(tienda.cantidadProductos()).append("\n"); // Usar el nuevo método cantidadProductos
+            resultado.append((i + 1)).append(". ").append(tienda.getNombre()).append(":\n");
+            resultado.append("  Productos actuales:\n");
+    
+            // Obtener los productos de la tienda y agregar indentación
+            String[] productos = tienda.cantidadProductos().split("\n");
+            for (String producto : productos) {
+                resultado.append("    ").append(producto).append("\n");
+            }
         }
         return resultado.toString();
     }
-    public static String mostrarProductos() {//Método que se encarga de mostrar los productos disponibles en la fábrica.
-        String productos = "";
+    public static String mostrarProductos() {
+        StringBuilder productos = new StringBuilder();
         if (Fabrica.productosDisponibles == null || Fabrica.productosDisponibles.isEmpty()) {
             return "No hay productos registrados o disponibles.";
         }
+        int index = 1;
         for (Producto producto : Fabrica.productosDisponibles) {
-            productos += producto.getNombre() + "\n";
+            productos.append(index).append(". ")
+                     .append(producto.getNombre()).append(" - ")
+                     .append(producto.getPeso()).append("kg - $")
+                     .append(producto.getPrecio()).append(" - ")
+                     .append(producto.getCategoria()).append("\n");
+            index++;
         }
-        return productos;
+        return productos.toString();
     }
        public static ArrayList<Producto> cantidadProductos(Producto producto, int cantidadAEnviar) {
         ArrayList<Producto> productosGenerados = new ArrayList<>();

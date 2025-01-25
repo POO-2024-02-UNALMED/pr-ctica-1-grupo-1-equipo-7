@@ -15,20 +15,19 @@ public class uiAbastacerTiedas {
         Scanner sc = new Scanner(System.in);
         boolean salir = false;
         
-
+        //INICIO DEL PROCESO DE ABASTECIMIENTO
         while (!salir) {
             System.out.println("========================================");
             System.out.println("¡Bienvenido a la opción de abastecer tienda!");
             System.out.println("Seleccione la tienda que desea abastecer (0 para salir):");
             System.out.println("========================================");
-            System.out.println(" 0. Salir");
+            System.out.println("0. Salir");
             System.out.println(Fabrica.mostrarTiendas());
             System.out.println("========================================");
 
-
             int tiendaSeleccionadaIndex = -1;
             Tienda tiendaSeleccionada = null;
-//salir es para regresar al menu principal y el otro(return) es para romper el bucle.(truque escrii mal). deberia implementarse la opcion de volver al menu principal o realizar el abastecimientod desde cero
+            
             // Bucle para seleccionar la tienda
             while (tiendaSeleccionadaIndex < 0 || tiendaSeleccionadaIndex > Fabrica.getListaTienda().size()) {
                 try {
@@ -56,6 +55,9 @@ public class uiAbastacerTiedas {
                                 tiendaSeleccionadaIndex = -1;
                                 continue;
                             }
+                            else if (!respuestaTienda.equalsIgnoreCase("v")) {
+                                System.out.println("Continuando con el proceso de abastecimiento...");
+                            }
                         } catch (Exception e) {
                             System.out.println("Entrada inválida. Por favor, ingrese una letra.");
                             sc.nextLine(); // Limpiar el buffer
@@ -67,116 +69,150 @@ public class uiAbastacerTiedas {
                 }
             }
 
-            if (salir) break; // Esta línea se utiliza para verificar si salir se ha establecido en true en cualquier punto del bucle.
-
-            // Mostrar productos por categoría
-            System.out.println("========================================");
-            System.out.println("Productos por categoría en la tienda seleccionada:");
-            System.out.println(tiendaSeleccionada.productosPorCategoria(tiendaSeleccionada.getListaProducto()));
-            System.out.println("========================================");
-            
-            // Lista para almacenar los productos seleccionados y sus cantidades
-            ArrayList<Producto> productosGenerados = new ArrayList<>();
-            // Lista temporal para almacenar los cambios en la cantidad de productos por categoría
-            List<Integer> conteoCategoriasTemporal = new ArrayList<>(tiendaSeleccionada.getConteoCategorias());
-
-            // Bucle para añadir productos al abastecimiento
-            Double pesoTotalProductos = 0d;
-            while (true) {
-                // Selección de producto
-                System.out.println("========================================");
-                System.out.println("Seleccione el producto que desea enviar a la tienda (0 para salir):");
-                System.out.println("========================================");
-                System.out.println(" 0. Salir");
-                System.out.println(Fabrica.mostrarProductos());
-                System.out.println("========================================");
-                int productoSeleccionadoIndex = -1;
-                Producto productoSeleccionado = null;
-
-                // Bucle para seleccionar el producto
-                while (productoSeleccionadoIndex < 0 || productoSeleccionadoIndex > Fabrica.getProductosDisponibles().size()) {
-                    try {
-                        productoSeleccionadoIndex = sc.nextInt();
-                        if (productoSeleccionadoIndex == 0) {
-                            System.out.println("Saliendo...");
-                            sc.close();
-                            return;
-                        }
-                        if (productoSeleccionadoIndex < 1 || productoSeleccionadoIndex > Fabrica.getProductosDisponibles().size()) {
-                            System.out.println("Número inválido. Ingrese un número entre 1 y " + Fabrica.getProductosDisponibles().size() + ".");
-                        } else {
-                            productoSeleccionado = Fabrica.getProductosDisponibles().get(productoSeleccionadoIndex - 1);
-                            System.out.println("Producto seleccionado: " + productoSeleccionado.getNombre());
-
-                            // Selección de cantidad de productos a enviar
-                            String categoriaProducto = productoSeleccionado.getCategoria();
-                            int indexCategoria = tiendaSeleccionada.getCategorias().indexOf(categoriaProducto);
-                            int cantidadActual = conteoCategoriasTemporal.get(indexCategoria);
-                            int cantidadMaxima = tiendaSeleccionada.getCantidadMaximaPorCategoria();
-                            int cantidadDisponible = cantidadMaxima - cantidadActual;
-
-                            System.out.println("Cantidad máxima de productos en la categoría " + categoriaProducto + ": " + cantidadDisponible);
-                            System.out.println("Ingrese la cantidad de productos a enviar:");
-
-                            int cantidadAEnviar = -1;
-                            //Bucle para seleccionar cantidad de productos a enviar
-                            while (cantidadAEnviar < 0 || cantidadAEnviar > cantidadDisponible) {
-                                try {
-                                    cantidadAEnviar = sc.nextInt();
-                                    if (cantidadAEnviar < 0 || cantidadAEnviar > cantidadDisponible) {
-                                        System.out.println("Cantidad inválida. Ingrese un número entre 0 y " + cantidadDisponible + ".");
-                                    } else {
-                                        System.out.println("Enviando " + cantidadAEnviar + " productos de la categoría " + categoriaProducto + " a la tienda " + tiendaSeleccionada.getNombre());
-                                        
-                                        // Generar los productos y agregarlos a la lista
-                                        productosGenerados.addAll(Fabrica.cantidadProductos(productoSeleccionado, cantidadAEnviar));//aqui cantidadProductos crea nuevos prodcutos asi que no se debe hacer ya que aun no se confirma el abastecimiento
-
-                                        // Calcular el peso total de los productos seleccionados
-                                        pesoTotalProductos += productoSeleccionado.getPeso() * cantidadAEnviar;
-
-                                        // Actualizar la cantidad de productos en la lista temporal
-                                        conteoCategoriasTemporal.set(indexCategoria, cantidadActual + cantidadAEnviar);
-                                    }
-                                } catch (Exception e) {
-                                    System.out.println("Entrada inválida. Por favor, ingrese un número.");
-                                    sc.nextLine(); // Limpiar el buffer
+                    // Mostrar los productos por categoría
+                    System.out.println("========================================");
+                    System.out.println("Productos por categoría en la tienda seleccionada:");
+                    System.out.println(tiendaSeleccionada.productosPorCategoria(tiendaSeleccionada.getListaProducto()));
+ 
+                    
+                    // Lista para almacenar los productos seleccionados y sus cantidades
+                    ArrayList<Producto> productosGenerados = new ArrayList<>();
+                    // Lista temporal para almacenar los cambios en la cantidad de productos por categoría
+                    ArrayList<Integer> conteoCategoriasTemporal = new ArrayList<>();
+                    conteoCategoriasTemporal.add(tiendaSeleccionada.getCantidadActualPorCategoria("Construcción"));
+                    conteoCategoriasTemporal.add(tiendaSeleccionada.getCantidadActualPorCategoria("Alimentos"));
+                    conteoCategoriasTemporal.add(tiendaSeleccionada.getCantidadActualPorCategoria("Hogar"));
+                    
+                    // Bucle para añadir productos al abastecimien3to
+                    Double pesoTotalProductos = 0d;
+                    while (true) {
+                        // Selección de producto
+                        System.out.println("========================================");
+                        System.out.println("Seleccione el producto que desea enviar a la tienda (0 para salir):");
+                        System.out.println("========================================");
+                        System.out.println("0. Salir");
+                        System.out.println(Fabrica.mostrarProductos());
+                        System.out.println("========================================");
+                        int productoSeleccionadoIndex = -1;
+                        Producto productoSeleccionado = null;
+                    
+                        // Bucle para seleccionar el producto
+                        while (productoSeleccionadoIndex < 0 || productoSeleccionadoIndex > Fabrica.getProductosDisponibles().size()) {
+                            try {
+                                productoSeleccionadoIndex = sc.nextInt();
+                                if (productoSeleccionadoIndex == 0) {
+                                    System.out.println("Saliendo...");
+                                    sc.close();
+                                    return;
                                 }
+                                if (productoSeleccionadoIndex < 1 || productoSeleccionadoIndex > Fabrica.getProductosDisponibles().size()) {
+                                    System.out.println("Número inválido. Ingrese un número entre 1 y " + Fabrica.getProductosDisponibles().size() + ".");
+                                } else {
+                                    productoSeleccionado = Fabrica.getProductosDisponibles().get(productoSeleccionadoIndex - 1);
+                                    System.out.println("Producto seleccionado: " + productoSeleccionado.getNombre());
+                    
+                                    // Selección de cantidad de productos a enviar
+                                    String categoriaProducto = productoSeleccionado.getCategoria();
+                                    int cantidadActual = tiendaSeleccionada.getCantidadActualPorCategoria(categoriaProducto);
+                                    
+                                    int cantidadMaxima;
+                                    
+                                    switch (categoriaProducto) {
+                                        case "Construcción":
+                                            cantidadActual = conteoCategoriasTemporal.get(0);
+                                            cantidadMaxima = tiendaSeleccionada.getCapacidadMaximaMaterial();
+                                            break;
+                                        case "Alimentos":
+                                            cantidadActual = conteoCategoriasTemporal.get(1);
+                                            cantidadMaxima = tiendaSeleccionada.getCapacidadMaximaConsumible();
+                                            break;
+                                        case "Hogar":
+                                            cantidadActual = conteoCategoriasTemporal.get(2);
+                                            cantidadMaxima = tiendaSeleccionada.getCapacidadMaximaLimpieza();
+                                            break;
+                                        default:
+                                            cantidadMaxima = 0; 
+                                            cantidadActual = 0;
+                                            break;
+                                    }
+                                    int cantidadDisponible = cantidadMaxima - cantidadActual;
+                                    
+                                    //se establece el limite de productos a enviar
+                                    System.out.println("Cantidad máxima de productos en la categoría " + categoriaProducto + ": " + cantidadDisponible);
+                                    System.out.println("Ingrese la cantidad de productos a enviar:");
+                    
+                                    int cantidadAEnviar = -1;
+                                    // Bucle para seleccionar cantidad de productos a enviar
+                                    while (cantidadAEnviar < 0 || cantidadAEnviar > cantidadDisponible) {
+                                        try {
+                                            cantidadAEnviar = sc.nextInt();
+                                            if (cantidadAEnviar < 0 || cantidadAEnviar > cantidadDisponible) {
+                                                System.out.println("Cantidad inválida. Ingrese un número entre 0 y " + cantidadDisponible + ".");
+                                            } else {
+                                                System.out.println("Enviando " + cantidadAEnviar + " productos de la categoría " + categoriaProducto + " a la tienda " + tiendaSeleccionada.getNombre());
+                                                
+                                                // Generar los productos y agregarlos a la lista
+                                                productosGenerados.addAll(Fabrica.cantidadProductos(productoSeleccionado, cantidadAEnviar));
+                    
+                                                // Calcular el peso total de los productos seleccionados
+                                                pesoTotalProductos += productoSeleccionado.getPeso() * cantidadAEnviar;
+                    
+                                                // Actualizar la cantidad de productos en la lista temporal
+                                                switch (categoriaProducto) {
+                                                    case "Construcción":
+                                                        conteoCategoriasTemporal.set(0, conteoCategoriasTemporal.get(0) + cantidadAEnviar);
+                                                        break;
+                                                    case "Alimentos":
+                                                        conteoCategoriasTemporal.set(1, conteoCategoriasTemporal.get(1) + cantidadAEnviar);
+                                                        break;
+                                                    case "Hogar":
+                                                        conteoCategoriasTemporal.set(2, conteoCategoriasTemporal.get(2) + cantidadAEnviar);
+                                                        break;
+                                                }
+                                            }
+                                        } catch (Exception e) {
+                                            System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                                            sc.nextLine(); // Limpiar el buffer
+                                        }
+                                    }
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                                e.printStackTrace();
+                                sc.nextLine(); // Limpiar el buffer
                             }
                         }
-                    } catch (Exception e) {
-                        System.out.println("Entrada inválida. Por favor, ingrese un número.");
-                        sc.nextLine(); // Limpiar el buffer
+                    
+                        // Mostrar productos por categoría actualizados
+                        System.out.println("Productos por categoría en la tienda seleccionada:");
+                        System.out.println(tiendaSeleccionada.productosPorCategoria(tiendaSeleccionada.getListaProducto(), conteoCategoriasTemporal));
+                    
+                        // Preguntar si desea añadir más productos
+                        System.out.println("========================================");
+                        System.out.println("¿Desea añadir más productos?");
+                        System.out.println("s para sí, v para volver a elegir productos, cualquier otra tecla para continuar):");
+                        System.out.println("========================================");
+                       
+                        try {
+                            String respuesta = sc.next();
+                            if (respuesta.equalsIgnoreCase("v")) {
+                                //Reinicio de la lista de productos generados y la lista temporal de conteo de categorías
+                                productosGenerados.clear();
+                                conteoCategoriasTemporal.clear();
+                                conteoCategoriasTemporal.add(tiendaSeleccionada.getCantidadActualPorCategoria("Construcción"));
+                                conteoCategoriasTemporal.add(tiendaSeleccionada.getCantidadActualPorCategoria("Alimentos"));
+                                conteoCategoriasTemporal.add(tiendaSeleccionada.getCantidadActualPorCategoria("Hogar"));
+                                pesoTotalProductos = 0d; // Reiniciar el peso total
+                                continue;
+                            }
+                            if (!respuesta.equalsIgnoreCase("s")) {
+                                break;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Entrada inválida. Ingrese una letra.");
+                            sc.nextLine(); // Limpiar el buffer
+                        }
                     }
-                }
-
-                if (salir) break; // Esta línea se utiliza para verificar si salir se ha establecido en true en cualquier punto del bucle.
-
-                // Mostrar productos por categoría actualizados
-                System.out.println("Productos por categoría en la tienda seleccionada:");
-                System.out.println(tiendaSeleccionada.productosPorCategoria(tiendaSeleccionada.getListaProducto(), conteoCategoriasTemporal)); // Usar productosPorCategoria
-
-                // Preguntar si desea añadir más productos
-                System.out.println("========================================");
-                System.out.println("¿Desea añadir más productos?");
-                System.out.println("s para sí, v para volver a elegir productos, cualquier otra tecla para continuar):");
-                System.out.println("========================================");
-               
-                try {
-                    String respuesta = sc.next();
-                    if (respuesta.equalsIgnoreCase("v")) {
-                        productosGenerados.clear();
-                        conteoCategoriasTemporal = new ArrayList<>(tiendaSeleccionada.getConteoCategorias());
-                        pesoTotalProductos = 0d; //si se vuelve al paso anterior se borra el peso aunque en el primer producto si se alla confirmado
-                        continue;
-                    }
-                    if (!respuesta.equalsIgnoreCase("s")) {
-                        break;
-                    }
-                } catch (Exception e) {
-                    System.out.println("Entrada inválida. Ingrese una letra.");
-                    sc.nextLine(); // Limpiar el buffer
-                }
-            }
 
             if (salir) break; // Esta línea se utiliza para verificar si salir se ha establecido en true en cualquier punto del bucle.
             
@@ -236,16 +272,21 @@ public class uiAbastacerTiedas {
                         if (confirmar.equalsIgnoreCase("s")) {
                             // Aplicar los cambios a la tienda
                             tiendaSeleccionada.setConteoCategorias(conteoCategoriasTemporal);
+                            tiendaSeleccionada.setListaProducto(tiendaSeleccionada.getListaProducto());
+                            System.out.println("========================================");
+                            System.out.println("Abastecimiento confirmado.");
+                            System.out.println("Enviando productos a la tienda " + tiendaSeleccionada.getNombre() + "...");
+                            System.out.println("========================================");
 
                             // Cargar productos en el transporte del conductor seleccionado
                             Transporte transporte = conductorSeleccionado.getTransporte();
                             transporte.abastecerProducto(tiendaSeleccionada, productosGenerados);
                             
                             //Cumplir con la meta del conductor y del operario
-                            conductorSeleccionado.setIndiceMeta(conductorSeleccionado.getIndiceMeta() + pesoTotalProductos);
+                            /*conductorSeleccionado.setIndiceMeta(conductorSeleccionado.getIndiceMeta() + pesoTotalProductos);
                             conductorSeleccionado.cantidadTrabajo += 1;
                             Fabrica.getOperario().setIndiceMeta(Fabrica.getOperario().getIndiceMeta() + 1);
-                            Fabrica.getOperario().setCantidadTrabajo(Fabrica.getOperario().getCantidadTrabajo() + 1);
+                            Fabrica.getOperario().setCantidadTrabajo(Fabrica.getOperario().getCantidadTrabajo() + 1);*/
 
                             // Descargar productos en la tienda
                             tiendaSeleccionada.descargarProducto(transporte);
@@ -256,7 +297,7 @@ public class uiAbastacerTiedas {
                             System.out.println("El producto fue enviado con éxito. Ahora la tienda tiene:");
                             System.out.println("       PRODUCTOS:");
                             System.out.println(tiendaSeleccionada.cantidadProductos());// Sobrecarga de método cantidadProductos
-                            System.out.println("========================================"); 
+
                         } else {
                             System.out.println("Abastecimiento cancelado.");
                             continue;
@@ -264,7 +305,9 @@ public class uiAbastacerTiedas {
                     }
                 } catch (Exception e) {
                     System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                    e.printStackTrace();
                     sc.nextLine(); // Limpiar el buffer
+
                 }
             }
 

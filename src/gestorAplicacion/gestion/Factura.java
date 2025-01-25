@@ -8,7 +8,6 @@ import produccion.Producto;
 import produccion.Tienda;
 import produccion.Transporte;
 import produccion.estadosProducto;
-import gestion.Moda;
 
 public class Factura {
     private Tienda tienda; 
@@ -16,7 +15,7 @@ public class Factura {
     private Transporte transporte; 
     private LocalDate fecha; 
     private int id;
-    private double total;
+    private double total; //Precio total de la factura. 
     private ArrayList<Producto> listaProductos=new ArrayList<>();  
     private static int totalCreadas=0; 
     public static ArrayList<Factura> listaFacturas=new ArrayList<>(); 
@@ -71,6 +70,7 @@ public class Factura {
     }
 
     return totalParcial + calcularValorEnvio();
+    //Calcular envio no se usara en el total factura
 }
 
 //Funcionalidad a la que pertenece: Devoluciones
@@ -208,6 +208,7 @@ public static double gananciasTotales(LocalDate fecha1, LocalDate fecha2) {
   return total;
 }
 
+
 //Funcionalidad a la que pertenece: Estadistica
 //Obtiene las ganancias totales de las facturas entre la fecha minima y maxima
 public static double gananciasTotales() {
@@ -244,12 +245,12 @@ public static double aumentoPorcentual(LocalDate fecha1, LocalDate fecha2) {
 
 //Funcionalidad a la que pertenece: Estadistica
 //Obtiene el producto mas comun de una lista de productos
-public static Object masComun(ArrayList<Object> productos) {
-  Object masComun = productos.get(0);
+public static Object masComun(ArrayList<Object> obj) {
+  Object masComun = obj.get(0);
   int max = 0;
-  for (Object p: productos) {
+  for (Object p: obj) {
     int count = 0;
-    for (Object p2: productos) {
+    for (Object p2: obj) {
       if (p.equals(p2)) {
         count++;
       }
@@ -278,13 +279,23 @@ public static Object modaProductos(LocalDate fecha1, LocalDate fecha2) {
 //Funcionalidad a la que pertenece: Estadistica
 //Obtiene la moda de una lista de clientes
 public static Object modaClientes(LocalDate fecha1, LocalDate fecha2) {
-  return new Object();
+  ArrayList<Factura> facturas = getFacturasEntreFechas(fecha1, fecha2);
+  ArrayList<Object> clientes = new ArrayList<>();
+  for (Factura f: facturas) {
+    clientes.add(f.getCliente());
+  }
+  return masComun(clientes);
 }
 
 //Funcionalidad a la que pertenece: Estadistica
 //Obtiene la moda de una lista de tiendas
 public static Object modaTiendas(LocalDate fecha1, LocalDate fecha2) {
-  return new Object();
+  ArrayList<Factura> facturas = getFacturasEntreFechas(fecha1, fecha2);
+  ArrayList<Object> tiendas = new ArrayList<>();
+  for (Factura f: facturas) {
+    tiendas.add(f.getTienda());
+  }
+  return masComun(tiendas);
 }
 
 

@@ -23,6 +23,11 @@ public class Tienda {
     //para la funcionalidad abastecer:
     //private List<Producto> productosAbastecer = new ArrayList<>();//no se van a usar
     //private List<Integer> cantidadesAbastecer = new ArrayList<>();//tampoco por ahora
+    private ArrayList<String> categorias = new ArrayList<>();
+    private ArrayList<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
+    private int capacidadMaximaMaterial;
+    private int capacidadMaximaConsumible;
+    private int capacidadMaximaLimpieza;//Es la cantidad maxima de productos que puede tener una tienda por categoria. (Es atributo auxiliar para la funcionalidad de abastecer.)
 
     // constructor
     public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
@@ -35,6 +40,9 @@ public class Tienda {
         this.cantidadProductos=new ArrayList<>();
         this.productosDevueltos=new ArrayList<>();
         this.listaProducto=new ArrayList<>();
+        this.capacidadMaximaMaterial = capacidadMaximaMaterial;
+        this.capacidadMaximaConsumible = capacidadMaximaConsumible;
+        this.capacidadMaximaLimpieza = capacidadMaximaLimpieza;
     }
     //getters y setters
 
@@ -100,20 +108,32 @@ public ArrayList<Object[]> getCantidadProductos() {
     return cantidadProductos;
 }
 
-public List<String> getCategorias() {
+public ArrayList<String> getCategorias() {
     return categorias;
 }
-public List<Integer> getConteoCategorias() {
+public ArrayList<Integer> getConteoCategorias() {
     return conteoCategorias;
 }
-public void setConteoCategorias(List<Integer> conteoCategorias) {
+public void setConteoCategorias(ArrayList<Integer> conteoCategorias) {
     this.conteoCategorias = conteoCategorias;
 }
-public Integer getCantidadMaximaPorCategoria() {
-    return cantidadMaximaPorCategoria;
+public int getCapacidadMaximaConsumible() {
+    return capacidadMaximaConsumible;
 }
-public void setCantidadMaximaPorCategoria(Integer cantidadMaximaPorCategoria) {
-    this.cantidadMaximaPorCategoria = cantidadMaximaPorCategoria;
+public int getCapacidadMaximaLimpieza() {
+    return capacidadMaximaLimpieza;
+}
+public int getCapacidadMaximaMaterial() {
+    return capacidadMaximaMaterial;
+}
+public void setCapacidadMaximaConsumible(int capacidadMaximaConsumible) {
+    this.capacidadMaximaConsumible = capacidadMaximaConsumible;
+}
+public void setCapacidadMaximaLimpieza(int capacidadMaximaLimpieza) {
+    this.capacidadMaximaLimpieza = capacidadMaximaLimpieza;
+}
+public void setCapacidadMaximaMaterial(int capacidadMaximaMaterial) {
+    this.capacidadMaximaMaterial = capacidadMaximaMaterial;
 }
 //metodos
 
@@ -140,22 +160,29 @@ public void agregarProductosPorCategoria(Producto producto, int categoria){
     Object[] productoCategoria = {producto, categoria};
     productosPorCategoria.add(productoCategoria);
 }
- // Método para calcular productos por categoría
- public String productosPorCategoria(List<Producto> productos) {
+public String productosPorCategoria(ArrayList<Producto> productos) {
     // Limpiar las listas antes de procesar
     categorias.clear();
     conteoCategorias.clear();
+
+    // Lista de todas las categorías posibles
+    ArrayList<String> todasLasCategorias = new ArrayList<>();
+    todasLasCategorias.add("Construcción");
+    todasLasCategorias.add("Alimentos");
+    todasLasCategorias.add("Hogar");
+
+    // Inicializar el conteo de todas las categorías a 0
+    for (String categoria : todasLasCategorias) {
+        categorias.add(categoria);
+        conteoCategorias.add(0);
+    }
 
     // Procesar la lista de productos
     for (Producto producto : productos) {
         String categoria = producto.getCategoria(); // Obtener la categoría del producto
 
         int index = categorias.indexOf(categoria); // Buscar si la categoría ya existe
-        if (index == -1) {
-            // Si no existe, agregarla junto con el conteo inicial
-            categorias.add(categoria);
-            conteoCategorias.add(1);
-        } else {
+        if (index != -1) {
             // Si ya existe, incrementar el conteo correspondiente
             conteoCategorias.set(index, conteoCategorias.get(index) + 1);
         }
@@ -167,16 +194,44 @@ public void agregarProductosPorCategoria(Producto producto, int categoria){
         resultado.append(categorias.get(i))
                  .append(": ")
                  .append(conteoCategorias.get(i))
-                 .append("/")
-                 .append(cantidadMaximaPorCategoria)
-                 .append(" productos\n");
+                 .append("/");
+
+        // Dependiendo de la categoría, agregar la capacidad máxima correspondiente
+        switch (categorias.get(i)) {
+            case "Construcción":
+                resultado.append(capacidadMaximaMaterial);
+                break;
+            case "Alimentos":
+                resultado.append(capacidadMaximaConsumible);
+                break;
+            case "Hogar":
+                resultado.append(capacidadMaximaLimpieza);
+                break;
+            default:
+                resultado.append("N/A");
+                break;
+        }
+
+        resultado.append(" productos\n");
     }
 
     return resultado.toString();
 }
+//sobrecarga del metodo anterior
 public String productosPorCategoria(List<Producto> productos, List<Integer> conteoTemporal) {
     // Limpiar las listas antes de procesar
     categorias.clear();
+
+    // Lista de todas las categorías posibles
+    ArrayList<String> todasLasCategorias = new ArrayList<>();
+    todasLasCategorias.add("Construcción");
+    todasLasCategorias.add("Alimentos");
+    todasLasCategorias.add("Hogar");
+
+    // Inicializar el conteo de todas las categorías a 0
+    for (String categoria : todasLasCategorias) {
+        categorias.add(categoria);
+    }
 
     // Procesar la lista de productos
     for (Producto producto : productos) {
@@ -194,14 +249,38 @@ public String productosPorCategoria(List<Producto> productos, List<Integer> cont
         resultado.append(categorias.get(i))
                  .append(": ")
                  .append(conteoTemporal.get(i))
-                 .append("/")
-                 .append(cantidadMaximaPorCategoria)
-                 .append(" productos\n");
-    }
+                 .append("/");
 
+        // Dependiendo de la categoría, agregar la capacidad máxima correspondiente
+        switch (categorias.get(i)) {
+            case "Construcción":
+                resultado.append(capacidadMaximaMaterial);
+                break;
+            case "Alimentos":
+                resultado.append(capacidadMaximaConsumible);
+                break;
+            case "Hogar":
+                resultado.append(capacidadMaximaLimpieza);
+                break;
+            default:
+                resultado.append("N/A");
+                break;
+        }
+
+        resultado.append(" productos\n");
+    }
     return resultado.toString();
 }
 
+public int getCantidadActualPorCategoria(String categoria) {
+    int cantidad = 0;
+    for (Producto producto : this.listaProducto) {
+        if (producto.getCategoria().equals(categoria)) {
+            cantidad++;
+        }
+    }
+    return cantidad;
+}
 //Funcionalidad a la que pertenece: Devoluciones
 public Cliente devolverProducto(Factura factura, Producto producto){
     productosDevueltos.add(producto);
@@ -270,14 +349,24 @@ public ArrayList<Producto> mostrarProductos(Producto producto) {
 }
 
 public String cantidadProductos() {
+    // Lista para almacenar los nombres de los productos ya contados
+    ArrayList<String> nombresContados = new ArrayList<>();
     // Construir el resultado
     StringBuilder resultado = new StringBuilder();
+
     for (Producto producto : listaProducto) {
-        int cantidad = 0;
-        for (Producto p : listaProducto) {
-            if (p.equals(producto)) {
-                cantidad++;
+        if (!nombresContados.contains(producto.getNombre())) {
+            int cantidad = 0;
+            for (Producto p : listaProducto) {
+                if (p.getNombre().equals(producto.getNombre())) {
+                    cantidad++;
+                }
             }
+            nombresContados.add(producto.getNombre());
+            resultado.append(producto.getNombre())
+                     .append(": ")
+                     .append(cantidad)
+                     .append(" unidades\n");
         }
         resultado.append(producto.getNombre())
                  .append(": ")

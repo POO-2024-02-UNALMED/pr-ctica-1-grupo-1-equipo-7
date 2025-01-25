@@ -11,18 +11,14 @@ public class Transporte {
     private ArrayList<TipoTransporte> listaTransportes;
     private Tienda tienda;
     private ArrayList<Producto> listaDeProductos;
+    final static int montoEnvioGratis=500000;
 
-    public Transporte(TipoTransporte tipoTransporte, double capacidad, double costo, Conductor conductor, Tienda tienda){
+    public Transporte(TipoTransporte tipoTransporte, double capacidad, double costo){
         this.tipoTransporte = tipoTransporte;
-        setTipoTransporte(tipoTransporte);//para enlazar un transporte con un tipo de transporte
         this.capacidad = capacidad;
         this.costo = costo;
-        this.conductor = conductor;
-        setConductor(conductor);//para enlazar un transporte con un conductor
-        this.tienda = tienda;
         this.listaTransportes = new ArrayList<>();
         this.listaDeProductos = new ArrayList<>();
-
     }
 
     // Getters y setters
@@ -61,7 +57,7 @@ public class Transporte {
 
     public void setConductor(Conductor conductor) { 
         this.conductor = conductor;
-        conductor.setTransporte(this);
+        //conductor.setTransporte(this);
     }
 
     // Para el atributo listaTransportes
@@ -97,7 +93,6 @@ public class Transporte {
         this.tienda = tiendaSeleccionada;
      }
     public static boolean enviarGratis(ArrayList<Producto> listaProductos) {
-        int montoEnvioGratis = 500000;
         int precioTotal = 0;
         for (Producto producto : listaProductos) {
             precioTotal += producto.getPrecio();
