@@ -6,23 +6,16 @@ import gestion.Factura;
 
 import java.util.ArrayList;
 import java.util.List;
-//import java.util.Scanner;
+
 public class Tienda {
     //atributos
     private String nombre;
     private Vendedor vendedor;
     private CuentaBancaria cuentaBancaria;
-    private ArrayList<Producto> productosDevueltos;
     private static int numTiendas = 0; 
     private ArrayList<Producto> listaProducto; //Cada tienda tiene una lista de productos DIFERENTES, este atributo NO puede ser static. 
+
     private ArrayList<Object[]> productosPorCategoria = new ArrayList<>(); // Lista de [Producto, Categoria]
-    private ArrayList<Object[]> cantidadProductos = new ArrayList<>();//duda aqui ya que puede ser un integer (con el UM).
-    private List<String> categorias = new ArrayList<>();
-    private List<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
-    private Integer cantidadMaximaPorCategoria;//Es la cantidad maxima de productos que puede tener una tienda por categoria. (Es atributo auxiliar para la funcionalidad de abastecer.)
-    //para la funcionalidad abastecer:
-    //private List<Producto> productosAbastecer = new ArrayList<>();//no se van a usar
-    //private List<Integer> cantidadesAbastecer = new ArrayList<>();//tampoco por ahora
     private ArrayList<String> categorias = new ArrayList<>();
     private ArrayList<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
     private int capacidadMaximaMaterial;
@@ -30,20 +23,19 @@ public class Tienda {
     private int capacidadMaximaLimpieza;//Es la cantidad maxima de productos que puede tener una tienda por categoria. (Es atributo auxiliar para la funcionalidad de abastecer.)
 
     // constructor
-    public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
-        //El numero de tiendas no deberia de ser un parametro del constructor, ya que este se incrementa automaticamente.
+    public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int capacidadMaximaMaterial, int capacidadMaximaConsumible, int capacidadMaximaLimpieza){
         this.nombre=nombre;
         this.vendedor=vendedor;
         this.vendedor.setTienda(this); //Se asigna la tienda al vendedor 
         this.cuentaBancaria=cuentaBancaria;
         numTiendas++;
-        this.cantidadProductos=new ArrayList<>();
-        this.productosDevueltos=new ArrayList<>();
         this.listaProducto=new ArrayList<>();
         this.capacidadMaximaMaterial = capacidadMaximaMaterial;
         this.capacidadMaximaConsumible = capacidadMaximaConsumible;
         this.capacidadMaximaLimpieza = capacidadMaximaLimpieza;
     }
+    public Tienda(){}
+
     //getters y setters
 
     
@@ -80,14 +72,6 @@ public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {
     this.cuentaBancaria = cuentaBancaria;
 }
 
-// Atributo productosDevueltos
-public ArrayList<Producto> getProductosDevueltos() {
-    return productosDevueltos;
-}
-
-public void setProductosDevueltos(ArrayList<Producto> productosDevueltos) {
-    this.productosDevueltos = productosDevueltos;
-}
 
 // Atributo numTiendas
 public int getNumTiendas() {
@@ -271,7 +255,6 @@ public String productosPorCategoria(List<Producto> productos, List<Integer> cont
     }
     return resultado.toString();
 }
-
 public int getCantidadActualPorCategoria(String categoria) {
     int cantidad = 0;
     for (Producto producto : this.listaProducto) {
@@ -368,15 +351,10 @@ public String cantidadProductos() {
                      .append(cantidad)
                      .append(" unidades\n");
         }
-        resultado.append(producto.getNombre())
-                 .append(": ")
-                 .append(cantidad)
-                 .append(" unidades\n");
     }
 
     return resultado.toString(); // Retorna el resultado 
-} 
-
+}
 
 public void descargarProducto(Transporte transporteSeleccionado) {
     ArrayList<Producto> productosTransportados = transporteSeleccionado.getListaDeProductos();
