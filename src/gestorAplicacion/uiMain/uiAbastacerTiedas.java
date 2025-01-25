@@ -242,10 +242,10 @@ public class uiAbastacerTiedas {
                             transporte.abastecerProducto(tiendaSeleccionada, productosGenerados);
                             
                             //Cumplir con la meta del conductor y del operario
-                            conductorSeleccionado.setIndiceMeta(pesoTotalProductos);
+                            conductorSeleccionado.setIndiceMeta(conductorSeleccionado.getIndiceMeta() + pesoTotalProductos);
                             conductorSeleccionado.cantidadTrabajo += 1;
                             Fabrica.getOperario().setIndiceMeta(Fabrica.getOperario().getIndiceMeta() + 1);
-                            Fabrica.getOperario().cantidadTrabajo += 1;
+                            Fabrica.getOperario().setCantidadTrabajo(Fabrica.getOperario().getCantidadTrabajo() + 1);
 
                             // Descargar productos en la tienda
                             tiendaSeleccionada.descargarProducto(transporte);

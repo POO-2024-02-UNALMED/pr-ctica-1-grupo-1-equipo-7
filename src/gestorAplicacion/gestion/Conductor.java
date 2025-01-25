@@ -8,7 +8,6 @@ public class Conductor extends Persona {
     private Fabrica fabrica;
     private static ArrayList<Conductor> listaConductores = new ArrayList<>();//me genera error en un metodo ya que una lista de conductos no es una lista de conductores V:
     private ArrayList<Meta> metaConductor;
-    private int pesoTransportado;
 
     public Conductor(String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria, Fabrica fabrica, Transporte transporte){
         super(nombre,cedula,edad,cuentaBancaria);
@@ -16,7 +15,6 @@ public class Conductor extends Persona {
         setTransporte(transporte);
         this.fabrica = fabrica;
         this.metaConductor = new ArrayList<>();
-        this.pesoTransportado=0;
         listaConductores.add(this);
 
     }
@@ -90,12 +88,6 @@ public class Conductor extends Persona {
 
     public void setConductor(Meta meta){     
         this.metaConductor.add(meta);          
-    }
-    public void setpesoTransportado(int peso){
-        this.pesoTransportado=peso;
-    }
-    public int getpesoTransportado(){
-        return this.pesoTransportado;
     }
 }
 

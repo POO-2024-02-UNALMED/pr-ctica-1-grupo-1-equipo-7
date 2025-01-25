@@ -54,7 +54,6 @@ public class Factura {
     }
   }
   //Metodo para calcular el valor del envio
-
   private double calcularValorEnvio(){
 
     double precioEnvio = transporte.getTipoTransporte().getPrecioEnvio();
