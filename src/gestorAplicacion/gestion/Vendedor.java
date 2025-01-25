@@ -7,8 +7,9 @@ public class Vendedor extends Persona {
     private static ArrayList<Persona> listaVendedores = new ArrayList<>();
     private ArrayList<Meta> metaVendedor;
 
-     public Vendedor (String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria){
+     public Vendedor (String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria, Tienda tienda){
         super(nombre, cedula, edad, cuentaBancaria);
+        this.tienda = tienda;
         this.metaVendedor = new ArrayList<>();
         listaVendedores.add(this);
 

@@ -1,5 +1,5 @@
 package produccion;
 
 public enum estadosProducto {
-    DISPONIBLE, DEVUELTO;
+    DISPONIBLE, VENDIDO, DEVUELTO;
 }

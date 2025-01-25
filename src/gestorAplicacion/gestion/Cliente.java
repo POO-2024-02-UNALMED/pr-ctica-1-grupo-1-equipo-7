@@ -4,12 +4,12 @@ import produccion.Producto;
 import gestion.CuentaBancaria;
 
 public class Cliente {
-    private static int totalCreados=0;
     public static ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();//Lista de clientes
-    private ArrayList<Factura> listaFacturas= new ArrayList<Factura>(); 
+    private ArrayList<Factura> listaFacturas= new ArrayList<Factura>();
     public ArrayList<Producto> listaProductos= new ArrayList<Producto>();
-    private int id; 
+    private int id;
     public CuentaBancaria cuentaBancaria;
+    private static int totalCreados=0;
     private String nombre;
     private int edad;
     private int cedula;
@@ -27,7 +27,6 @@ public class Cliente {
     public Cliente(){}
 
     //Métodos: 
-    
     public static String mostrarClientes(){  //Imprime la lista de clientes, comenzando desde 1 para facilitar al usurario a la hora de escojer. La forma de imprimir es : 1.Cliente
         String texto = null;
         if (listaClientes.isEmpty()) {
