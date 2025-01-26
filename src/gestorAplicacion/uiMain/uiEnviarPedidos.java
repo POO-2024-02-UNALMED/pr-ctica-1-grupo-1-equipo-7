@@ -26,7 +26,6 @@ public interface uiEnviarPedidos {
                             seleccion = sc.nextInt();
                             if (seleccion == 0) {
                                 System.out.println("Saliendo...");
-                                sc.close();
                                 return;
                             } 
                             else if (seleccion > 0 && seleccion <= Cliente.listaClientes.size()){
@@ -76,7 +75,6 @@ public interface uiEnviarPedidos {
                             opcion = sc.nextInt();
                             if (opcion == 0) {
                                 System.out.println("Saliendo...");
-                                sc.close();
                                 return;
                             } 
                             else if (opcion > 0 && opcion <= Fabrica.getListaTienda().size()){
