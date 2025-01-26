@@ -47,9 +47,7 @@ public class CuentaBancaria implements Serializable{
         return saldoTrabajo; 
     }
 
-    public void devolverDinero(double total, Cliente cliente){
-        cliente.getCuentaBancaria().añadirDinero(total);                
-    }
+   
 
 
     //Getters y Setters

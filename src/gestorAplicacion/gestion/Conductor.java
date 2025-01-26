@@ -8,7 +8,6 @@ public class Conductor extends Persona {
     private Transporte transporte;
     private Fabrica fabrica;
     private ArrayList<Meta> metaConductor;
-    private int pesoTransportado;
     private String licencia;
 
     public Conductor(String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria, Fabrica fabrica, Transporte transporte){
@@ -99,6 +98,16 @@ public class Conductor extends Persona {
 
     public void setConductor(Meta meta){     
         this.metaConductor.add(meta);          
+    }
+
+    // Getter para licencia
+    public String getLicencia() {
+        return licencia;
+    }
+
+    // Setter para licencia
+    public void setLicencia(String licencia) {
+        this.licencia = licencia;
     }
 }
 
