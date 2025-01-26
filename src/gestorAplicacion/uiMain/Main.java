@@ -188,6 +188,19 @@ public class Main {
             listaConductores.add(conductor9);
             listaConductores.add(conductor10);
         }
+    // Instancias estáticas de las cuentas bancarias
+    public static CuentaBancaria cuentaCliente1 = new CuentaBancaria(10001, 5000);
+    public static CuentaBancaria cuentaCliente2 = new CuentaBancaria(10002, 15000);
+    public static CuentaBancaria cuentaCliente3 = new CuentaBancaria(10003, 8000);
+    public static CuentaBancaria cuentaCliente4 = new CuentaBancaria(10004, 2000);
+    public static CuentaBancaria cuentaCliente5 = new CuentaBancaria(10005, 12000);
+
+    // Instancias estáticas de los clientes
+    public static Cliente cliente1 = new Cliente("Juan Pérez", 30, 987654321, cuentaCliente1);
+    public static Cliente cliente2 = new Cliente("María López", 25, 123456789, cuentaCliente2);
+    public static Cliente cliente3 = new Cliente("Carlos García", 40, 567890123, cuentaCliente3);
+    public static Cliente cliente4 = new Cliente("Ana Rodríguez", 35, 654321987, cuentaCliente4);
+    public static Cliente cliente5 = new Cliente("Luis Fernández", 28, 192837465, cuentaCliente5);
 
 
     //CORREGIRRRR:

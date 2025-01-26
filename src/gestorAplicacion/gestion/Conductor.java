@@ -95,5 +95,12 @@ public class Conductor extends Persona {
     public void setConductor(Meta meta){     
         this.metaConductor.add(meta);          
     }
+    public void aumentarCargaTrabajo(){
+        this.cantidadTrabajo += 1;
+    }
+    public void aumentarPesoTransportado(int peso){
+        this.pesoTransportado += peso;
+    }
 }
+
 

@@ -28,7 +28,7 @@ public class Cliente {
 
     //Métodos: 
     public static String mostrarClientes(){  //Imprime la lista de clientes, comenzando desde 1 para facilitar al usurario a la hora de escojer. La forma de imprimir es : 1.Cliente
-        String texto = null;
+        String texto = "";
         if (listaClientes.isEmpty()) {
             
             return "No hay clientes registrados.";

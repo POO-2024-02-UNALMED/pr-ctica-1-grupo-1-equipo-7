@@ -312,9 +312,14 @@ public String toString() {
 
   // Detalles de los productos
   for (Producto producto : listaProductos) {
-      factura.append(String.format("| %-30s | $%-10.2f | %-10.2f |\n", producto.getNombre(), producto.getPrecio(), producto.getPeso()));
-      totalPrecio += producto.getPrecio();
-      totalPeso += producto.getPeso();
+      if (producto != null) {
+          factura.append(String.format("| %-30s | $%-10.2f | %-10.2f |\n", 
+              producto.getNombre(), 
+              (double) producto.getPrecio(), 
+              (double) producto.getPeso()));
+          totalPrecio += producto.getPrecio();
+          totalPeso += producto.getPeso();
+      }
   }
 
   // Línea de separación

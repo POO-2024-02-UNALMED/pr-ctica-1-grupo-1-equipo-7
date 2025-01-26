@@ -66,4 +66,7 @@ public class Vendedor extends Persona {
     public static ArrayList<Persona> getListaVendedores(){
         return Vendedor.listaVendedores;
     }
+    public void aumentarCargaTrabajo(){
+        this.cantidadTrabajo += 1;
+    }
 }

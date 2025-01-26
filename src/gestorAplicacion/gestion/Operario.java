@@ -69,4 +69,6 @@ public class Operario extends Persona {
     public static ArrayList<Persona> getListaOperario(){
         return Operario.listaOperario;
     }
+
 }
+

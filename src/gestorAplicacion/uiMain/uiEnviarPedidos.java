@@ -2,9 +2,7 @@ package uiMain;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
-
 import javax.management.AttributeChangeNotificationFilter;
-
 import gestion.*;
 import produccion.*;
 import java.util.ArrayList;
@@ -67,7 +65,7 @@ public interface uiEnviarPedidos {
                 System.out.println("Seleccione la tienda desde la cual se enviará el pedido. Si no desea continuar, presione 0 para salir.");
                 System.out.println("Listado de Tiendas:");
                 System.out.println("0. Salir");
-                System.out.println(Fabrica.mostrarTiendas());
+                System.out.println(Fabrica.mostrarTiendas(true));
 
                 int opcion = -1;
                 Tienda tiendaSeleccionada = null;
@@ -129,7 +127,7 @@ public interface uiEnviarPedidos {
                                 if (eleccion.equals("aceptar")) {
                                     tiendaSeleccionada = Fabrica.getListaTienda().get(opcion - 1);
                                     System.out.println("Ha confirmado que desea enviar "+ cantidadProductosSeleccionados+" productos.");
-                                    confirmacionTienda = 1;
+                                    confirmacionCantidadProductos = 1;
                                     break;
                                 } 
                                 else if (eleccion.equals("regresar")) {
@@ -152,29 +150,45 @@ public interface uiEnviarPedidos {
                 }
                 ArrayList<Producto> listaProductosPedidos = new ArrayList<>();
                 ArrayList<ArrayList<Object>> listaProductosTienda = tiendaSeleccionada.listaProductosTienda();
-                // Itera segun la cantidad de productos seleccionados por el usuario
+
+                System.out.println("Por favor, seleccione los productos de manera individual. Si desea cancelar el envío, ingrese 0.");
                 for (int i = 0; i < cantidadProductosSeleccionados; i++) {
-                    System.out.println("Por favor, seleccione los productos de manera individual. Si desea cancelar el envío, ingrese 0.");
+                    if (i != 0) {
+                        System.out.println("Por favor, seleccione el siguiente producto para enviar.");
+                    }
+
                     while (true) {
                         System.out.println("0. Salir");
                         try {
                             // Mostrar los productos filtrados
-                            tiendaSeleccionada.mostrarListaProductosTienda(listaProductosTienda);
+                            System.out.println(tiendaSeleccionada.mostrarListaProductosTienda(listaProductosTienda));
 
                             int eleccion = sc.nextInt();
 
                             if (eleccion == 0) {
                                 System.out.println("Saliendo...");
-                                sc.close(); 
+                                sc.close();
                                 return;
                             } else if (eleccion > 0 && eleccion <= listaProductosTienda.size()) {
+                                // Obtener el producto seleccionado
                                 Producto productoSeleccionado = (Producto) listaProductosTienda.get(eleccion - 1).get(0);
+                                int cantidadProducto = (int) listaProductosTienda.get(eleccion - 1).get(1);
+
+                                // Validar que haya stock
+                                if (cantidadProducto <= 0) {
+                                    System.out.println("El producto seleccionado ya no tiene stock disponible. Por favor, elija otro.");
+                                    continue; // Volver al inicio del bucle para pedir otro producto
+                                }
+
                                 System.out.println("Para confirmar, ingrese 0. Si desea volver a ingresar el producto, ingrese 1.");
-                
+
                                 while (true) {
                                     int confirmacionProductoSeleccionado = sc.nextInt();
                                     if (confirmacionProductoSeleccionado == 0) {
+                                        // Agregar el producto a la lista de pedidos y actualizar la cantidad en stock
                                         listaProductosPedidos.add(productoSeleccionado);
+                                        listaProductosTienda.get(eleccion - 1).set(1, cantidadProducto - 1);
+
                                         System.out.println("Producto agregado: " + productoSeleccionado.getNombre());
                                         break;
                                     } else if (confirmacionProductoSeleccionado == 1) {
@@ -182,7 +196,6 @@ public interface uiEnviarPedidos {
                                     } else {
                                         System.out.println("Por favor, ingrese 0 para confirmar su selección o 1 para volver a ingresar el producto.");
                                     }
-
                                 }
                                 break; // Salir del bucle principal tras confirmar o rechazar el producto
                             } else {
@@ -190,7 +203,7 @@ public interface uiEnviarPedidos {
                             }
                         } catch (Exception e) {
                             System.out.println("Entrada inválida. Por favor, ingrese un número.");
-                            sc.nextLine(); 
+                            sc.nextLine();
                         }
                     }
                 }
@@ -272,11 +285,18 @@ public interface uiEnviarPedidos {
                 }
                 System.out.println("Generando Factura...");
                 System.out.println("¡Factura creada con éxito! A continuación, se mostrará la factura:\n");
-                tiendaSeleccionada.enviarPedido(listaProductosPedidos, transporteSeleccionado, clienteSeleccionado,fechaVenta);
+                System.out.println(tiendaSeleccionada.enviarPedido(listaProductosPedidos, transporteSeleccionado, clienteSeleccionado,fechaVenta));
+                tiendaSeleccionada.getVendedor().aumentarCargaTrabajo();
+                transporteSeleccionado.getConductor().aumentarCargaTrabajo();
+                //transporteSeleccionado.getConductor().aumentarPesoTransportado(totalPeso);
+                return;
+            }
+
         }
     }
 }
-}
+
+
 
 
 
