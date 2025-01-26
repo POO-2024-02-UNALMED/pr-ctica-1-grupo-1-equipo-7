@@ -7,12 +7,11 @@ public abstract class Persona{
 
     private String nombre; 
     private int cedula; 
-    protected int edad;
+    private int edad;
     public int cantidadTrabajo; // debe incrementar cada que realice un trabajo, 
                                 // tener encuenta para las funcionalidades que interactuen con los trabajadores
     private CuentaBancaria cuentaBancaria;
     private double indiceMeta;
-    private ArrayList<Boolean> verificadorMetasCumplidas;
     private static int personasTotales = 0;
     private static ArrayList<Persona> listaPersonas = new ArrayList<>();
                                   
@@ -24,7 +23,6 @@ public abstract class Persona{
         this.cuentaBancaria = cuentaBancaria;
         this.cantidadTrabajo = 0;
         this.indiceMeta = 0;
-        this.verificadorMetasCumplidas = new ArrayList<>();
         Persona.personasTotales += 1;
         Persona.listaPersonas.add(this);
 
@@ -96,15 +94,6 @@ public abstract class Persona{
 
     public void setIndiceMeta(double indiceMeta) {
         this.indiceMeta = indiceMeta;
-    }
-
-    // Getter y Setter para verificadorMetasCumplidas
-    public ArrayList<Boolean> getVerificadorMetasCumplidas() {
-        return verificadorMetasCumplidas;
-    }
-
-    public void setVerificadorMetasCumplidas(ArrayList<Boolean> verificadorMetasCumplidas) {
-        this.verificadorMetasCumplidas = verificadorMetasCumplidas;
     }
 
     // Getter para personasTotales

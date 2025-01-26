@@ -63,13 +63,13 @@ public class Producto {
     }
 
     return resultado.toString();
-}
-public static String obtenerMotivoDeDevolucion(int index) {
-    if (index < 1 || index > motivosDevolucion.size()) {
-        return "Motivo no válido.";
     }
-    return motivosDevolucion.get(index - 1);
-}
+    public static String obtenerMotivoDeDevolucion(int index) {
+        if (index < 1 || index > motivosDevolucion.size()) {
+            return "Motivo no válido.";
+        }
+        return motivosDevolucion.get(index - 1);
+    }
 
     //getters y setters
     public String getNombre() {

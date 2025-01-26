@@ -42,9 +42,7 @@ public class CuentaBancaria {
         return saldoTrabajo; 
     }
 
-    public void devolverDinero(double total, Cliente cliente){
-        cliente.getCuentaBancaria().añadirDinero(total);                
-    }
+   
 
 
     //Getters y Setters
