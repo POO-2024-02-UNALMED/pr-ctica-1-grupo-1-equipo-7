@@ -19,7 +19,7 @@ public class Main {
             System.out.println("4. Pago Trabajadores");
             System.out.println("5. Estadísticas");
             System.out.println("0. Salir");
-
+            System.out.print("» ");
             int opcion = sc.nextInt();
 
             switch (opcion) {
@@ -195,10 +195,10 @@ public class Main {
         // Mostrar resumen de inicialización
         System.out.println("Sistema inicializado con los siguientes datos:");
         System.out.println("Fábrica: " + fabrica.getNombre());
-        System.out.println("Tiendas: ");
-        listaTiendas.forEach(System.out::println);
-        System.out.println("\nProductos en la fábrica: ");
-        productosFabrica.forEach(System.out::println);
+        System.out.println("Tiendas:" + Fabrica.mostrarTiendas());
+        //listaTiendas.forEach(System.out::println);
+        //System.out.println("\nProductos en la fábrica: ");innecesario
+        //productosFabrica.forEach(System.out::println);
     }
 }
 
