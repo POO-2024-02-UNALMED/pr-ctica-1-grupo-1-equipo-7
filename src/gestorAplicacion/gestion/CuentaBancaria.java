@@ -1,6 +1,11 @@
 package gestion;
 
-public class CuentaBancaria {
+import java.io.Serializable;
+
+public class CuentaBancaria implements Serializable{
+    private static final long serialVersionUID = 2L;
+
+    //atributos
     private int numeroCuenta;
     private double saldo;
 

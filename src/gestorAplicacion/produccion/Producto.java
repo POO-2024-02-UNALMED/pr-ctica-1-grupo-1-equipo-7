@@ -1,12 +1,20 @@
 package produccion;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-public class Producto {
+
+
+public class Producto implements Serializable{
+    private static final long serialVersionUID = 7L;
+
+    //Atributos
     public String nombre;
     int precio;
     private int cantidad;
     private int id=0; 
     private static int totalCreados=0;
+    private static ArrayList<Producto> listaProductos = new ArrayList<Producto>(); 
     public estadosProducto estado; //disponible,vendido,devuelto
     private String tipo;
     private String categoria; 
@@ -32,6 +40,7 @@ public class Producto {
         totalCreados++;
         this.id=totalCreados;
         this.peso=peso;
+        Producto.listaProductos.add(this);
     }
     public Producto(){
         totalCreados++;
@@ -128,6 +137,15 @@ public class Producto {
     public void setPeso(double peso){
         this.peso = peso;
     }
+
+    public static ArrayList<Producto> getListaProductos(){
+        return Producto.listaProductos;
+    }
+
+    public static void setListaProductos(ArrayList<Producto> listaProductos){
+        Producto.listaProductos = listaProductos;
+    }
+
   
     @Override
     public String toString(){

@@ -1,12 +1,14 @@
 package produccion;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import gestion.CuentaBancaria;
 import gestion.Operario;
 import gestion.Persona;
 
-public class Fabrica {
+public class Fabrica implements Serializable {
+    private static final long serialVersionUID = 6L;
 
     // Atributos
     private  String idFabrica;
@@ -15,8 +17,6 @@ public class Fabrica {
     public static  CuentaBancaria cuentaBancaria;  //se quito el static ya que solo existe 1 fabrica no hace falta que el atributo sea de clase
                                                 //RTA: Para la de devoluciones necesito que sea static:). Att: Andres.
     private static Operario operario;       //lo mismo para operario 
-    private static ArrayList <Producto> productosDisponibles; //Catalogo de productos disponibles en la fábrica
-    private static Operario operario;  
     private static ArrayList <Producto> productosDisponibles; //Catalogo de productos disponibles en la fábrica
     private static ArrayList<Tienda> listaTienda = new ArrayList<Tienda>();
 

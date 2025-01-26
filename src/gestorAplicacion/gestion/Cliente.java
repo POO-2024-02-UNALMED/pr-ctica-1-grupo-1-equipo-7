@@ -1,9 +1,13 @@
 package gestion;
+import java.io.Serializable;
 import java.util.ArrayList;
 import produccion.Producto;
 import gestion.CuentaBancaria;
 
-public class Cliente {
+public class Cliente implements Serializable{
+    //Atributos
+    private static final long serialVersionUID = 1L;
+
     public static ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();//Lista de clientes
     private ArrayList<Factura> listaFacturas= new ArrayList<Factura>();
     public ArrayList<Producto> listaProductos= new ArrayList<Producto>();
@@ -75,19 +79,23 @@ public class Cliente {
     }
 
     public int getId(){
-    return this.id;
+        return this.id;
     }
     public void setId(int nuevoId){ 
-    this.id = nuevoId;
+        this.id = nuevoId;
     }
     public CuentaBancaria getCuentaBancaria(){
-    return cuentaBancaria;
+        return cuentaBancaria;
     }
     public void setCuentaBancaria(CuentaBancaria cuentaBancaria){
         this.cuentaBancaria = cuentaBancaria;
     }
     public static ArrayList<Cliente> getListaClientes(){
         return listaClientes;
+    }
+
+    public static void setListaClientes(ArrayList<Cliente> listaClientes){
+        Cliente.listaClientes = listaClientes;
     }
 
 }

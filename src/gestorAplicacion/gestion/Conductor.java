@@ -77,10 +77,15 @@ public class Conductor extends Persona {
         this.fabrica = fabrica;
     }
 
-    // Para el atributo listaConductores (static) solo Getter
+    // Para el atributo listaConductores (static)
     public static ArrayList<Conductor> getListaConductores() { 
         return listaConductores;
     }
+
+    public static void setListaConductores(ArrayList<Conductor> listaConductores) { 
+        Conductor.listaConductores = listaConductores;
+    }
+
 
     // Para el atributo metaConductor
     public ArrayList<Meta> getMeta() { 

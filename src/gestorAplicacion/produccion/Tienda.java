@@ -1,4 +1,6 @@
 package produccion;
+
+import java.io.Serializable;
 import gestion.Vendedor;
 import gestion.Cliente;
 import gestion.CuentaBancaria;
@@ -7,8 +9,10 @@ import gestion.Factura;
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
-//import java.util.Scanner;
-public class Tienda {
+
+public class Tienda implements Serializable{
+    private static final long serialVersionUID = 8L;
+    
     //atributos
     private String nombre;
     private Vendedor vendedor;

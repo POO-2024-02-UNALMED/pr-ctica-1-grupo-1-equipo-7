@@ -2,6 +2,7 @@ package uiMain;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 //import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -74,7 +75,12 @@ public class uiEstadistica {
             switch (opcion) {
                 case 1:
                     System.out.println("Las ganancias discretas son: ");
-                    System.out.println(Factura.gananciasDiscretas(fechaInicio, fechaFin));
+                    for (Object f : Factura.gananciasDiscretas(fechaInicio, fechaFin)) {
+                        for (ArrayList o : (ArrayList<ArrayList>) f) {
+                            System.out.println(o.get(0));
+                            System.out.println(o.get(1)+ "\n");
+                        }
+                    }
                     break;
                 case 2:
                     System.out.println("La ganancia total es:");
@@ -102,14 +108,20 @@ public class uiEstadistica {
                 default:
                     System.out.println("Opción no válida. Intente de nuevo.");
             }
-            
-            System.out.println("Desea realizar otra operación? (s/n): ");
-            String respuesta = scanner.nextLine().toLowerCase();
-            if (!respuesta.equalsIgnoreCase("s") & !respuesta.equalsIgnoreCase("n")) {
-                mostrar();
-            } else {
-                System.out.println("Saliendo...");
-                opcion = 6;
+
+            while (true) {
+                System.out.println("Desea realizar otra operación? (s/n): ");
+                String respuesta = scanner.nextLine().toLowerCase();
+                if (respuesta.equals("s")) {
+                    break;
+                } else if (respuesta.equals("n")) {
+                    System.out.println("Saliendo...");
+                    opcion = 6;
+                    break;
+                } else {
+                    System.out.println("Respuesta no válida. Intente de nuevo.");
+                }
+                
             }
 
         } while (opcion != 6);
