@@ -16,36 +16,21 @@ public class Tienda {
     private ArrayList<Producto> productosDevueltos;
     private static int numTiendas = 0; 
     private ArrayList<Producto> listaProducto; //Cada tienda tiene una lista de productos DIFERENTES, este atributo NO puede ser static. 
-<<<<<<< HEAD
-    private List<String> categorias = new ArrayList<>();
-    private List<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
-    private Integer cantidadMaximaPorCategoria;//Es la cantidad maxima de productos que puede tener una tienda por categoria. (Es atributo auxiliar para la funcionalidad de abastecer.)
-    //para la funcionalidad abastecer:
-    //private List<Producto> productosAbastecer = new ArrayList<>();//no se van a usar
-    //private List<Integer> cantidadesAbastecer = new ArrayList<>();//tampoco por ahora
-    private int capacidadMaximaMaterial;
-    private int capacidadMaximaConsumible;
-    private int capacidadMaximaLimpieza;//Es la cantidad maxima de productos que puede tener una tienda por categoria. (Es atributo auxiliar para la funcionalidad de abastecer.)
-=======
-
     private ArrayList<Object[]> productosPorCategoria = new ArrayList<>(); // Lista de [Producto, Categoria]
     private ArrayList<String> categorias = new ArrayList<>();
     private ArrayList<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
     private int capacidadMaximaMaterial;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Construccion
     private int capacidadMaximaConsumible;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Alimentos
     private int capacidadMaximaLimpieza;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Hogar
->>>>>>> 9bf949d63e05a458795bb860ce33ef48d34d8d7f
+
 
     // constructor
-    public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
-        //El numero de tiendas no deberia de ser un parametro del constructor, ya que este se incrementa automaticamente.
+    public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int capacidadMaximaMaterial, int capacidadMaximaConsumible, int capacidadMaximaLimpieza){
         this.nombre=nombre;
         this.vendedor=vendedor;
         this.vendedor.setTienda(this); //Se asigna la tienda al vendedor 
         this.cuentaBancaria=cuentaBancaria;
         numTiendas++;
-        this.cantidadProductos=new ArrayList<>();
-        this.productosDevueltos=new ArrayList<>();
         this.listaProducto=new ArrayList<>();
         this.capacidadMaximaMaterial = capacidadMaximaMaterial;
         this.capacidadMaximaConsumible = capacidadMaximaConsumible;
@@ -272,12 +257,6 @@ public String productosPorCategoria(ArrayList<Producto> productos, List<Integer>
     }
     return resultado.toString();
 }
-<<<<<<< HEAD
-
-=======
-//Funcionalidad a la que pertenece: Abastecer tiendas
-//Metodo que se encarga de calcular la cantidad actual de por su categoria
->>>>>>> 9bf949d63e05a458795bb860ce33ef48d34d8d7f
 public int getCantidadActualPorCategoria(String categoria) {
     int cantidad = 0;
     for (Producto producto : this.listaProducto) {
@@ -353,6 +332,7 @@ public ArrayList<Producto> mostrarProductos(Producto producto) {
     }
     return productosParaMostrar;
 }
+
 //Funcionalidad a la que pertenece: Abastecer tiendas
 //Metodo que se encarga de mostrar los productos de la TIENDA de forma ordenada(producto:cantidad)
 public String cantidadProductos() {
@@ -375,22 +355,10 @@ public String cantidadProductos() {
                      .append(cantidad)
                      .append(" unidades\n");
         }
-        resultado.append(producto.getNombre())
-                 .append(": ")
-                 .append(cantidad)
-                 .append(" unidades\n");
     }
 
     return resultado.toString(); // Retorna el resultado 
-<<<<<<< HEAD
-} 
-
-
-=======
 }
-//Funcionalidad a la que pertenece: Abastecer tiendas
-//Metodo que se encarga de descargar los productos de un transporte a la tienda
->>>>>>> 9bf949d63e05a458795bb860ce33ef48d34d8d7f
 public void descargarProducto(Transporte transporteSeleccionado) {
     ArrayList<Producto> productosTransportados = transporteSeleccionado.getListaDeProductos();
     for (Producto producto : productosTransportados) {
@@ -400,21 +368,16 @@ public void descargarProducto(Transporte transporteSeleccionado) {
 }
 
 public double venderProducto(Producto productoSeleccionado) {
-    for (Object[] item : cantidadProductos) {
-        Producto producto = (Producto) item[0];
-        int cantidad = (int) item[1];
-
+    for (Producto producto : listaProducto) {
         if (producto.equals(productoSeleccionado)) {
-            if (cantidad > 0) {
-                item[1] = cantidad - 1; // Reducir inventario
-                return producto.getPeso(); // Retornar el peso del producto vendido
-            } else {
-                return 0.0;
-            }
+            double pesoProducto = producto.getPeso(); // Obtener el peso antes de eliminar
+            listaProducto.remove(producto);          // Eliminar el producto de la lista
+            return pesoProducto;                     // Retornar el peso del producto
         }
     }
-    return 0.0;
+    return 0.0;                                      // Si no se encuentra, retorna 0.0
 }
+
 public ArrayList<ArrayList<Object>> listaProductosTienda() {
     ArrayList<ArrayList<Object>> listaProductos = new ArrayList<>();
     

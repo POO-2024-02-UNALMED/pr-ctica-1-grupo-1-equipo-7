@@ -1,5 +1,8 @@
 package uiMain;
-
+import gestion.*;
+import produccion.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -51,23 +54,28 @@ public class Main {
         }
         sc.close();
     }
-    //cada quien ingrese su funcionalidad muchachos...
+
     public static void enviarPedidos() {
-        // Implementar la funcionalidad de enviar pedidos
+        uiMain.uiEnviarPedidos.enviar();
     }
 
     public static void devoluciones() {
         // Implementar la funcionalidad de devoluciones
+        uiMain.uiDevoluciones.devolver();
+    }
+
+    public static void abastecerTiendas() {
+        // Implementar la funcionalidad de abastecer tiendas
+        uiMain.uiAbastacerTiedas.abastecer();
     }
 
     public static void pagoTrabajadores() {
         // Implementar la funcionalidad de pago de trabajadores
+        uiMain.uiPagoTrabajadores.pagarTrabajadores();
     }
 
     public static void estadisticas() {
         // Implementar la funcionalidad de estadísticas
-<<<<<<< HEAD
-=======
         uiMain.uiEstadistica.bienvenida();
         uiMain.uiEstadistica.mostrar();
     }
@@ -141,7 +149,7 @@ public class Main {
         static CuentaBancaria cuentaConductor8 = new CuentaBancaria(89012, 12000);
         static CuentaBancaria cuentaConductor9 = new CuentaBancaria(90123, 13000);
         static CuentaBancaria cuentaConductor10 = new CuentaBancaria(123456, 14000);
-    
+
     // Crear transportes
         static Transporte transporte1 = new Transporte(TipoTransporte.CAMION, 15000, 16329);
         static Transporte transporte2 = new Transporte(TipoTransporte.AVION, 30000, 64000);
@@ -153,7 +161,7 @@ public class Main {
         static Transporte transporte8 = new Transporte(TipoTransporte.HELICOPTERO, 70000, 29000);
         static Transporte transporte9 = new Transporte(TipoTransporte.TREN, 20000, 30000);
         static Transporte transporte10 = new Transporte(TipoTransporte.CAMINANDO, 5000, 15);
-    
+
     // Crear conductores
         static Conductor conductor1 = new Conductor("Conductor 1", 11111, 30, cuentaConductor1, fabrica, transporte1);
         static Conductor conductor2 = new Conductor("Conductor 2", 22222, 31, cuentaConductor2, fabrica, transporte2);
@@ -165,7 +173,7 @@ public class Main {
         static Conductor conductor8 = new Conductor("Conductor 8", 88888, 37, cuentaConductor8, fabrica, transporte8);
         static Conductor conductor9 = new Conductor("Conductor 9", 99999, 38, cuentaConductor9, fabrica, transporte9);
         static Conductor conductor10 = new Conductor("Conductor 10", 101010, 39, cuentaConductor10, fabrica, transporte10);
-    
+
         // Crear lista de conductores
         static ArrayList<Conductor> listaConductores = new ArrayList<>();
         static {
@@ -180,26 +188,20 @@ public class Main {
             listaConductores.add(conductor9);
             listaConductores.add(conductor10);
         }
-        
+
 
     //CORREGIRRRR:
     static {
         // Mostrar resumen de inicialización
         System.out.println("Sistema inicializado con los siguientes datos:");
         System.out.println("Fábrica: " + fabrica.getNombre());
+        System.out.println("Tiendas: ");
+        listaTiendas.forEach(System.out::println);
+        System.out.println("\nProductos en la fábrica: ");
+        productosFabrica.forEach(System.out::println);
         System.out.println("Tiendas:" + Fabrica.mostrarTiendas());
         //listaTiendas.forEach(System.out::println);
         //System.out.println("\nProductos en la fábrica: ");innecesario
         //productosFabrica.forEach(System.out::println);
->>>>>>> 9bf949d63e05a458795bb860ce33ef48d34d8d7f
     }
-    public static void abastecerTiendas() {
-        // Implementar la funcionalidad de abastecer tiendas
 }
-
-        //Método main, desde el que se va a ejecutar el programa principal, de aca se muestra el menu 
-        //con las 5 funcionalidades, se hace el switch y se llama a los metodos de cada funcionalidad 
-        //depeniendo de la que se elija.  
-
-}
-
