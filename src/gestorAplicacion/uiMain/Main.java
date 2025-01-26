@@ -93,8 +93,8 @@ public class Main {
 
     // Crear tiendas
     static Tienda tienda1 = new Tienda("Hefesto Construcciones", vendedor1, cuentaFabrica,100,100,100);
-    static Tienda tienda2 = new Tienda("Consumibles de la Abuela Tata", vendedor2, cuentaFabrica,1000,100,100);
-    static Tienda tienda3 = new Tienda("Miss Músculo Aseo", vendedor3, cuentaFabrica, 1000, 1000,1000);
+    static Tienda tienda2 = new Tienda("Consumibles de la Abuela Tata", vendedor2, cuentaFabrica,100,100,100);
+    static Tienda tienda3 = new Tienda("Miss Músculo Aseo", vendedor3, cuentaFabrica, 100, 100,100);
 
     // Crear productos para cada tienda
     static Producto producto1 = new Producto("Cemento", 50, 100, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
@@ -135,9 +135,6 @@ public class Main {
     // Crear fábrica
     static Fabrica fabrica = new Fabrica("F001", "Fábrica Principal", "Calle Principal 123", cuentaFabrica, productosFabrica, listaTiendas,operario1);
 
-    {
-        operario1.setFabrica(fabrica);
-    }
         // Crear cuentas bancarias para los conductores
         static CuentaBancaria cuentaConductor1 = new CuentaBancaria(12345, 5000);
         static CuentaBancaria cuentaConductor2 = new CuentaBancaria(23456, 6000);
@@ -201,6 +198,46 @@ public class Main {
     public static Cliente cliente3 = new Cliente("Carlos García", 40, 567890123, cuentaCliente3);
     public static Cliente cliente4 = new Cliente("Ana Rodríguez", 35, 654321987, cuentaCliente4);
     public static Cliente cliente5 = new Cliente("Luis Fernández", 28, 192837465, cuentaCliente5);
+
+
+    //Instancias estáticas de las metas para operario
+    public static Meta metaOperario1 = new Meta("Facil",5, 10000);
+    public static Meta metaOperario2 = new Meta("Normal", 10, 17000);
+    public static Meta metaOperario3 = new Meta("Dificil", 15, 25000);
+    public static Meta metaOperario4 = new Meta("Muy Dificil", 20, 35000);
+
+    //Instancias estáticas de las metas para Vendedor
+    public static Meta metaVendedor1 = new Meta("Facil",5, 9000);
+    public static Meta metaVendedor2= new Meta("Normal", 10, 15000);
+    public static Meta metaVendedor3 = new Meta("Dificil", 15, 22000);
+    public static Meta metaVendedor4 = new Meta("Muy Dificil", 20, 30000);
+
+    //Instancias estáticas de las metas para operario
+    public static Meta metaConductor1 = new Meta("Facil",25, 8000);
+    public static Meta metaConductor2= new Meta("Normal", 40, 13500);
+    public static Meta metaConductor3 = new Meta("Dificil", 55, 21000);
+    public static Meta metaConductor4 = new Meta("Muy Dificil", 70, 28500);
+
+    static{
+        operario1.setMetaOperario(metaOperario1);
+        operario1.setMetaOperario(metaOperario2);
+        operario1.setMetaOperario(metaOperario3);
+        operario1.setMetaOperario(metaOperario4);
+
+        for(Conductor i: Conductor.getListaConductores()){
+            i.setMetaConductor(metaConductor1);
+            i.setMetaConductor(metaConductor2);
+            i.setMetaConductor(metaConductor3);
+            i.setMetaConductor(metaConductor4);
+        }
+
+        for(Vendedor i : Vendedor.getListaVendedores()){
+            i.setMetaVendedor(metaVendedor1);
+            i.setMetaVendedor(metaVendedor2);
+            i.setMetaVendedor(metaVendedor3);
+            i.setMetaVendedor(metaVendedor4);
+        }
+    }
 
 
     //CORREGIRRRR:

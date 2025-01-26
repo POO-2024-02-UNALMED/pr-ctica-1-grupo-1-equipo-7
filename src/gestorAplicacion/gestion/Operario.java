@@ -5,7 +5,7 @@ import produccion.Fabrica;
 
 public class Operario extends Persona {
     private Fabrica fabrica;
-    private static ArrayList<Persona> listaOperario = new ArrayList<>();
+    private static ArrayList<Operario> listaOperario = new ArrayList<>();
     private ArrayList<Meta> metaOperario;
 
     public Operario(String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria, Fabrica fabrica){
@@ -66,7 +66,7 @@ public class Operario extends Persona {
     }
 
     //Getter y Setter 'listaOperario'
-    public static ArrayList<Persona> getListaOperario(){
+    public static ArrayList<Operario> getListaOperario(){
         return Operario.listaOperario;
     }
 

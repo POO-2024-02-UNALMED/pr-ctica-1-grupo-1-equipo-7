@@ -38,9 +38,9 @@ public class CuentaBancaria implements Serializable{
     public int calcularPago(Persona persona) {
         int saldoTrabajo;
         if (persona instanceof Operario) {
-            saldoTrabajo = persona.getCantidadTrabajo() * 7000;
+            saldoTrabajo = persona.getCantidadTrabajo() * 6000;
         } else if (persona instanceof Vendedor) {
-            saldoTrabajo = persona.getCantidadTrabajo() * 5500;
+            saldoTrabajo = persona.getCantidadTrabajo() * 5000;
         } else {
             saldoTrabajo = persona.getCantidadTrabajo() * 4000;
         }

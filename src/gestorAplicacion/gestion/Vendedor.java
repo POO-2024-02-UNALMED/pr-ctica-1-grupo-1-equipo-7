@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Vendedor extends Persona {
     private Tienda tienda;
-    private static ArrayList<Persona> listaVendedores = new ArrayList<>();
+    private static ArrayList<Vendedor> listaVendedores = new ArrayList<>();
     private ArrayList<Meta> metaVendedor;
 
     public Vendedor (String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria){
@@ -63,7 +63,7 @@ public class Vendedor extends Persona {
     }
 
     //Getter y Setter 'listavendedores'
-    public static ArrayList<Persona> getListaVendedores(){
+    public static ArrayList<Vendedor> getListaVendedores(){
         return Vendedor.listaVendedores;
     }
     public void aumentarCargaTrabajo(){
