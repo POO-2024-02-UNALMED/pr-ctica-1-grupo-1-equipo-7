@@ -1,9 +1,17 @@
 package uiMain;
-import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+
+import javax.management.AttributeChangeNotificationFilter;
+
 import gestion.*;
 import produccion.*;
-public class uiEnviarPedidos {
+import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+public interface uiEnviarPedidos {
     public static void enviar() {
         Scanner sc = new Scanner(System.in);
         while (true){
@@ -12,7 +20,7 @@ public class uiEnviarPedidos {
             System.out.println(Cliente.mostrarClientes());
             int seleccion = -1;
             while(true){
-                Cliente clienteSeleccionado;
+                Cliente clienteSeleccionado = null;
                 int confirmacionCliente = 0;
                 while(confirmacionCliente == 0){
                     while (true) {
@@ -143,22 +151,7 @@ public class uiEnviarPedidos {
                     }
                 }
                 ArrayList<Producto> listaProductosPedidos = new ArrayList<>();
-                ArrayList<Object[]> listaFiltrada = new ArrayList<>();
-
-                 // Filtra los productos con cantidad mayor a 0
-                for (Object[] listaAux : tiendaSeleccionada.getCantidadProductos()) {
-                    int cantidad = (int) listaAux[1];
-                    if (cantidad > 0) {
-                        listaFiltrada.add(listaAux);
-                    }
-                }
-
-                 // Valida si hay productos disponibles
-                if (listaFiltrada.isEmpty()) {
-                    System.out.println("No hay productos disponibles para seleccionar.");
-                    return;
-                }
-
+                ArrayList<ArrayList<Object>> listaProductosTienda = tiendaSeleccionada.listaProductosTienda();
                 // Itera segun la cantidad de productos seleccionados por el usuario
                 for (int i = 0; i < cantidadProductosSeleccionados; i++) {
                     System.out.println("Por favor, seleccione los productos de manera individual. Si desea cancelar el envío, ingrese 0.");
@@ -166,19 +159,16 @@ public class uiEnviarPedidos {
                         System.out.println("0. Salir");
                         try {
                             // Mostrar los productos filtrados
-                            for (int j = 0; j < listaFiltrada.size(); j++) {
-                                Producto prod = (Producto) listaFiltrada.get(j)[0];
-                                System.out.println((j + 1) + ". " + prod.getNombre());
-                            }
-                
+                            tiendaSeleccionada.mostrarListaProductosTienda(listaProductosTienda);
+
                             int eleccion = sc.nextInt();
-                
+
                             if (eleccion == 0) {
                                 System.out.println("Saliendo...");
                                 sc.close(); 
                                 return;
-                            } else if (eleccion > 0 && eleccion <= listaFiltrada.size()) {
-                                Producto productoSeleccionado = (Producto) listaFiltrada.get(eleccion - 1)[0];
+                            } else if (eleccion > 0 && eleccion <= listaProductosTienda.size()) {
+                                Producto productoSeleccionado = (Producto) listaProductosTienda.get(eleccion - 1).get(0);
                                 System.out.println("Para confirmar, ingrese 0. Si desea volver a ingresar el producto, ingrese 1.");
                 
                                 while (true) {
@@ -192,6 +182,7 @@ public class uiEnviarPedidos {
                                     } else {
                                         System.out.println("Por favor, ingrese 0 para confirmar su selección o 1 para volver a ingresar el producto.");
                                     }
+
                                 }
                                 break; // Salir del bucle principal tras confirmar o rechazar el producto
                             } else {
@@ -226,7 +217,7 @@ public class uiEnviarPedidos {
                 System.out.println("Por favor, elija el transporte que desea utilizar para su envío:");
                 System.out.println("0. Salir");
                 System.out.println(TipoTransporte.mostrarTipoTransporteSegunCarga(listaTransporteFiltrada, envioGratis));
-                TipoTransporte transporteSeleccionado;
+                TipoTransporte tipoTransporteSeleccionado;
                 while (true) {
                     try {
                         opcion = sc.nextInt();
@@ -236,7 +227,7 @@ public class uiEnviarPedidos {
                             return;
                         } 
                         else if (opcion > 0 && opcion <= listaTransporteFiltrada.size()){
-                            transporteSeleccionado = listaTransporteFiltrada.get(opcion -1);
+                            tipoTransporteSeleccionado = listaTransporteFiltrada.get(opcion -1);
                             break;
                         } 
                         else {
@@ -248,19 +239,50 @@ public class uiEnviarPedidos {
                         sc.nextLine();
                     }
                 }
+                Transporte transporteSeleccionado = null;
+                for (Conductor conductor : Conductor.getListaConductores()){
+                    if (conductor.getTransporte().getTipoTransporte() == tipoTransporteSeleccionado)
+                    transporteSeleccionado = conductor.getTransporte();
+                }
                 if(envioGratis==true){
-                    System.out.println("Ha escogido el transporte: " + transporteSeleccionado.getNombre() + "\n" + "- Precio: 0.0");
+                    System.out.println("Ha escogido el transporte: " + transporteSeleccionado.getTipoTransporte().getNombre() + "\n" + "- Precio: 0.0");
                 }
                 else{
-                    System.out.println("Ha escogido el transporte: " + transporteSeleccionado.getNombre() + "\n" + "- Precio: " + transporteSeleccionado.getPrecioEnvio());
+                    System.out.println("Ha escogido el transporte: " + transporteSeleccionado.getTipoTransporte().getNombre() + "\n" + "- Precio: " + transporteSeleccionado.getTipoTransporte().getPrecioEnvio());
                 }
+                String formatoFecha = "dd/MM/yyyy";
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern(formatoFecha);
+
+                boolean fechaValida = false;
+                LocalDate fechaVenta = null;
+
                 System.out.println("Por favor, ingrese el día en que se realiza la venta (formato: DD/MM/AAAA). Asegúrese de que la fecha sea válida.");
-
-
-            }
+                while (!fechaValida) {
+                    System.out.print("Ingrese una fecha: ");
+                    String entrada = sc.nextLine();
+        
+                    try {
+                        // Convierte la fecha en formato String a LocalDate
+                        fechaVenta = LocalDate.parse(entrada, formatter);
+                        System.out.println("La fecha ingresada es válida: " + fechaVenta.format(formatter));
+                        fechaValida = true;
+                    } catch (DateTimeParseException e) {
+                        System.out.println("La fecha ingresada no es válida o no cumple con el formato DD/MM/AAAA. Intente nuevamente.");
+                    }
+                }
+                System.out.println("Generando Factura...");
+                System.out.println("¡Factura creada con éxito! A continuación, se mostrará la factura:\n");
+                tiendaSeleccionada.enviarPedido(listaProductosPedidos, transporteSeleccionado, clienteSeleccionado,fechaVenta);
         }
     }
 }
+}
+
+
+
+
+
+
                 
                 
                                 

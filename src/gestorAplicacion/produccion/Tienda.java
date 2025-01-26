@@ -6,6 +6,7 @@ import gestion.Factura;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.time.LocalDate;
 //import java.util.Scanner;
 public class Tienda {
     //atributos
@@ -15,16 +16,12 @@ public class Tienda {
     private ArrayList<Producto> productosDevueltos;
     private static int numTiendas = 0; 
     private ArrayList<Producto> listaProducto; //Cada tienda tiene una lista de productos DIFERENTES, este atributo NO puede ser static. 
-    private ArrayList<Object[]> productosPorCategoria = new ArrayList<>(); // Lista de [Producto, Categoria]
-    private ArrayList<Object[]> cantidadProductos = new ArrayList<>();//duda aqui ya que puede ser un integer (con el UM).
     private List<String> categorias = new ArrayList<>();
     private List<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
     private Integer cantidadMaximaPorCategoria;//Es la cantidad maxima de productos que puede tener una tienda por categoria. (Es atributo auxiliar para la funcionalidad de abastecer.)
     //para la funcionalidad abastecer:
     //private List<Producto> productosAbastecer = new ArrayList<>();//no se van a usar
     //private List<Integer> cantidadesAbastecer = new ArrayList<>();//tampoco por ahora
-    private ArrayList<String> categorias = new ArrayList<>();
-    private ArrayList<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
     private int capacidadMaximaMaterial;
     private int capacidadMaximaConsumible;
     private int capacidadMaximaLimpieza;//Es la cantidad maxima de productos que puede tener una tienda por categoria. (Es atributo auxiliar para la funcionalidad de abastecer.)
@@ -103,10 +100,6 @@ public void setListaProducto(ArrayList<Producto> listaProducto) {
     this.listaProducto = listaProducto;
 }
 
-// Atributo cantidadProductos
-public ArrayList<Object[]> getCantidadProductos() {
-    return cantidadProductos;
-}
 
 public ArrayList<String> getCategorias() {
     return categorias;
@@ -150,12 +143,6 @@ public String mostrarProductos() {
 }
 
 
-public String cantidadProductosTotal(){
-    if (listaProducto == null) {
-        return "El inventario no está disponible.";
-    }
-    return "En el inventario se encuentran " + listaProducto.size() + " productos.";
-}
 public void agregarProductosPorCategoria(Producto producto, int categoria){
     Object[] productoCategoria = {producto, categoria};
     productosPorCategoria.add(productoCategoria);
@@ -385,53 +372,7 @@ public void descargarProducto(Transporte transporteSeleccionado) {
     }
     transporteSeleccionado.getListaDeProductos().clear(); // Vaciar la lista de productos del transporte
 }
-public void agregarCantidadProducto(Producto producto, int cantidad){//[[producto1,cantidad],[producto2,cantidad]]
-    boolean existe = false;
-    for (Object[] item : cantidadProductos) {
-        if (item[0].equals(producto)) {
-            // Si el producto ya existe, actualizamos la cantidad
-            item[1] = (int) item[1] + cantidad;
-            existe = true;
-            break;
-        }
-    }
-    // Si el producto no existe, lo agregamos
-    if (!existe) {
-        Object[] listaAux = {producto, cantidad};
-        cantidadProductos.add(listaAux);
-    }
-}
-public String mostrarCantidadProductos() {
-    if (cantidadProductos == null || cantidadProductos.isEmpty()) {
-        return "Actualmente no hay productos registrados en el sistema.";
-    }
 
-    ArrayList<Object[]> listaFiltrada = new ArrayList<>();
-    for (Object[] listaAux : cantidadProductos) {
-        int cantidad = (int) listaAux[1];
-        if (cantidad != 0) {
-            listaFiltrada.add(listaAux);
-        }
-    }
-
-    if (listaFiltrada.isEmpty()) {
-        return "No hay productos disponibles con cantidad mayor a 0.";
-    }
-
-    StringBuilder texto = new StringBuilder();
-    int contador = 1;
-    for (Object[] lista : listaFiltrada) {
-        Producto producto = (Producto) lista[0];
-        int cantidad = (int) lista[1];
-
-        texto.append(contador).append(". Producto: ").append(producto.getNombre()).append("\n")
-             .append(" - Cantidad: ").append(cantidad).append("\n")
-             .append(" - Peso: ").append(producto.getPeso()).append("\n\n");
-        contador++;
-    }
-
-    return texto.toString().trim();
-}
 public double venderProducto(Producto productoSeleccionado) {
     for (Object[] item : cantidadProductos) {
         Producto producto = (Producto) item[0];
@@ -447,6 +388,62 @@ public double venderProducto(Producto productoSeleccionado) {
         }
     }
     return 0.0;
+}
+public ArrayList<ArrayList<Object>> listaProductosTienda() {
+    ArrayList<ArrayList<Object>> listaProductos = new ArrayList<>();
+    
+    for (Producto producto : listaProducto) {  // Asegúrate de que 'listaProducto' esté correctamente definida
+        ArrayList<Object> productoCantidad = new ArrayList<>();
+        boolean encontrado = false;
+
+        if (listaProductos.isEmpty()) {
+            productoCantidad.add(producto);
+            productoCantidad.add(1);  // Agregar el producto con cantidad 1
+            listaProductos.add(productoCantidad);
+        } else {
+            for (ArrayList<Object> listaAux : listaProductos) {  // Iterar sobre las sublistas
+                // Comparar los productos usando 'equals'
+                if (listaAux.get(0).equals(producto)) {
+                    // Incrementar la cantidad del producto
+                    listaAux.set(1, (Integer) listaAux.get(1) + 1);  // Cambié a Integer
+                    encontrado = true;
+                    break;  // Salir del ciclo si ya encontramos el producto
+                }
+            }
+
+            if (!encontrado) {
+                productoCantidad.add(producto);  // Agregar el producto
+                productoCantidad.add(1);         // Inicializar la cantidad en 1
+                listaProductos.add(productoCantidad);  // Agregar a la lista
+            }
+        }
+    }
+    return listaProductos;  // Regresar la lista de productos y sus cantidades
+}
+public String mostrarListaProductosTienda(ArrayList<ArrayList<Object>> listaProductos) {
+    if (listaProductos == null || listaProductos.isEmpty()) {
+        return "Actualmente no hay productos registrados en el sistema.";
+    }
+
+    StringBuilder texto = new StringBuilder();
+    int contador = 1;
+
+    // Recorrer listaProductos para mostrar cada producto y su cantidad
+    for (ArrayList<Object> listaAux : listaProductos) {
+        Producto producto = (Producto) listaAux.get(0);  // Obtener el producto
+        Integer cantidad = (Integer) listaAux.get(1);   // Obtener la cantidad
+
+        texto.append(contador).append(". Producto: ").append(producto.getNombre()).append("\n")
+             .append(" - Cantidad: ").append(cantidad).append("\n")
+             .append(" - Peso: ").append(producto.getPeso()).append("\n\n");
+        contador++;
+    }
+
+    return texto.toString().trim();
+}
+public String enviarPedido(ArrayList<Producto> listaProductosPedidos, Transporte transporteSeleccionado,Cliente clienteSeleccionado,LocalDate dia ){
+    Factura factura = new Factura(this, clienteSeleccionado, transporteSeleccionado, listaProductosPedidos, dia);
+    return factura.toString();
 }
 }
 
