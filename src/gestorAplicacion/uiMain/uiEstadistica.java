@@ -102,14 +102,20 @@ public class uiEstadistica {
                 default:
                     System.out.println("Opción no válida. Intente de nuevo.");
             }
-            
-            System.out.println("Desea realizar otra operación? (s/n): ");
-            String respuesta = scanner.nextLine().toLowerCase();
-            if (!respuesta.equalsIgnoreCase("s") & !respuesta.equalsIgnoreCase("n")) {
-                mostrar();
-            } else {
-                System.out.println("Saliendo...");
-                opcion = 6;
+
+            while (true) {
+                System.out.println("Desea realizar otra operación? (s/n): ");
+                String respuesta = scanner.nextLine().toLowerCase();
+                if (respuesta.equals("s")) {
+                    break;
+                } else if (respuesta.equals("n")) {
+                    System.out.println("Saliendo...");
+                    opcion = 6;
+                    break;
+                } else {
+                    System.out.println("Respuesta no válida. Intente de nuevo.");
+                }
+                
             }
 
         } while (opcion != 6);
