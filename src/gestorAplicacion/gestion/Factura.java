@@ -3,13 +3,17 @@ package gestion;
 //Se importan librerias para el uso de fechas con su respectivo formato
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.io.Serializable;
 import java.util.ArrayList;
 import produccion.Producto;
 import produccion.Tienda;
 import produccion.Transporte;
 import produccion.estadosProducto;
 
-public class Factura {
+public class Factura implements Serializable{
+    private static final long serialVersionUID = 3L;
+
+    //Atributos
     private Tienda tienda; 
     private Cliente cliente; 
     private Transporte transporte; 

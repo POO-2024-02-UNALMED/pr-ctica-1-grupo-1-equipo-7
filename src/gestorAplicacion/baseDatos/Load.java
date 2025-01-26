@@ -1,7 +1,6 @@
 package baseDatos;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import gestion.Cliente;
 import gestion.Conductor;

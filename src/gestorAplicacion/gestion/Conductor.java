@@ -8,7 +8,6 @@ public class Conductor extends Persona {
     private Transporte transporte;
     private Fabrica fabrica;
     private ArrayList<Meta> metaConductor;
-    private int pesoTransportado;
     private String licencia;
 
     public Conductor(String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria, Fabrica fabrica, Transporte transporte){
@@ -78,10 +77,15 @@ public class Conductor extends Persona {
         this.fabrica = fabrica;
     }
 
-    // Para el atributo listaConductores (static) solo Getter
+    // Para el atributo listaConductores (static)
     public static ArrayList<Conductor> getListaConductores() { 
         return listaConductores;
     }
+
+    public static void setListaConductores(ArrayList<Conductor> listaConductores) { 
+        Conductor.listaConductores = listaConductores;
+    }
+
 
     // Para el atributo metaConductor
     public ArrayList<Meta> getMeta() { 
@@ -98,8 +102,14 @@ public class Conductor extends Persona {
     public void aumentarCargaTrabajo(){
         this.cantidadTrabajo += 1;
     }
-    public void aumentarPesoTransportado(int peso){
-        this.pesoTransportado += peso;
+    // Getter para licencia
+    public String getLicencia() {
+        return licencia;
+    }
+
+    // Setter para licencia
+    public void setLicencia(String licencia) {
+        this.licencia = licencia;
     }
 }
 
