@@ -10,7 +10,7 @@ import gestion.Meta;
 
 public class uiPagoTrabajadores {
     public static void pagarTrabajadores(){
-        System.out.println("Eligió la opción de pagar a sus trabajadores.\n");
+        System.out.println("\nEligió la opción de pagar a sus trabajadores.");
         Scanner sc = new Scanner(System.in);
         // Etiqueta del primer loop
         LOOP_PRINCIPAL:
@@ -18,6 +18,7 @@ public class uiPagoTrabajadores {
             ArrayList<Persona> listaTrabajadores = new ArrayList<>();  // Se crea para usarla cuando se verifique el tipo de empleado que escogió.
             System.out.println("Seleccione el tipo de empleado que desea pagarle.");
             System.out.println("1. Operarios \n2. Conductores \n3. Vendedores\n0. Volver al menú.");
+            System.out.print("» ");
             int opcion;
             int opcion2;
             int opcion3;
@@ -28,13 +29,13 @@ public class uiPagoTrabajadores {
             try {
                 opcion = sc.nextInt();
             } catch (Exception e) {
-                System.out.println("Entrada inválida. Por favor, ingrese un número.\n");
+                System.out.println("\nEntrada inválida. Por favor, ingrese un número.");
                 sc.nextLine(); // Limpiar el buffer
                 continue; 
             }
             
             if (opcion == 0) {
-                System.out.println("Volviendo al menú principal.");
+                System.out.println("Volviendo al menú principal.\n");
                 break;
             }
 
@@ -48,7 +49,10 @@ public class uiPagoTrabajadores {
             else if (opcion > 0 && opcion <= 3){
                 switch (opcion) {
                     case 1:
-                        listaTrabajadores = Operario.getListaOperario();
+                        for(Operario i : Operario.getListaOperario()){
+                            listaTrabajadores.add(i);
+                        }
+                        
                         break;
                     case 2:
                         for(Conductor i : Conductor.getListaConductores()){
@@ -56,7 +60,9 @@ public class uiPagoTrabajadores {
                         }
                         break;
                     case 3:
-                        listaTrabajadores = Vendedor.getListaVendedores();
+                        for(Vendedor i : Vendedor.getListaVendedores()){
+                            listaTrabajadores.add(i);
+                        }
                         break;
                 }
 
@@ -70,6 +76,7 @@ public class uiPagoTrabajadores {
                     }
                     System.out.println(Fabrica.mostrarPersonas(trabajadores));
                     System.out.println("Elija el trabajador que desea pagarle. Seleccione un número entre: [1 - " + trabajadores.size() + "] \n0. Volver al menú.");
+                    System.out.print("» ");
                     // Para validar que el usuario ingrese un número válido otra vez
                     try {
                         opcion2 = sc.nextInt();
@@ -102,6 +109,7 @@ public class uiPagoTrabajadores {
                         while(true){
                             // Preguntar si quiere revisar metas o seguir con el pago.
                             System.out.println("¿Quiere revisar las metas del trabajador?\n1. Sí\n2. No\n3. Cambiar de Trabajador\n0. Volver al menú principal.");
+                            System.out.print("» ");
 
                             // Verificación de que se ingrese un número.
                             try {
@@ -145,6 +153,7 @@ public class uiPagoTrabajadores {
                                     }
                                     System.out.println(trabajadorSeleccionado.mostrarMetas());
                                     System.out.println("\nElija la meta que desea revisar. Seleccione un número entre: [1 - " + metasTrabajador.size() + "]\n"+ (metasTrabajador.size()+1) +". Proceder con el pago. \n0. Volver al menú.");
+                                    System.out.print("» ");
 
                                     // Para validar que el usuario ingrese un número válido otra vez
                                     try {
@@ -185,6 +194,7 @@ public class uiPagoTrabajadores {
                                     LOOP_QUINTO:
                                     while (true) {    
                                         System.out.println("¿Qué desea hacer? \n1. Revisar otra meta \n2. Proceder con el pago.");
+                                        System.out.print("» ");
                                         try {
                                             opcion5 = sc.nextInt();
                                         } catch (Exception e) {
@@ -228,6 +238,7 @@ public class uiPagoTrabajadores {
             ULTIMO_LOOP:
             while(true){
                 System.out.println("\n¿Qué desea hacer? \n1. Pagar a otro trabajador. \n0. Volver al menú principal.");
+                System.out.print("» ");
                 try {
                     opcion6 = sc.nextInt();
                 } catch (Exception e) {
@@ -248,6 +259,6 @@ public class uiPagoTrabajadores {
                     break LOOP_PRINCIPAL;
                 }
             }
-        }sc.close();     
+        }    
     }  
 }
