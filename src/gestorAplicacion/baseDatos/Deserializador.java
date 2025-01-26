@@ -15,10 +15,8 @@ public class Deserializador {
         FileInputStream fileInputStream;
         ObjectInputStream objectInputStream;
 
-            fileInputStream
-            = new FileInputStream(strArchivo);
-           objectInputStream
-            = new ObjectInputStream(fileInputStream);
+            fileInputStream = new FileInputStream(strArchivo);
+           objectInputStream = new ObjectInputStream(fileInputStream);
         
             Serializable s = (Serializable) objectInputStream.readObject();
             objectInputStream.close();
