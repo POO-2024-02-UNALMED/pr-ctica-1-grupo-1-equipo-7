@@ -1,7 +1,6 @@
 package baseDatos;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import gestion.Cliente;
 import gestion.Conductor;
@@ -28,7 +27,7 @@ public class Load {
 
       facturas = Factura.getListaFacturas();
       clientes = Cliente.getListaClientes();
-      catalogo = Producto.getListaProductos();
+      //catalogo = Producto.getListaProductos();
       conductores = Conductor.getListaConductores();
 
       Serializador.guardarTiendas();
@@ -55,10 +54,10 @@ public class Load {
        facturas =  Deserializador.cargarFacturas();
        conductores = Deserializador.cargaConductores();
 
-       Factura.setListaFacturas(facturas);
-       Cliente.setListaClientes(clientes);
-       Producto.setListaProductos(catalogo);
-       Conductor.setListaConductores(conductores);
+       //Factura.setListaFacturas(facturas);
+       //Cliente.setListaClientes(clientes);
+       //Producto.setListaProductos(catalogo);
+       //Conductor.setListaConductores(conductores);
 
       }catch(Exception e){
         System.out.println("Ha ocurrido un error en la deserialización");

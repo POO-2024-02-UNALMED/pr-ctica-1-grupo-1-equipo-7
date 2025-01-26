@@ -1,15 +1,19 @@
 package gestion;
+import java.io.Serializable;
 import java.util.ArrayList;
 import produccion.Producto;
 import gestion.CuentaBancaria;
 
-public class Cliente {
-    private static int totalCreados=0;
+public class Cliente implements Serializable{
+    //Atributos
+    private static final long serialVersionUID = 1L;
+
     public static ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();//Lista de clientes
-    private ArrayList<Factura> listaFacturas= new ArrayList<Factura>(); 
+    private ArrayList<Factura> listaFacturas= new ArrayList<Factura>();
     public ArrayList<Producto> listaProductos= new ArrayList<Producto>();
-    private int id; 
+    private int id;
     public CuentaBancaria cuentaBancaria;
+    private static int totalCreados=0;
     private String nombre;
     private int edad;
     private int cedula;
@@ -27,9 +31,8 @@ public class Cliente {
     public Cliente(){}
 
     //Métodos: 
-    
     public static String mostrarClientes(){  //Imprime la lista de clientes, comenzando desde 1 para facilitar al usurario a la hora de escojer. La forma de imprimir es : 1.Cliente
-        String texto = null;
+        String texto = "";
         if (listaClientes.isEmpty()) {
             
             return "No hay clientes registrados.";
@@ -76,19 +79,23 @@ public class Cliente {
     }
 
     public int getId(){
-    return this.id;
+        return this.id;
     }
     public void setId(int nuevoId){ 
-    this.id = nuevoId;
+        this.id = nuevoId;
     }
     public CuentaBancaria getCuentaBancaria(){
-    return cuentaBancaria;
+        return cuentaBancaria;
     }
     public void setCuentaBancaria(CuentaBancaria cuentaBancaria){
         this.cuentaBancaria = cuentaBancaria;
     }
     public static ArrayList<Cliente> getListaClientes(){
         return listaClientes;
+    }
+
+    public static void setListaClientes(ArrayList<Cliente> listaClientes){
+        Cliente.listaClientes = listaClientes;
     }
 
 }

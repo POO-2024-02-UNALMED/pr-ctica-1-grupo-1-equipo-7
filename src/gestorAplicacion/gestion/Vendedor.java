@@ -7,13 +7,11 @@ public class Vendedor extends Persona {
     private static ArrayList<Persona> listaVendedores = new ArrayList<>();
     private ArrayList<Meta> metaVendedor;
 
-     public Vendedor (String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria){
+    public Vendedor (String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria){
         super(nombre, cedula, edad, cuentaBancaria);
         this.metaVendedor = new ArrayList<>();
         listaVendedores.add(this);
-
     }
-
     public Vendedor() {
         //TODO Auto-generated constructor stub
     }
@@ -67,5 +65,8 @@ public class Vendedor extends Persona {
     //Getter y Setter 'listavendedores'
     public static ArrayList<Persona> getListaVendedores(){
         return Vendedor.listaVendedores;
+    }
+    public void aumentarCargaTrabajo(){
+        this.cantidadTrabajo += 1;
     }
 }

@@ -1,9 +1,13 @@
 package produccion;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import gestion.Conductor;
 
-public class Transporte {
+public class Transporte implements Serializable {
+    private static final long serialVersionUID = 9L;
+
+    // Atributos
     private TipoTransporte tipoTransporte;
     private double capacidad;
     private double costo;

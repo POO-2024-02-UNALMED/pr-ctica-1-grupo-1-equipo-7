@@ -1,19 +1,21 @@
 package produccion;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import gestion.CuentaBancaria;
 import gestion.Operario;
 import gestion.Persona;
 
-public class Fabrica {
+public class Fabrica implements Serializable {
+    private static final long serialVersionUID = 6L;
 
     // Atributos
     private  String idFabrica;
     private  String nombre;
     private  String direccion;
     public static  CuentaBancaria cuentaBancaria;  //se quito el static ya que solo existe 1 fabrica no hace falta que el atributo sea de clase
-                                                //RTA: Para la de devoluciones necesito que sea static:). Att: Andres.
+                                                //RTA: Para la de devoluciones necesito que sea static:). Att: Andres
     private static Operario operario;  
     private static ArrayList <Producto> productosDisponibles; //Catalogo de productos disponibles en la fábrica
     private static ArrayList<Tienda> listaTienda = new ArrayList<Tienda>();
@@ -27,6 +29,7 @@ public class Fabrica {
         Fabrica.productosDisponibles = productosDisponibles;
         Fabrica.listaTienda = listaTienda;
         operario.setFabrica(this);
+        
         Fabrica.operario=operario;
     }
     public Fabrica() {}
@@ -61,7 +64,7 @@ public class Fabrica {
     //Funcionalidad a la que pertenece: Devoluciones 
     //Método que se encarga de descontar el dinero de la cuenta bancaria de la fábrica cuando se realiza una devolución 
     // y retorna el precio del producto que se va a devolver.
-    
+
     public static double descontarDineroCuenta(Producto producto){
         double precio = producto.getPrecio();
         double nuevoSaldo= Fabrica.cuentaBancaria.getSaldo()-precio;
@@ -92,17 +95,17 @@ public class Fabrica {
     }
     //Funcionalidad a la que pertenece: Abastecer tiendas
     //Metodo que se encarga de mostrar las tiendas disponibles y los productos que tienen en stock
-       public static String mostrarTiendas() {
+    public static String mostrarTiendas() {
         if (listaTienda.isEmpty()) {
             return "No hay tiendas disponibles.";
         }
-    
+
         StringBuilder resultado = new StringBuilder("Listado de Tiendas:\n");
         for (int i = 0; i < listaTienda.size(); i++) {
             Tienda tienda = listaTienda.get(i);
             resultado.append((i + 1)).append(". ").append(tienda.getNombre()).append(":\n");
             resultado.append("  Productos actuales:\n");
-    
+
             // Obtener los productos de la tienda y agregar indentación
             String[] productos = tienda.cantidadProductos().split("\n");
             for (String producto : productos) {
@@ -111,6 +114,21 @@ public class Fabrica {
         }
         return resultado.toString();
     }
+    // Método sobrecargado que solo muestra las tiendas, sin productos
+    public static String mostrarTiendas(Boolean sinProducto) {
+        if (listaTienda.isEmpty()) {
+            return "No hay tiendas registradas.";
+        }
+    
+        StringBuilder texto = new StringBuilder();
+        for (int i = 0; i < listaTienda.size(); i++) {
+            Tienda tienda = listaTienda.get(i);
+            texto.append((i + 1) + ". Tienda: " + tienda.getNombre() + "\n");
+        }
+    
+        return texto.toString();
+    }
+    
     //Funcionalidad a la que pertenece: Abastecer tiendas
     //Metodo que se encarga de mostrar los productos disponibles en la fábrica para generar
     public static String mostrarProductos() {
@@ -195,4 +213,3 @@ public class Fabrica {
     }
 
 }
-
