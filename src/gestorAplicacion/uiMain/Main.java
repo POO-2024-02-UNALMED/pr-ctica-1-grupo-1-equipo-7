@@ -191,6 +191,7 @@ public class Main {
         //listaTiendas.forEach(System.out::println);
         //System.out.println("\nProductos en la fábrica: ");innecesario
         //productosFabrica.forEach(System.out::println);
+>>>>>>> 9bf949d63e05a458795bb860ce33ef48d34d8d7f
     }
     public static void abastecerTiendas() {
         // Implementar la funcionalidad de abastecer tiendas

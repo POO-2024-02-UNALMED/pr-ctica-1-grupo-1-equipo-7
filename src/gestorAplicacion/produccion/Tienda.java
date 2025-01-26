@@ -272,9 +272,12 @@ public String productosPorCategoria(ArrayList<Producto> productos, List<Integer>
     }
     return resultado.toString();
 }
+<<<<<<< HEAD
 
+=======
 //Funcionalidad a la que pertenece: Abastecer tiendas
 //Metodo que se encarga de calcular la cantidad actual de por su categoria
+>>>>>>> 9bf949d63e05a458795bb860ce33ef48d34d8d7f
 public int getCantidadActualPorCategoria(String categoria) {
     int cantidad = 0;
     for (Producto producto : this.listaProducto) {
@@ -379,9 +382,15 @@ public String cantidadProductos() {
     }
 
     return resultado.toString(); // Retorna el resultado 
+<<<<<<< HEAD
 } 
 
 
+=======
+}
+//Funcionalidad a la que pertenece: Abastecer tiendas
+//Metodo que se encarga de descargar los productos de un transporte a la tienda
+>>>>>>> 9bf949d63e05a458795bb860ce33ef48d34d8d7f
 public void descargarProducto(Transporte transporteSeleccionado) {
     ArrayList<Producto> productosTransportados = transporteSeleccionado.getListaDeProductos();
     for (Producto producto : productosTransportados) {
