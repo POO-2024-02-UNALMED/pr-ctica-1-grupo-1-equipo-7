@@ -17,7 +17,7 @@ public class Fabrica {
     private static Operario operario;       //lo mismo para operario 
     private static ArrayList <Producto> productosDisponibles; //Catalogo de productos disponibles en la fábrica
     private static Operario operario;  
-    private static ArrayList <Producto> productosDisponibles; //se traen todos productos que pueden ser producidos en la fabrica a partir de una lista que tiene la cual se le pasa en el constructor de la fábrica la cual contiene todos los productos que puede abastecer 
+    private static ArrayList <Producto> productosDisponibles; //Catalogo de productos disponibles en la fábrica
     private static ArrayList<Tienda> listaTienda = new ArrayList<Tienda>();
 
     // Constructor
@@ -29,7 +29,7 @@ public class Fabrica {
         Fabrica.productosDisponibles = productosDisponibles;
         Fabrica.listaTienda = listaTienda;
         operario.setFabrica(this);
-        
+        Fabrica.operario=operario;
     }
     public Fabrica() {}
 
@@ -92,7 +92,8 @@ public class Fabrica {
             System.out.println("La tienda ya está registrada o es nula.");
         }
     }
-
+    //Funcionalidad a la que pertenece: Abastecer tiendas
+    //Metodo que se encarga de mostrar las tiendas disponibles y los productos que tienen en stock
        public static String mostrarTiendas() {
         if (listaTienda.isEmpty()) {
             return "No hay tiendas disponibles.";
@@ -112,6 +113,8 @@ public class Fabrica {
         }
         return resultado.toString();
     }
+    //Funcionalidad a la que pertenece: Abastecer tiendas
+    //Metodo que se encarga de mostrar los productos disponibles en la fábrica para generar
     public static String mostrarProductos() {
         StringBuilder productos = new StringBuilder();
         if (Fabrica.productosDisponibles == null || Fabrica.productosDisponibles.isEmpty()) {

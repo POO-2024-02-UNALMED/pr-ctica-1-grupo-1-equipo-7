@@ -16,6 +16,7 @@ public class Tienda {
     private ArrayList<Producto> productosDevueltos;
     private static int numTiendas = 0; 
     private ArrayList<Producto> listaProducto; //Cada tienda tiene una lista de productos DIFERENTES, este atributo NO puede ser static. 
+<<<<<<< HEAD
     private List<String> categorias = new ArrayList<>();
     private List<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
     private Integer cantidadMaximaPorCategoria;//Es la cantidad maxima de productos que puede tener una tienda por categoria. (Es atributo auxiliar para la funcionalidad de abastecer.)
@@ -25,6 +26,15 @@ public class Tienda {
     private int capacidadMaximaMaterial;
     private int capacidadMaximaConsumible;
     private int capacidadMaximaLimpieza;//Es la cantidad maxima de productos que puede tener una tienda por categoria. (Es atributo auxiliar para la funcionalidad de abastecer.)
+=======
+
+    private ArrayList<Object[]> productosPorCategoria = new ArrayList<>(); // Lista de [Producto, Categoria]
+    private ArrayList<String> categorias = new ArrayList<>();
+    private ArrayList<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
+    private int capacidadMaximaMaterial;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Construccion
+    private int capacidadMaximaConsumible;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Alimentos
+    private int capacidadMaximaLimpieza;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Hogar
+>>>>>>> 9bf949d63e05a458795bb860ce33ef48d34d8d7f
 
     // constructor
     public Tienda(String nombre,Vendedor vendedor, CuentaBancaria cuentaBancaria, int numTiendas){
@@ -147,6 +157,8 @@ public void agregarProductosPorCategoria(Producto producto, int categoria){
     Object[] productoCategoria = {producto, categoria};
     productosPorCategoria.add(productoCategoria);
 }
+//Funcionalidad a la que pertenece: Abastecer tiendas
+//Metodo que se encarga de mostrar los productos por categoria en formato: (cantidad actual/capacidad maxima)
 public String productosPorCategoria(ArrayList<Producto> productos) {
     // Limpiar las listas antes de procesar
     categorias.clear();
@@ -204,8 +216,10 @@ public String productosPorCategoria(ArrayList<Producto> productos) {
 
     return resultado.toString();
 }
+//Funcionalidad a la que pertenece: Abastecer tiendas
+//Metodo que se encarga de mostrar los productos por categoria en formato: (cantidad actual/capacidad maxima)
 //sobrecarga del metodo anterior
-public String productosPorCategoria(List<Producto> productos, List<Integer> conteoTemporal) {
+public String productosPorCategoria(ArrayList<Producto> productos, List<Integer> conteoTemporal) {
     // Limpiar las listas antes de procesar
     categorias.clear();
 
@@ -259,6 +273,8 @@ public String productosPorCategoria(List<Producto> productos, List<Integer> cont
     return resultado.toString();
 }
 
+//Funcionalidad a la que pertenece: Abastecer tiendas
+//Metodo que se encarga de calcular la cantidad actual de por su categoria
 public int getCantidadActualPorCategoria(String categoria) {
     int cantidad = 0;
     for (Producto producto : this.listaProducto) {
@@ -334,7 +350,8 @@ public ArrayList<Producto> mostrarProductos(Producto producto) {
     }
     return productosParaMostrar;
 }
-
+//Funcionalidad a la que pertenece: Abastecer tiendas
+//Metodo que se encarga de mostrar los productos de la TIENDA de forma ordenada(producto:cantidad)
 public String cantidadProductos() {
     // Lista para almacenar los nombres de los productos ya contados
     ArrayList<String> nombresContados = new ArrayList<>();
