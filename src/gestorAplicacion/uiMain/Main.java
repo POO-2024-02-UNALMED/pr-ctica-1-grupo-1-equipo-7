@@ -93,8 +93,8 @@ public class Main {
 
     // Crear tiendas
     static Tienda tienda1 = new Tienda("Hefesto Construcciones", vendedor1, cuentaFabrica,100,100,100);
-    static Tienda tienda2 = new Tienda("Consumibles de la Abuela Tata", vendedor2, cuentaFabrica,1000,100,100);
-    static Tienda tienda3 = new Tienda("Miss Músculo Aseo", vendedor3, cuentaFabrica, 1000, 1000,1000);
+    static Tienda tienda2 = new Tienda("Consumibles de la Abuela Tata", vendedor2, cuentaFabrica,100,100,100);
+    static Tienda tienda3 = new Tienda("Miss Músculo Aseo", vendedor3, cuentaFabrica, 100, 100,100);
 
     // Crear productos para cada tienda
     static Producto producto1 = new Producto("Cemento", 50, 100, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
@@ -188,17 +188,5 @@ public class Main {
             listaConductores.add(conductor9);
             listaConductores.add(conductor10);
         }
-        
-
-    //CORREGIRRRR:
-    static {
-        // Mostrar resumen de inicialización
-        System.out.println("Sistema inicializado con los siguientes datos:");
-        System.out.println("Fábrica: " + fabrica.getNombre());
-        System.out.println("Tiendas:" + Fabrica.mostrarTiendas());
-        //listaTiendas.forEach(System.out::println);
-        //System.out.println("\nProductos en la fábrica: ");innecesario
-        //productosFabrica.forEach(System.out::println);
-    }
 }
 

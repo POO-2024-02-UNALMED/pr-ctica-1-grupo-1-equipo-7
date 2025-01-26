@@ -40,51 +40,52 @@ public class uiAbastacerTiedas {
                     if (tiendaSeleccionadaIndex < 1 || tiendaSeleccionadaIndex > Fabrica.getListaTienda().size()) {
                         System.out.println("Número inválido. Ingrese un número entre 1 y " + Fabrica.getListaTienda().size() + ".");
                     } else {
-                        tiendaSeleccionada = Fabrica.getListaTienda().get(tiendaSeleccionadaIndex - 1);
-                        System.out.println("Tienda seleccionada: " + tiendaSeleccionada.getNombre());
+                        boolean confirmacionTienda= false;
+                        while(!confirmacionTienda){
+                            tiendaSeleccionada= Fabrica.getListaTienda().get(tiendaSeleccionadaIndex - 1);
+                            System.out.println("Tienda seleccionada: " + tiendaSeleccionada.getNombre());
+
+                            System.out.println("¿Es correcta esta selección? (1 para sí, 2 para no)"); 
+                            System.out.println("1. Sí, proceder");  
+                            System.out.println("2. No, seleccionar otra tienda");
+                            
+                            try{
+                                int confirmacion = sc.nextInt();
+                                if (confirmacion == 1){
+                                    System.out.println("Procediendo con la tienda seleccionada...");
+                                    confirmacionTienda = true;
+                                }else if (confirmacion == 2){
+                                    System.out.println("========================================");
+                                    System.out.println("Seleccione la tienda que desea abastecer (0 para salir):");
+                                    System.out.println("========================================");
+                                    System.out.println("0. Salir");
+                                    System.out.println(Fabrica.mostrarTiendas());
+                                    System.out.println("========================================");
+                                    System.out.print("» ");
+                                    tiendaSeleccionadaIndex = sc.nextInt();
+                                
+                                    if (tiendaSeleccionadaIndex == 0) {
+                                        System.out.println("Saliendo...");
+                                        sc.close();
+                                        return;
+                                    }
+                                    if (tiendaSeleccionadaIndex < 1 || tiendaSeleccionadaIndex > Fabrica.getListaTienda().size()) {
+                                        System.out.println("Número inválido. Ingrese un número entre 1 y " + Fabrica.getListaTienda().size() + ".");
+                                    } else {
+                                        System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                                        //confirmacionTienda = true;
+                                    }
+
+                                }
+
+                            }catch(Exception e){
+                                System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                                sc.nextLine(); // Limpiar el buffer
+                            }
                     }
-                    // Preguntar si desea regresar o continuar
-                    System.out.println("========================================");
-                    System.out.println("¿Desea volver al paso anterior?");
-                    System.out.println("Escriba la letra (v) para volver o cualquier otra tecla para continuar.");
-                    System.out.println("========================================");
-                    try {
-                        System.out.print("» ");
-                        String respuestaTienda = sc.next();
-                        if (respuestaTienda.equalsIgnoreCase("v")) {
-                            tiendaSeleccionada = null;
-                            tiendaSeleccionadaIndex = -1;
-                            continue;
-                        }
-                        else if (!respuestaTienda.equalsIgnoreCase("v")) {
-                            System.out.println("Continuando con el proceso de abastecimiento...");
-                        }
-                    } catch (Exception e) {
-                        System.out.println("Entrada inválida. Por favor, ingrese una letra.");
-                        sc.nextLine(); // Limpiar el buffer
                     }
                 } catch (Exception e) {
                     System.out.println("Entrada inválida. Por favor, ingrese un número.");
-                    sc.nextLine(); // Limpiar el buffer
-                }
-                // Preguntar si desea regresar o continuar
-                System.out.println("========================================");
-                System.out.println("¿Desea volver al paso anterior?");
-                System.out.println("Escriba la letra (v) para volver o cualquier otra tecla para continuar.");
-                    System.out.println("========================================");
-                try {
-                    System.out.print("» ");
-                    String respuestaTienda = sc.next();
-                    if (respuestaTienda.equalsIgnoreCase("v")) {
-                        tiendaSeleccionada = null;
-                        tiendaSeleccionadaIndex = -1;
-                        continue;
-                    }
-                    else if (!respuestaTienda.equalsIgnoreCase("v")) {
-                        System.out.println("Continuando con el proceso de abastecimiento...");
-                    }
-                } catch (Exception e) {
-                    System.out.println("Entrada inválida. Por favor, ingrese una letra.");
                     sc.nextLine(); // Limpiar el buffer
                 }
             }
