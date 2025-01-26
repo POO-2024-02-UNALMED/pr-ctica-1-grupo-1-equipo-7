@@ -2,6 +2,7 @@ package uiMain;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 //import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -74,7 +75,12 @@ public class uiEstadistica {
             switch (opcion) {
                 case 1:
                     System.out.println("Las ganancias discretas son: ");
-                    System.out.println(Factura.gananciasDiscretas(fechaInicio, fechaFin));
+                    for (Object f : Factura.gananciasDiscretas(fechaInicio, fechaFin)) {
+                        for (ArrayList o : (ArrayList<ArrayList>) f) {
+                            System.out.println(o.get(0));
+                            System.out.println(o.get(1)+ "\n");
+                        }
+                    }
                     break;
                 case 2:
                     System.out.println("La ganancia total es:");
