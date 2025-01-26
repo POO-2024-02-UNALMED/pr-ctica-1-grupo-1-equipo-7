@@ -36,7 +36,9 @@ public class Producto {
     public Producto(){
         totalCreados++;
     }
-    public Producto(Producto producto){//este es un constructor de copia
+    //este es un constructor de copia para generar un nuevo producto con los mismos atributos de otro producto
+    //funcionalidad a la que pertenece: Abastecer tiendas
+    public Producto(Producto producto){
         this.nombre = producto.nombre;
         this.precio = producto.precio;
         this.cantidad = producto.cantidad;

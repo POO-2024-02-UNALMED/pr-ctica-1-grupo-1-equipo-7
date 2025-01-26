@@ -28,15 +28,10 @@ public class Factura {
         if (Factura.listaFacturas.size() > 2) {
           Factura.ordenarFacturasPorFecha();
         }
-
         this.fecha = fecha;
-
         this.total = calcularTotal();
         listaFacturas.add(this);
-
-        this.id = ++totalCreadas;
-
-        
+        this.id = ++totalCreadas;      
     }
 
   //Metodo para ordenar las facturas por fecha
@@ -297,8 +292,40 @@ public static Object modaTiendas(LocalDate fecha1, LocalDate fecha2) {
   }
   return masComun(tiendas);
 }
+@Override
+public String toString() {
+  StringBuilder factura = new StringBuilder();
+  double totalPrecio = 0;
+  double totalPeso = 0;
 
+  // Encabezado de la factura
+  factura.append("=====================================\n");
+  factura.append(String.format("           %s\n", tienda.getNombre()));
+  factura.append("=====================================\n");
+  factura.append(String.format("Cliente: %s\n", cliente.getNombre()));
+  factura.append(String.format("Cédula: %s\n", cliente.getCedula()));
+  factura.append(String.format("Fecha: %s\n", fecha));
+  factura.append(String.format("Transporte: %s\n", transporte.getTipoTransporte().getNombre()));
+  factura.append("=====================================\n");
+  factura.append(String.format("| %-30s | %-10s | %-10s |\n", "Producto", "Precio", "Peso (kg)"));
+  factura.append("|------------------------------|------------|------------|\n");
 
+  // Detalles de los productos
+  for (Producto producto : listaProductos) {
+      factura.append(String.format("| %-30s | $%-10.2f | %-10.2f |\n", producto.getNombre(), producto.getPrecio(), producto.getPeso()));
+      totalPrecio += producto.getPrecio();
+      totalPeso += producto.getPeso();
+  }
+
+  // Línea de separación
+  factura.append("|------------------------------|------------|------------|\n");
+
+  // Totales
+  factura.append(String.format("| %-30s | $%-10.2f | %-10.2f |\n", "Total", totalPrecio, totalPeso));
+  factura.append("=====================================\n");
+
+  return factura.toString();
+}
 //getters
 public ArrayList<Producto> getListaProductos(){
   return listaProductos;
