@@ -1,11 +1,12 @@
 package produccion;
 
+import gestion.Moda;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class Producto implements Serializable{
+public class Producto implements Moda, Serializable{
     private static final long serialVersionUID = 7L;
 
     //Atributos

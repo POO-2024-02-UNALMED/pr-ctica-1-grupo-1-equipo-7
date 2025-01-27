@@ -1,6 +1,7 @@
 package produccion;
 
 import java.io.Serializable;
+import gestion.Moda;
 import gestion.Vendedor;
 import gestion.Cliente;
 import gestion.CuentaBancaria;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
-public class Tienda implements Serializable{
+public class Tienda implements Moda, Serializable{
     private static final long serialVersionUID = 8L;
     
     //atributos
@@ -448,6 +449,11 @@ public String enviarPedido(ArrayList<Producto> listaProductosPedidos, Transporte
     Factura factura = new Factura(this, clienteSeleccionado, transporteSeleccionado, listaProductosPedidos, dia);
     return factura.toString();
 }
+
+public String toString(){
+    return "Nombre: " + nombre;
+}
+
 }
 
 

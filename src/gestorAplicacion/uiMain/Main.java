@@ -292,9 +292,15 @@ public class Main {
     public static Meta metaConductor2= new Meta("Normal", 40, 13500);
     public static Meta metaConductor3 = new Meta("Dificil", 55, 21000);
     public static Meta metaConductor4 = new Meta("Muy Dificil", 70, 28500);
+    
     //Factura
     static LocalDate fecha = LocalDate.of(2024,10,2);
+    static LocalDate fecha2 = LocalDate.of(2024,10,5);
+    static LocalDate fecha3 = LocalDate.of(2024,10,8);
+
     static Factura f1=new Factura(tienda1, cliente1, transporte1, listaProductosTienda1, fecha);
+    static Factura f2=new Factura(tienda2, cliente2, transporte2, listaProductosTienda2, fecha2);
+    static Factura f3=new Factura(tienda2, cliente1, transporte3, listaProductosTienda3, fecha3);
 
     static{
         operario1.setMetaOperario(metaOperario1);

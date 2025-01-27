@@ -241,61 +241,83 @@ public static double aumentoPorcentual(LocalDate fecha1, LocalDate fecha2) {
   return ((ganancias2 - ganancias1) / ganancias1) * 100;
 }
 
-
 //Funcionalidad a la que pertenece: Estadistica
-//Obtiene el producto mas comun de una lista de productos
-public static Object masComun(ArrayList<Object> obj) {
-  Object masComun = obj.get(0);
-  int max = 0;
-  for (Object p: obj) {
+//Obtiene la moda de una lista de productos
+public static String modaProductos(LocalDate fecha1, LocalDate fecha2) {
+  ArrayList<Factura> facturas = getFacturasEntreFechas(fecha1, fecha2);
+  ArrayList<String> productos = new ArrayList<>();
+  for (Factura f: facturas) {
+    for (Producto p: f.getListaProductos()) {
+      productos.add(p.getNombre());
+    }
+  }
+  int maxCount = 0;
+  String maxStr = "";
+  for (String s: productos) {
     int count = 0;
-    for (Object p2: obj) {
-      if (p.equals(p2)) {
+    for (String s2: productos) {
+      if (s.equals(s2)) {
         count++;
       }
     }
-    if (count > max) {
-      max = count;
-      masComun = p;
+    if (count > maxCount) {
+      maxCount = count;
+      maxStr = s;
     }
   }
-  return masComun;
-}
-
-//Funcionalidad a la que pertenece: Estadistica
-//Obtiene la moda de una lista de productos
-public static Object modaProductos(LocalDate fecha1, LocalDate fecha2) {
-  ArrayList<Factura> facturas = getFacturasEntreFechas(fecha1, fecha2);
-  ArrayList<Object> productos = new ArrayList<>();
-  for (Factura f: facturas) {
-    for (Producto p: f.getListaProductos()) {
-      productos.add(p);
-    }
-  }
-  return masComun(productos);
+  return maxStr;
 }
 
 //Funcionalidad a la que pertenece: Estadistica
 //Obtiene la moda de una lista de clientes
 public static Object modaClientes(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<Factura> facturas = getFacturasEntreFechas(fecha1, fecha2);
-  ArrayList<Object> clientes = new ArrayList<>();
+  ArrayList<String> clientes = new ArrayList<>();
   for (Factura f: facturas) {
-    clientes.add(f.getCliente());
+    clientes.add(f.getCliente().getNombre());
   }
-  return masComun(clientes);
+  int maxCount = 0;
+  String maxStr = "";
+  for (String s: clientes) {
+    int count = 0;
+    for (String s2: clientes) {
+      if (s.equals(s2)) {
+        count++;
+      }
+    }
+    if (count > maxCount) {
+      maxCount = count;
+      maxStr = s;
+    }
+  }
+  return maxStr;
 }
 
 //Funcionalidad a la que pertenece: Estadistica
 //Obtiene la moda de una lista de tiendas
 public static Object modaTiendas(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<Factura> facturas = getFacturasEntreFechas(fecha1, fecha2);
-  ArrayList<Object> tiendas = new ArrayList<>();
+  ArrayList<String> tiendas = new ArrayList<>();
   for (Factura f: facturas) {
-    tiendas.add(f.getTienda());
+    tiendas.add(f.getTienda().getNombre());
   }
-  return masComun(tiendas);
+  int maxCount = 0;
+  String maxStr = "";
+  for (String s: tiendas) {
+    int count = 0;
+    for (String s2: tiendas) {
+      if (s.equals(s2)) {
+        count++;
+      }
+    }
+    if (count > maxCount) {
+      maxCount = count;
+      maxStr = s;
+    }
+  }
+  return maxStr;
 }
+
 @Override
 public String toString() {
   StringBuilder factura = new StringBuilder();

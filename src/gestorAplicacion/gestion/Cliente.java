@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import produccion.Producto;
 import gestion.CuentaBancaria;
 
-public class Cliente implements Serializable{
+public class Cliente implements Moda, Serializable{
     //Atributos
     private static final long serialVersionUID = 1L;
 
@@ -96,6 +96,10 @@ public class Cliente implements Serializable{
 
     public static void setListaClientes(ArrayList<Cliente> listaClientes){
         Cliente.listaClientes = listaClientes;
+    }
+
+    public String toString(){
+        return "Nombre: " + nombre;
     }
 
 }
