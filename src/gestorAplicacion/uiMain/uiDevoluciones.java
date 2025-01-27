@@ -82,13 +82,14 @@ public class uiDevoluciones {
                                     // y se obtiene el valor del producto a devolver.
                                     Fabrica.cuentaBancaria.devolverDinero(valorADevolver, cliente); 
                                     cliente.removerProducto(producto);// Se remueve el producto de la lista de productos del cliente.
-                                    System.out.println("Devolviendo el dinero..."); 
+                                    System.out.println("Se le devolverá el valor de su producto, que es de $ "+ producto.getPrecio());
+                                    System.out.println("----Devolviendo el dinero---"); 
                                     try {
                                         Thread.sleep(2000);
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
-                                    System.out.println("El producto ha sido devuelto exitosamente.");
+                                    System.out.println("El producto ha sido devuelto exitosamente y se ha reembolsado su dinero.");
                                     System.out.println("¿Qué desea hacer? \n1. Devolver otro producto \n0. Regresar al menú de facturas");
                                     int opcion3;
                                     switch (opcion3 = sc.nextInt()) {
@@ -111,7 +112,7 @@ public class uiDevoluciones {
                                         Producto.motivosDevolucion.add(Producto.motivosDevolucion.size()-1, causa);
                                     }
                                     System.out.println("Por el motivo indicado, se le hará el cambio del producto.");
-                                    System.out.println("Si el producto que seleccione tiene un precio mayor al que desea cambiar, puede agregar otro producto para completar el valor restante. Es posible que tenga que pagar un excedente.\nNO se le devolverá el dinero restante.");
+                                    System.out.println("Si el producto que seleccione tiene un precio menor al que desea cambiar, puede agregar otro producto para completar el valor restante. Es posible que tenga que pagar un excedente.\nNO se le devolverá el dinero restante.");
                                     System.out.println("Seleccione el producto por el cual desea cambiar: ");
                                     double precio=producto.getPrecio();
                                     System.out.println("El precio de su producto es de: $"+precio);
@@ -119,8 +120,9 @@ public class uiDevoluciones {
                                     ArrayList<Producto> carrito = new ArrayList<>();
                                     double subtotal = 0;
                                     System.out.println("\nProductos disponibles para cambio:");
-                                    ArrayList<Producto> productosDisponibles = tienda.mostrarProductos(producto); 
-
+                                    ArrayList<Producto> productosDisponibles = tienda.mostrarProductos(producto);
+                                  
+                                    
                                     while (true) {
                                         //Se muestran los productos 
                                         //que el cliente puede cambiar. 
@@ -128,9 +130,32 @@ public class uiDevoluciones {
                                             System.out.println("Se han agotado los productos en la tienda disponibles para cambiar. Se procederá al cambio del producto con su carrito actual");
                                             break; //Se considera el caso (poco probable pero no imposible) de que la tienda se quede sin productos para cambiar. 
                                         }
-                                        for (int i = 0; i < productosDisponibles.size(); i++) {
-                                            Producto p = productosDisponibles.get(i);
-                                            System.out.println((i + 1) + ". " + p.getNombre() + " - Precio: $" + p.getPrecio());
+                                        ArrayList<Producto> productosUnicos=new ArrayList<>(); //Productos disponibles para cambiar, pero aparecen solo una vez
+                                        ArrayList<Integer> frecuencias= new ArrayList<>(); //Lista que contiene la frecuencia de cada producto en la lista de productosDisponibles
+                                        for (Producto p: productosDisponibles){
+                                            boolean encontrado=false; 
+
+                                            for (int i = 0; i < productosUnicos.size(); i++) {
+                                                if (productosUnicos.get(i).getNombre().equals(p.getNombre())) {
+                                                    // Si el producto ya está en la lista, aumentar su frecuencia
+                                                    frecuencias.set(i, frecuencias.get(i) + 1);
+                                                    encontrado = true;
+                                                    break;
+                                                }
+                                            }
+                                        
+                                            if (!encontrado) {
+                                                // Si no se encontró, agregar el producto a productosUnicos
+                                                productosUnicos.add(p);
+                                                frecuencias.add(1);
+                                            }
+                                        }
+                                        
+                                        for (int i = 0; i < productosUnicos.size(); i++) {
+                                            Producto p = productosUnicos.get(i);
+                                            int cantidadProducto=frecuencias.get(i);
+                                            System.out.println((i + 1) + ". " + p.getNombre() + " - Precio: $" + p.getPrecio()+ " - Productos disponibles: "+ cantidadProducto);
+                                            //Se imprime cada producto de la tienda que se puede cambiar, su precio y la cantidad que hay. 
                                         }
                                         // Pedir al usuario que seleccione un producto
                                         System.out.println("Ingrese el número del producto que desea añadir al carrito (o 0 para finalizar):");
@@ -144,10 +169,10 @@ public class uiDevoluciones {
                             
                                         // Agregar la selección a la lista
                                         seleccionProductos.add(opcion4);
-                                        Producto productoSeleccionado=productosDisponibles.get(opcion4-1); //Se usa para eliminar el producto de la lista de productos disponibles al final de la iteracion. 
+                                        Producto productoSeleccionado=productosUnicos.get(opcion4-1); //Se usa para eliminar el producto de la lista de productos disponibles al final de la iteracion. 
                             
                                         // Llamar al método de la tienda para procesar la selección.
-                                        carrito = tienda.agregarProductosParaCambio(precio, seleccionProductos,productosDisponibles);
+                                        carrito = tienda.agregarProductosParaCambio(precio, seleccionProductos,productosUnicos);
                             
                                         // Mostrar los productos seleccionados
                                         System.out.println("\nResumen del cambio:");
@@ -197,13 +222,14 @@ public class uiDevoluciones {
                                     cliente.removerProducto(producto); // Se remueve el producto de la lista de productos del cliente.
                                     producto.setEstado(estadosProducto.DEVUELTO);
                                     for (Producto p : carrito) {
-                                        cliente.listaProductos.add(p); // Se añaden los productos seleccionados al cliente.
+                                        cliente.listaProductos.add(p); // Se añaden los productos seleccionados por el cambio al cliente.
+                                        tienda.getListaProducto().remove(p); // Se eliminan los productos que el cliente seleccionó de la lista de la tienda 
                                     }
                                     System.out.println("Generando resumen final del cambio...");
                             
                                     // Mostrar resumen final del cambio
                                     try {
-                                        Thread.sleep(2000);
+                                        Thread.sleep(2500);
                                     } catch (InterruptedException e) {
                                         e.printStackTrace();
                                     }
@@ -214,7 +240,7 @@ public class uiDevoluciones {
                                         System.out.println(" - " + p.getNombre() + ": $" + p.getPrecio());
                                     }
                                     System.out.println("Total del carrito: $" + subtotal+"\nExcedente pagado: "+excedente);
-                                    System.out.println("------------------------------------------");
+                                    System.out.println("---------------------------------------");
                                     
                                 }
                             }
