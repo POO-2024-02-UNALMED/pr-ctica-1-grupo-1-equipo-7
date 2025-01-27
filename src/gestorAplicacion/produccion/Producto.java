@@ -37,8 +37,8 @@ public class Producto implements Serializable{
         this.tipo = tipo;
         this.categoria = categoria;
         totalCreados++;
-        this.id=totalCreados;
         this.peso=peso;
+        this.id=totalCreados;
         Producto.listaProductos.add(this);
     }
     public Producto(){

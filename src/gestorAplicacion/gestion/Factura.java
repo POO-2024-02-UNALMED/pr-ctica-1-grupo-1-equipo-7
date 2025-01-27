@@ -20,7 +20,7 @@ public class Factura implements Serializable{
     private LocalDate fecha; 
     private int id;
     private double total; //Precio total de la factura. 
-    private ArrayList<Producto> listaProductos=new ArrayList<>();  
+    private ArrayList<Producto> listaProductos;
     private static int totalCreadas=0; 
     public static ArrayList<Factura> listaFacturas=new ArrayList<>(); 
 

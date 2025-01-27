@@ -1,6 +1,8 @@
 package uiMain;
 import gestion.*;
 import produccion.*;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -290,6 +292,9 @@ public class Main {
     public static Meta metaConductor2= new Meta("Normal", 40, 13500);
     public static Meta metaConductor3 = new Meta("Dificil", 55, 21000);
     public static Meta metaConductor4 = new Meta("Muy Dificil", 70, 28500);
+    //Factura
+    static LocalDate fecha = LocalDate.of(2024,10,2);
+    static Factura f1=new Factura(tienda1, cliente1, transporte1, listaProductosTienda1, fecha);
 
     static{
         operario1.setMetaOperario(metaOperario1);

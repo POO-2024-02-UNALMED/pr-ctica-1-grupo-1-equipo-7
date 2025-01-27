@@ -17,7 +17,6 @@ public class Tienda implements Serializable{
     private String nombre;
     private Vendedor vendedor;
     private CuentaBancaria cuentaBancaria;
-    private ArrayList<Producto> productosDevueltos;
     private static int numTiendas = 0; 
     private ArrayList<Producto> listaProducto; //Cada tienda tiene una lista de productos DIFERENTES, este atributo NO puede ser static. 
     private ArrayList<Object[]> productosPorCategoria = new ArrayList<>(); // Lista de [Producto, Categoria]
@@ -76,14 +75,6 @@ public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {
     this.cuentaBancaria = cuentaBancaria;
 }
 
-// Atributo productosDevueltos
-public ArrayList<Producto> getProductosDevueltos() {
-    return productosDevueltos;
-}
-
-public void setProductosDevueltos(ArrayList<Producto> productosDevueltos) {
-    this.productosDevueltos = productosDevueltos;
-}
 
 // Atributo numTiendas
 public int getNumTiendas() {
@@ -272,10 +263,8 @@ public int getCantidadActualPorCategoria(String categoria) {
 }
 //Funcionalidad a la que pertenece: Devoluciones
 public Cliente devolverProducto(Factura factura, Producto producto){
-    productosDevueltos.add(producto);
-    
+    listaProducto.add(producto);
     producto.setEstado(estadosProducto.DEVUELTO);
-    productosDevueltos.add(producto);
     return factura.getCliente();
 }
 

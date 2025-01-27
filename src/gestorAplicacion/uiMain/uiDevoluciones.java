@@ -1,7 +1,7 @@
 package uiMain;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Scanner;
-
 import gestion.Factura;
 import produccion.*;
 import gestion.Cliente;
@@ -81,7 +81,13 @@ public class uiDevoluciones {
                                     double valorADevolver=Fabrica.descontarDineroCuenta(producto); // Se descuenta el dinero de la cuenta de la fábrica
                                     // y se obtiene el valor del producto a devolver.
                                     Fabrica.cuentaBancaria.devolverDinero(valorADevolver, cliente); 
-                                    cliente.removerProducto(producto); // Se remueve el producto de la lista de productos del cliente.
+                                    cliente.removerProducto(producto);// Se remueve el producto de la lista de productos del cliente.
+                                    System.out.println("Devolviendo el dinero..."); 
+                                    try {
+                                        Thread.sleep(2000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
                                     System.out.println("El producto ha sido devuelto exitosamente.");
                                     System.out.println("¿Qué desea hacer? \n1. Devolver otro producto \n0. Regresar al menú de facturas");
                                     int opcion3;
@@ -133,7 +139,7 @@ public class uiDevoluciones {
                                         // Salir si el cliente no quiere añadir más productos
                                         if (opcion4 == 0) {
                                             System.out.println("Ha decidido no añadir más productos.");
-                                            break;
+                                            return;
                                         }
                             
                                         // Agregar la selección a la lista
@@ -153,7 +159,7 @@ public class uiDevoluciones {
                                         System.out.println("Subtotal actual: $" + subtotal);
                             
                                         // Verificar si el subtotal alcanzó el límite permitido
-                                        if (subtotal >= precio) {
+                                        if (subtotal > precio) {
                                             System.out.println("El subtotal ha alcanzado el valor límite. El proceso ha finalizado.");
                                             break;
                                         }
@@ -162,14 +168,17 @@ public class uiDevoluciones {
                                         System.out.println("¿Desea continuar añadiendo productos? (1: Sí, 0: No)");
                                         int continuar = sc.nextInt();
                                         if (continuar==1){
-                                            for (Producto p: productosDisponibles){
-                                                if (p.getId()==productoSeleccionado.getId()){
-                                                    productosDisponibles.remove(p);
-                                                }
+                                            Iterator<Producto> iterator = productosDisponibles.iterator();
+                                            while (iterator.hasNext()){
+                                                Producto p=iterator.next();
+                                                if (p.getId()==productoSeleccionado.getId()) {
+                                                    iterator.remove();
                                             }
-                                            System.out.println("\nProductos disponibles para cambio:");
+                                          }
+                                          System.out.println("\nProductos disponibles para cambio:");
+
                                         }  
-                                        if (continuar == 0) {
+                                        else if (continuar == 0) {
                                             System.out.println("Proceso finalizado. Su carrito de cambio está listo.");
                                             break;
                                         }
@@ -190,15 +199,22 @@ public class uiDevoluciones {
                                     for (Producto p : carrito) {
                                         cliente.listaProductos.add(p); // Se añaden los productos seleccionados al cliente.
                                     }
+                                    System.out.println("Generando resumen final del cambio...");
                             
                                     // Mostrar resumen final del cambio
+                                    try {
+                                        Thread.sleep(2000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
                                     System.out.println("\n----- Resumen final del cambio -----");
-                                    System.out.println("Usted ha cambiado un "+ producto.getNombre()+"por:");
+                                    System.out.println("Usted ha cambiado un "+ producto.getNombre()+" por:");
 
                                     for (Producto p : carrito) {
                                         System.out.println(" - " + p.getNombre() + ": $" + p.getPrecio());
                                     }
                                     System.out.println("Total del carrito: $" + subtotal+"\nExcedente pagado: "+excedente);
+                                    System.out.println("------------------------------------------");
                                     
                                 }
                             }
