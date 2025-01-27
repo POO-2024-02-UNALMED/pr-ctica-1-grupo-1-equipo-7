@@ -3,6 +3,7 @@ package uiMain;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import gestion.Factura;
@@ -14,6 +15,7 @@ public class uiEstadistica {
     private static Scanner scanner = new Scanner(System.in);
     private static LocalDate fechaInicio;
     private static LocalDate fechaFin;
+    private static DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static int num = 0;
 
     public static void bienvenida() {
@@ -22,7 +24,6 @@ public class uiEstadistica {
     }
 
     public static void asignarFecha() {
-        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         
         // Convertir la fecha a String con el nuevo formato
         String fechaMinFormateada = Factura.getFechaMin().format(formato);
@@ -91,7 +92,11 @@ public class uiEstadistica {
 
             switch (opcion) {
                 case 1:
-                    System.out.println("Las ganancias discretas son: " + Factura.gananciasDiscretas(fechaInicio, fechaFin));
+                    System.out.println("Las ganancias discretas son: ");
+                    for (Object g : Factura.gananciasDiscretas(fechaInicio, fechaFin)) {
+                        ArrayList<Object> ganancias = (ArrayList<Object>) g;
+                        System.out.println("Fecha: " + ganancias.get(0) + " Ganancia: " + ganancias.get(1));
+                    }
                     
                     break;
                 case 2:
