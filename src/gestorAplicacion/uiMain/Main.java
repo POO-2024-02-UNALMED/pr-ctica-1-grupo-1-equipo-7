@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import baseDatos.Load;
+
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -46,6 +48,7 @@ public class Main {
                     estadisticas();
                     break;
                 case 0:
+                    Load.guardar();
                     salir = true;
                     System.out.println("Saliendo del sistema...");
                     break;

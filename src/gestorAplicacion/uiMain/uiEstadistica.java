@@ -95,7 +95,9 @@ public class uiEstadistica {
                     System.out.println("Las ganancias discretas son: ");
                     for (Object g : Factura.gananciasDiscretas(fechaInicio, fechaFin)) {
                         ArrayList<Object> ganancias = (ArrayList<Object>) g;
-                        System.out.println("Fecha: " + ganancias.get(0) + " Ganancia: " + ganancias.get(1));
+                        LocalDate f = (LocalDate) ganancias.get(0);
+                        String fecha = f.format(formato);
+                        System.out.println("Fecha: " + fecha + " Ganancia: " + ganancias.get(1));
                     }
                     
                     break;
