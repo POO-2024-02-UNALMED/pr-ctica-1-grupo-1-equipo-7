@@ -3,7 +3,6 @@ package gestion;
 import java.io.Serializable;
 
 public class Meta implements Serializable{
-    private static final long serialVersionUID = 4L;
 
     //Atributos
     private String nivelDeDificultad;

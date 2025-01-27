@@ -3,7 +3,7 @@ package gestion;
 import java.io.Serializable;
 
 public class CuentaBancaria implements Serializable{
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 4L;
 
     //atributos
     private int numeroCuenta;

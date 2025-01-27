@@ -27,9 +27,9 @@ public class Deserializador {
     public static ArrayList<Factura> cargarFacturas() throws IOException, ClassNotFoundException{
         @SuppressWarnings("unchecked")
 
-        ArrayList<Factura> facturas = (ArrayList<Factura>) deserializar("src/baseDatos/temp/facturas.txt");
+        ArrayList<Factura> listaFacturas = (ArrayList<Factura>) deserializar("src/baseDatos/temp/facturas.txt");
 
-        return facturas;
+        return listaFacturas;
     }
 
 
@@ -51,25 +51,25 @@ public class Deserializador {
 
     public static ArrayList<Cliente> cargarClientes() throws IOException, ClassNotFoundException{
 
-        ArrayList<Cliente> clientes= (ArrayList<Cliente>) deserializar("src/baseDatos/temp/clientes.txt");
+        ArrayList<Cliente> listaClientes= (ArrayList<Cliente>) deserializar("src/baseDatos/temp/clientes.txt");
 
-        return clientes;
+        return listaClientes;
     }
 
 
     public static ArrayList<Vendedor> cargarVendedores() throws IOException, ClassNotFoundException{
 
-        ArrayList<Vendedor> vendedores = (ArrayList<Vendedor>) deserializar("src/baseDatos/temp/vendedores.txt");
+        ArrayList<Vendedor> listaVendedores = (ArrayList<Vendedor>) deserializar("src/baseDatos/temp/vendedores.txt");
 
-        return vendedores;
+        return listaVendedores;
     }
 
 
     public static ArrayList<Tienda> cargarTiendas() throws IOException, ClassNotFoundException{
 
-        ArrayList<Tienda> tiendas = (ArrayList<Tienda>) deserializar("src/baseDatos/temp/tiendas.txt");
+        ArrayList<Tienda> listaTiendas = (ArrayList<Tienda>) deserializar("src/baseDatos/temp/tiendas.txt");
 
-        return tiendas;
+        return listaTiendas;
     }
 
 
@@ -83,9 +83,9 @@ public class Deserializador {
 
     public static ArrayList<Conductor> cargaConductores() throws IOException, ClassNotFoundException{
 
-        ArrayList<Conductor> conductores = (ArrayList<Conductor>) deserializar("src/baseDatos/temp/conductores.txt");
+        ArrayList<Conductor> listaConductores = (ArrayList<Conductor>) deserializar("src/baseDatos/temp/conductores.txt");
 
-        return conductores;
+        return listaConductores;
     }
 
 }

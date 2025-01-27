@@ -28,10 +28,10 @@ public class uiEstadistica {
         // Convertir la fecha a String con el nuevo formato
         String fechaMinFormateada = Factura.getFechaMin().format(formato);
         String fechaMaxFormateada = Factura.getFechaMax().format(formato);
-
+        
         System.out.println("La fecha mínima es: " + fechaMinFormateada);
         System.out.println("La fecha máxima es: " + fechaMaxFormateada);
-        System.out.println("Usar fechas por defecto? (s/n): ");
+        System.out.println("Usar fechas por defecto (las mostradas anteriormente)? (s/n): ");
 
         String respuesta = scanner.nextLine();
 

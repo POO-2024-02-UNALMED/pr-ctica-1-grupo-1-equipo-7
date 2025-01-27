@@ -11,7 +11,7 @@ import produccion.Transporte;
 import produccion.estadosProducto;
 
 public class Factura implements Serializable{
-    private static final long serialVersionUID = 3L;
+    private static final long serialVersionUID = 2L;
 
     //Atributos
     private Tienda tienda; 

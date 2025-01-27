@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public abstract class Persona implements Serializable{
-    private static final long serialVersionUID = 5L;
+    private static final long serialVersionUID = 3L;
 
     private static final int SALARIOBASE = 10000;  //Salario base que despues se modifica por cantidad de veces trabajadas y por bonos 
 
