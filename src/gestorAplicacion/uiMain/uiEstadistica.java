@@ -3,8 +3,6 @@ package uiMain;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-//import java.util.ArrayList;
 import java.util.Scanner;
 
 import gestion.Factura;
@@ -16,6 +14,7 @@ public class uiEstadistica {
     private static Scanner scanner = new Scanner(System.in);
     private static LocalDate fechaInicio;
     private static LocalDate fechaFin;
+    private static int num = 0;
 
     public static void bienvenida() {
         System.out.println("=== Bienvenido al módulo de estadísticas ===");
@@ -69,15 +68,18 @@ public class uiEstadistica {
     }
 
     private static void mostrarMenu() {
-        asignarFecha();
         System.out.println("=== Opciones ===");
         System.out.println("1. Mostrar ganancias discretas entre fechas");
         System.out.println("2. Mostrar ganancias totales entre fechas");
         System.out.println("3. Mostrar promedio de ganancias por día entre fechas");
         System.out.println("4. Mostrar aumento porcentual de ganancias entre fechas");
         System.out.println("5. Mostrar moda de productos entre fechas");
+        if (num > 0) {
+            System.out.println("6. Cambiar fechas");
+        }
         System.out.println("0. Salir");
         System.out.print("Seleccione una opción: ");
+        num++;
     }
 
     public static void mostrar() {
@@ -112,6 +114,9 @@ public class uiEstadistica {
                     System.out.println("El cliente que más compró es: ");
                     System.out.println(Factura.modaClientes(fechaInicio, fechaFin));
                     break;
+                case 6:
+                    asignarFecha();
+                    break;
                 case 0:
                     System.out.println("Saliendo...");
                     break;
@@ -134,7 +139,7 @@ public class uiEstadistica {
                 
             }
 
-        } while (opcion != 6);
+        } while (opcion != 0);
     }
 
     

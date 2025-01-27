@@ -79,6 +79,7 @@ public class Main {
     public static void estadisticas() {
         // Implementar la funcionalidad de estadísticas
         uiMain.uiEstadistica.bienvenida();
+        uiMain.uiEstadistica.asignarFecha();
         uiMain.uiEstadistica.mostrar();
     }
 

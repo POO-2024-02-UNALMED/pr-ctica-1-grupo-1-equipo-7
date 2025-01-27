@@ -149,7 +149,7 @@ public static LocalDate getFechaMin(){
 public static ArrayList<Factura> getFacturasEntreFechas(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<Factura> facturas = new ArrayList<>();
   for (Factura f: listaFacturas) {
-    if (f.getFecha().isAfter(fecha1) && f.getFecha().isBefore(fecha2)) {
+    if (f.getFecha().isAfter(fecha1) && f.getFecha().isBefore(fecha2) || f.getFecha().isEqual(fecha1) || f.getFecha().isEqual(fecha2)) {
       facturas.add(f);
     }
   }
