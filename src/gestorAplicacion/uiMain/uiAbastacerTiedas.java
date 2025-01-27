@@ -6,7 +6,7 @@ import produccion.Producto;
 import produccion.TipoTransporte;
 import produccion.Transporte;
 import gestion.Conductor;
-
+import java.util.concurrent.TimeUnit;  
 import java.util.ArrayList;
 
 public class uiAbastacerTiedas {
@@ -33,8 +33,12 @@ public class uiAbastacerTiedas {
                     System.out.print("» ");
                     tiendaSeleccionadaIndex = sc.nextInt();
                     if (tiendaSeleccionadaIndex == 0) {
-                        System.out.println("Saliendo...");
-                        sc.close();
+                        try {
+                            System.out.println("Saliendo...");
+                            TimeUnit.SECONDS.sleep(1);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         return;
                     }
                     if (tiendaSeleccionadaIndex < 1 || tiendaSeleccionadaIndex > Fabrica.getListaTienda().size()) {
@@ -66,7 +70,6 @@ public class uiAbastacerTiedas {
                                 
                                     if (tiendaSeleccionadaIndex == 0) {
                                         System.out.println("Saliendo...");
-                                        sc.close();
                                         return;
                                     }
                                     if (tiendaSeleccionadaIndex < 1 || tiendaSeleccionadaIndex > Fabrica.getListaTienda().size()) {
@@ -123,7 +126,7 @@ public class uiAbastacerTiedas {
                                 productoSeleccionadoIndex = sc.nextInt();
                                 if (productoSeleccionadoIndex == 0) {
                                     System.out.println("Saliendo...");
-                                    sc.close();
+
                                     return;
                                 }
                                 if (productoSeleccionadoIndex < 1 || productoSeleccionadoIndex > Fabrica.getProductosDisponibles().size()) {
@@ -257,7 +260,6 @@ public class uiAbastacerTiedas {
                     transporteSeleccionadoIndex = sc.nextInt();
                     if (transporteSeleccionadoIndex == 0) {
                         System.out.println("Saliendo...");
-                        sc.close();
                         return;
                     }
                     if (transporteSeleccionadoIndex < 1 || transporteSeleccionadoIndex > listaTransportes.size()) {
@@ -363,6 +365,5 @@ public class uiAbastacerTiedas {
                 sc.nextLine(); // Limpiar el buffer
             }
         }
-        sc.close();
     }
 }
