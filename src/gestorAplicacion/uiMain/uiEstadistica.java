@@ -44,22 +44,39 @@ public class uiEstadistica {
             while (true) {
                 System.out.println("Ingrese la fecha de inicio (dd/mm/yyyy): ");
                 String SFechaInicio = scanner.nextLine();
+                fechaInicio = Factura.convertirStrADate(SFechaInicio);
                 try {
-                    fechaInicio = Factura.convertirStrADate(SFechaInicio);
-                    break;
+                    if (SFechaInicio.equals("0")) {
+                        System.out.println("Saliendo...");
+                        break;
+                    }else
+                    if (fechaInicio.isBefore(Factura.getFechaMin()) || fechaInicio.isAfter(Factura.getFechaMax())  || fechaInicio.isAfter(fechaFin)) {
+                        System.out.println("Fecha inválida. Intente de nuevo.");
+                    } else {
+                        break;
+                    }
                 } catch (DateTimeParseException e) {
-                    System.out.println("Formato o Fecha inválida. Intente de nuevo.");
+                    System.out.println("Formato inválido. Intente de nuevo.");
                 }
             }
             
             while (true) {
                 System.out.println("Ingrese la fecha de fin (dd/mm/yyyy): ");
                 String SFechaFin = scanner.nextLine();
+                fechaFin = Factura.convertirStrADate(SFechaFin);
                 try {
-                    fechaFin = Factura.convertirStrADate(SFechaFin);
-                    break;
+                    if (SFechaFin.equals("0")) {
+                        System.out.println("Saliendo...");
+                        break;
+                   
+                    } else
+                    if (fechaFin.isBefore(Factura.getFechaMin()) || fechaFin.isAfter(Factura.getFechaMax()) || fechaFin.isBefore(fechaInicio)) {
+                        System.out.println("Fecha inválida. Intente de nuevo.");
+                    } else {
+                        break;
+                    }
                 } catch (DateTimeParseException e) {
-                    System.out.println("Formato o Fecha inválida. Intente de nuevo.");
+                    System.out.println("Formato inválido. Intente de nuevo.");
                 }
             }
         } else {
@@ -70,11 +87,11 @@ public class uiEstadistica {
 
     private static void mostrarMenu() {
         System.out.println("=== Opciones ===");
-        System.out.println("1. Mostrar ganancias discretas entre fechas");
-        System.out.println("2. Mostrar ganancias totales entre fechas");
-        System.out.println("3. Mostrar promedio de ganancias por día entre fechas");
-        System.out.println("4. Mostrar aumento porcentual de ganancias entre fechas");
-        System.out.println("5. Mostrar moda de productos entre fechas");
+        System.out.println("1. Mostrar ganancias discretas");
+        System.out.println("2. Mostrar ganancias totales");
+        System.out.println("3. Mostrar promedio de ganancias por día");
+        System.out.println("4. Mostrar aumento porcentual de ganancias");
+        System.out.println("5. Mostrar moda de productos, tiendas y clientes");
         if (num > 0) {
             System.out.println("6. Cambiar fechas");
         }
