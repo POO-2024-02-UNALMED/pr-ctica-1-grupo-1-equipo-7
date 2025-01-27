@@ -97,22 +97,95 @@ public class Main {
     static Tienda tienda3 = new Tienda("Miss Músculo Aseo", vendedor3, cuentaFabrica, 100, 100,100);
 
     // Crear productos para cada tienda
-    static Producto producto1 = new Producto("Cemento", 50, 100, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
-    static Producto producto2 = new Producto("Madera", 30, 50, estadosProducto.DISPONIBLE, "Material", "Construcción", 20.0);
-    static Producto producto3 = new Producto("Adhesivo", 20, 200, estadosProducto.DISPONIBLE, "Material", "Construcción", 5.0);
+   
+    //tienda 1
+    static Producto producto1 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
+    static Producto producto2 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
+    static Producto producto3 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
+    static Producto producto4 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
+    static Producto producto5 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
+    
+    static Producto producto6 = new Producto("Cemento Blanco", 55000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
+    static Producto producto7 = new Producto("Cemento Blanco", 55000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
+    
+    static Producto producto8 = new Producto("Adhesivo Cerámico", 20000, estadosProducto.DISPONIBLE, "Material", "Construcción", 5.0);
+    static Producto producto9 = new Producto("Adhesivo Cerámico", 20000, estadosProducto.DISPONIBLE, "Material", "Construcción", 5.0);
+    
+    static Producto producto10 = new Producto("Pintura Interior", 35000, estadosProducto.DISPONIBLE, "Material", "Construcción", 18.0);
+    static Producto producto11 = new Producto("Pintura Interior", 35000, estadosProducto.DISPONIBLE, "Material", "Construcción", 18.0);
+    
+    //tienda 2
+    static Producto producto12 = new Producto("Pan", 10000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
+    static Producto producto13 = new Producto("Pan", 10000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
+    static Producto producto14 = new Producto("Pan", 10000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
 
-    static Producto producto4 = new Producto("Pan", 10, 150, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-    static Producto producto5 = new Producto("Leche", 8, 100, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 2.0);
-    static Producto producto6 = new Producto("Arroz", 5, 300, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
+    static Producto producto15 = new Producto("Leche Entera", 8000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 2.0);
+    static Producto producto16 = new Producto("Leche Entera", 8000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 2.0);
+    static Producto producto17 = new Producto("Leche Entera", 8000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 2.0);
 
-    static Producto producto7 = new Producto("Detergente", 15, 120, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 3.0);
-    static Producto producto8 = new Producto("Esponja", 5, 200, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.5);
-    static Producto producto9 = new Producto("Limpiador", 12, 150, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
+    static Producto producto18 = new Producto("Arroz", 5000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
+    static Producto producto19 = new Producto("Arroz", 5000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
+    static Producto producto20 = new Producto("Arroz", 5000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
 
-    // Inicializar y añadir productos a las tiendas
-    static ArrayList<Producto> listaProductosTienda1 = new ArrayList<>(Arrays.asList(producto1, producto2, producto3));
-    static ArrayList<Producto> listaProductosTienda2 = new ArrayList<>(Arrays.asList(producto4, producto5, producto6));
-    static ArrayList<Producto> listaProductosTienda3 = new ArrayList<>(Arrays.asList(producto7, producto8, producto9));
+    static Producto producto21 = new Producto("Galletas", 12000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.5);
+    static Producto producto22 = new Producto("Galletas", 12000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.5);
+    static Producto producto23 = new Producto("Galletas", 12000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.5);
+
+    static Producto producto24 = new Producto("Mantequilla", 7000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.25);
+    static Producto producto25 = new Producto("Mantequilla", 7000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.25);
+    static Producto producto26 = new Producto("Mantequilla", 7000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.25);
+
+    static Producto producto27 = new Producto("Queso", 15000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
+    static Producto producto28 = new Producto("Queso", 15000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
+    static Producto producto29 = new Producto("Queso", 15000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
+
+    //tienda 3
+    static Producto producto30 = new Producto("Detergente", 15000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 3.0);
+    static Producto producto31 = new Producto("Detergente", 15000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 3.0);
+    static Producto producto32 = new Producto("Detergente", 15000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 3.0);
+
+    static Producto producto33 = new Producto("Esponja", 5000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.5);
+    static Producto producto34 = new Producto("Esponja", 5000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.5);
+    static Producto producto35 = new Producto("Esponja", 5000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.5);
+
+    static Producto producto36 = new Producto("Limpiador", 12000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
+    static Producto producto37 = new Producto("Limpiador", 12000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
+    static Producto producto38 = new Producto("Limpiador", 12000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
+
+    static Producto producto39 = new Producto("Jabón Líquido", 10000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 1.5);
+    static Producto producto40 = new Producto("Jabón Líquido", 10000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 1.5);
+    static Producto producto41 = new Producto("Jabón Líquido", 10000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 1.5);
+
+    static Producto producto42 = new Producto("Trapeador", 25000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.8);
+    static Producto producto43 = new Producto("Trapeador", 25000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.8);
+    static Producto producto44 = new Producto("Trapeador", 25000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.8);
+
+    static Producto producto45 = new Producto("Cloro", 8000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
+    static Producto producto46 = new Producto("Cloro", 8000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
+    static Producto producto47 = new Producto("Cloro", 8000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
+
+    static ArrayList<Producto> listaProductosTienda1 = new ArrayList<>(Arrays.asList(
+        producto1, producto2, producto3, producto4, producto5,  // Cemento Gris
+        producto6, producto7,                                 // Cemento Blanco
+        producto8, producto9,                                 // Adhesivo Cerámico
+        producto10, producto11                                // Pintura Interior
+));
+    static ArrayList<Producto> listaProductosTienda2 = new ArrayList<>(Arrays.asList(
+        producto12, producto13, producto14, // Pan
+        producto15, producto16, producto17, // Leche Entera
+        producto18, producto19, producto20, // Arroz
+        producto21, producto22, producto23, // Galletas
+        producto24, producto25, producto26, // Mantequilla
+        producto27, producto28, producto29  // Queso
+    ));
+    static ArrayList<Producto> listaProductosTienda3 = new ArrayList<>(Arrays.asList(
+        producto30, producto31, producto32, // Detergente
+        producto33, producto34, producto35, // Esponja
+        producto36, producto37, producto38, // Limpiador
+        producto39, producto40, producto41, // Jabón Líquido
+        producto42, producto43, producto44, // Trapeador
+        producto45, producto46, producto47  // Cloro
+));
 
 
 
@@ -237,21 +310,5 @@ public class Main {
             i.setMetaVendedor(metaVendedor3);
             i.setMetaVendedor(metaVendedor4);
         }
-    }
-
-
-    //CORREGIRRRR:
-    static {
-        // Mostrar resumen de inicialización
-        System.out.println("Sistema inicializado con los siguientes datos:");
-        System.out.println("Fábrica: " + fabrica.getNombre());
-        System.out.println("Tiendas: ");
-        listaTiendas.forEach(System.out::println);
-        System.out.println("\nProductos en la fábrica: ");
-        productosFabrica.forEach(System.out::println);
-        System.out.println("Tiendas:" + Fabrica.mostrarTiendas());
-        //listaTiendas.forEach(System.out::println);
-        //System.out.println("\nProductos en la fábrica: ");innecesario
-        //productosFabrica.forEach(System.out::println);
     }
 }

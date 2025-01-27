@@ -395,8 +395,9 @@ public ArrayList<ArrayList<Object>> listaProductosTienda() {
             listaProductos.add(productoCantidad);
         } else {
             for (ArrayList<Object> listaAux : listaProductos) {  // Iterar sobre las sublistas
-                // Comparar los productos usando 'equals'
-                if (listaAux.get(0).equals(producto)) {
+                Producto p = (Producto) listaAux.get(0); // Obtener el producto de la sublista
+                // Comparar los productos usando solo el nombre
+                if (p.getNombre().equals(producto.getNombre())) {
                     // Incrementar la cantidad del producto
                     listaAux.set(1, (Integer) listaAux.get(1) + 1);  // Cambié a Integer
                     encontrado = true;
@@ -426,13 +427,33 @@ public String mostrarListaProductosTienda(ArrayList<ArrayList<Object>> listaProd
         Producto producto = (Producto) listaAux.get(0);  // Obtener el producto
         Integer cantidad = (Integer) listaAux.get(1);   // Obtener la cantidad
 
+        // Solo mostrar un producto una vez con la cantidad total
         texto.append(contador).append(". Producto: ").append(producto.getNombre()).append("\n")
+             .append(" - Precio: ").append(producto.getPrecio()).append("\n")  // Mostrar precio
              .append(" - Cantidad: ").append(cantidad).append("\n")
              .append(" - Peso: ").append(producto.getPeso()).append("\n\n");
         contador++;
     }
 
     return texto.toString().trim();
+}
+public void eliminarProductosPorNombre(ArrayList<Producto> listaEliminar) {
+    // Recorrer la lista de productos a eliminar
+    for (Producto productoAEliminar : listaEliminar) {
+        boolean productoEliminado = false;
+        
+        // Recorrer la lista de productos de la tienda
+        for (int i = 0; i < listaProducto.size(); i++) {
+            Producto productoTienda = listaProducto.get(i);
+            
+            // Si el nombre del producto coincide, lo eliminamos
+            if (productoTienda.getNombre().equals(productoAEliminar.getNombre()) && !productoEliminado) {
+                listaProducto.remove(i);  // Eliminar el producto de la tienda
+                productoEliminado = true;  // Asegurarse de que solo se elimine una vez
+                break;  // Salir del bucle una vez que se elimine el producto
+            }
+        }
+    }
 }
 public String enviarPedido(ArrayList<Producto> listaProductosPedidos, Transporte transporteSeleccionado,Cliente clienteSeleccionado,LocalDate dia ){
     Factura factura = new Factura(this, clienteSeleccionado, transporteSeleccionado, listaProductosPedidos, dia);
