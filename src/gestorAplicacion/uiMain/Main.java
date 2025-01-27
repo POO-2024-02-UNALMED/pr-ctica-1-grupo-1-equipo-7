@@ -93,7 +93,7 @@ public class Main {
     static CuentaBancaria cuentaVendedor3 = new CuentaBancaria(95687, 200);
 
     // Crear vendedores
-    static Vendedor vendedor1 = new Vendedor("Maria Beatriz", 57793, 20, cuentaVendedor1);
+    static Vendedor vendedor1 = new Vendedor("Maria Beatriz", 577935, 20, cuentaVendedor1);
     static Vendedor vendedor2 = new Vendedor("Adriana Alexia Putellas", 89235, 21, cuentaVendedor2);
     static Vendedor vendedor3 = new Vendedor("Lionel Andres Messi", 14720, 22, cuentaVendedor3);
 
@@ -239,16 +239,16 @@ public class Main {
         static Transporte transporte10 = new Transporte(TipoTransporte.CAMINANDO, 5000, 15);
 
     // Crear conductores
-        static Conductor conductor1 = new Conductor("Conductor 1", 11111, 30, cuentaConductor1, fabrica, transporte1);
-        static Conductor conductor2 = new Conductor("Conductor 2", 22222, 31, cuentaConductor2, fabrica, transporte2);
-        static Conductor conductor3 = new Conductor("Conductor 3", 33333, 32, cuentaConductor3, fabrica, transporte3);
-        static Conductor conductor4 = new Conductor("Conductor 4", 44444, 33, cuentaConductor4, fabrica, transporte4);
-        static Conductor conductor5 = new Conductor("Conductor 5", 55555, 34, cuentaConductor5, fabrica, transporte5);
-        static Conductor conductor6 = new Conductor("Conductor 6", 66666, 35, cuentaConductor6, fabrica, transporte6);
-        static Conductor conductor7 = new Conductor("Conductor 7", 77777, 36, cuentaConductor7, fabrica, transporte7);
-        static Conductor conductor8 = new Conductor("Conductor 8", 88888, 37, cuentaConductor8, fabrica, transporte8);
-        static Conductor conductor9 = new Conductor("Conductor 9", 99999, 38, cuentaConductor9, fabrica, transporte9);
-        static Conductor conductor10 = new Conductor("Conductor 10", 101010, 39, cuentaConductor10, fabrica, transporte10);
+        static Conductor conductor1 = new Conductor("Julian Lopez", 19658, 30, cuentaConductor1, fabrica, transporte1);
+        static Conductor conductor2 = new Conductor("Oscar Rodriguez", 27932, 31, cuentaConductor2, fabrica, transporte2);
+        static Conductor conductor3 = new Conductor("Pablo Estrada", 37431, 32, cuentaConductor3, fabrica, transporte3);
+        static Conductor conductor4 = new Conductor("Camilo Henriquez", 4496, 33, cuentaConductor4, fabrica, transporte4);
+        static Conductor conductor5 = new Conductor("Juan Zamora", 55865, 34, cuentaConductor5, fabrica, transporte5);
+        static Conductor conductor6 = new Conductor("Miguel Zuluaga", 69636, 35, cuentaConductor6, fabrica, transporte6);
+        static Conductor conductor7 = new Conductor("Juan Herrera", 76970, 36, cuentaConductor7, fabrica, transporte7);
+        static Conductor conductor8 = new Conductor("Adres Guerra", 80497, 37, cuentaConductor8, fabrica, transporte8);
+        static Conductor conductor9 = new Conductor("Yhan Jaramillo", 93049, 38, cuentaConductor9, fabrica, transporte9);
+        static Conductor conductor10 = new Conductor("Jose Sanchez", 10101, 39, cuentaConductor10, fabrica, transporte10);
 
         // Crear lista de conductores
         static ArrayList<Conductor> listaConductores = new ArrayList<>();
