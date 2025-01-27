@@ -56,7 +56,7 @@ package produccion;
         
         // Método principal con el parámetro booleano
         public static String mostrarTipoTransporteSegunCarga(ArrayList<TipoTransporte> listaFiltrada, boolean envioGratisRecomendado) {
-            StringBuilder sb = new StringBuilder("Opciones de transporte disponibles:\n");
+            StringBuilder sb = new StringBuilder("");
         
             // Inicializa las variables para determinar el transporte con el precio más bajo
             double precioMinimo = Double.MAX_VALUE;

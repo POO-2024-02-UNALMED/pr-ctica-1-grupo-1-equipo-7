@@ -19,7 +19,7 @@ public class Meta implements Serializable{
     }
 
     public boolean cumpleMeta(double indiceDeTrabajo){
-        if(this.getIndice() < indiceDeTrabajo){
+        if(this.getIndice() <= indiceDeTrabajo){
             return true;
         }else{
             return false;

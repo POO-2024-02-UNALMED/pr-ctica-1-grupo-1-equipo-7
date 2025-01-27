@@ -1,11 +1,12 @@
 package produccion;
 
+import gestion.Moda;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class Producto implements Serializable{
+public class Producto implements Moda, Serializable{
     private static final long serialVersionUID = 7L;
 
     //Atributos
@@ -30,16 +31,15 @@ public class Producto implements Serializable{
             "Otro motivo"
         ));
     //Constructores: 
-    public Producto(String nombre, int precio, int cantidad,  estadosProducto estado, String tipo, String categoria,double peso){
+    public Producto(String nombre, int precio,  estadosProducto estado, String tipo, String categoria,double peso){
         this.nombre = nombre;
         this.precio = precio;
-        this.cantidad = cantidad;
         this.estado = estado;
         this.tipo = tipo;
         this.categoria = categoria;
         totalCreados++;
-        this.id=totalCreados;
         this.peso=peso;
+        this.id=totalCreados;
         Producto.listaProductos.add(this);
     }
     public Producto(){
@@ -50,7 +50,6 @@ public class Producto implements Serializable{
     public Producto(Producto producto){
         this.nombre = producto.nombre;
         this.precio = producto.precio;
-        this.cantidad = producto.cantidad;
         this.estado = producto.estado;
         this.tipo = producto.tipo;
         this.categoria = producto.categoria;
@@ -103,9 +102,7 @@ public class Producto implements Serializable{
     public void setPrecio(int precio){
         this.precio = precio;
     }
-    public int getCantidad(){
-        return this.cantidad;
-    }
+
     public int getId(){
         return this.id;
     }

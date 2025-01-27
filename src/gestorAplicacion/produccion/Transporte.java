@@ -15,7 +15,7 @@ public class Transporte implements Serializable {
     private ArrayList<TipoTransporte> listaTransportes;
     private Tienda tienda;
     private ArrayList<Producto> listaDeProductos;
-    final static int montoEnvioGratis=500000;
+    final static int montoEnvioGratis=250000;
 
     public Transporte(TipoTransporte tipoTransporte, double capacidad, double costo){
         this.tipoTransporte = tipoTransporte;
