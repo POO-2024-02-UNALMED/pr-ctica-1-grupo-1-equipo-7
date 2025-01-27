@@ -237,7 +237,7 @@ public static double promedioGanancias(LocalDate fecha1, LocalDate fecha2) {
 //Obtiene el aumento porcentual de las ganancias de las facturas entre dos fechas
 public static double aumentoPorcentual(LocalDate fecha1, LocalDate fecha2) {
   double ganancias1 = gananciasTotales(fecha1, fecha2);
-  double ganancias2 = gananciasTotales();
+  double ganancias2 = gananciasTotales(Factura.getFechaMin(), Factura.getFechaMax());
   return ((ganancias2 - ganancias1) / ganancias1) * 100;
 }
 
