@@ -275,10 +275,10 @@ public class Load {
       Meta metaVendedor4 = new Meta("Muy Dificil", 20, 30000);
 
     //Instancias estáticas de las metas para operario
-      Meta metaConductor1 = new Meta("Facil",25, 8000);
-      Meta metaConductor2= new Meta("Normal", 40, 13500);
-      Meta metaConductor3 = new Meta("Dificil", 55, 21000);
-      Meta metaConductor4 = new Meta("Muy Dificil", 70, 28500);
+      Meta metaConductor1 = new Meta("Facil",30, 8000);
+      Meta metaConductor2= new Meta("Normal", 50, 13500);
+      Meta metaConductor3 = new Meta("Dificil", 60, 21000);
+      Meta metaConductor4 = new Meta("Muy Dificil", 100, 28500);
     
     //Factura
      LocalDate fecha = LocalDate.of(2024,10,2);
@@ -309,9 +309,46 @@ public class Load {
             i.setMetaVendedor(metaVendedor3);
             i.setMetaVendedor(metaVendedor4);
         }
+        vendedor1.setCantidadTrabajo(3);
+        vendedor2.setCantidadTrabajo(6);
+        vendedor3.setCantidadTrabajo(11);
+        vendedor1.setIndiceMeta(3);
+        vendedor2.setIndiceMeta(6);
+        vendedor3.setIndiceMeta(11);
 
-      }
+        operario1.setCantidadTrabajo(7);
+        operario1.setIndiceMeta(7);
         
+        conductor1.setCantidadTrabajo(8);
+        conductor1.setIndiceMeta(37);
+
+        conductor2.setCantidadTrabajo(12);
+        conductor2.setIndiceMeta(45);
+
+        conductor3.setCantidadTrabajo(5);
+        conductor3.setIndiceMeta(58);
+
+        conductor4.setCantidadTrabajo(0);
+        conductor4.setIndiceMeta(0);
+
+        conductor5.setCantidadTrabajo(9);
+        conductor5.setIndiceMeta(28);
+
+        conductor6.setCantidadTrabajo(3);
+        conductor6.setIndiceMeta(47);
+
+        conductor7.setCantidadTrabajo(0);
+        conductor7.setIndiceMeta(0);
+
+        conductor8.setCantidadTrabajo(7);
+        conductor8.setIndiceMeta(69);
+
+        conductor9.setCantidadTrabajo(13);
+        conductor9.setIndiceMeta(50);
+
+        conductor10.setCantidadTrabajo(6);
+        conductor10.setIndiceMeta(18);
+
     }
 */
 

@@ -85,22 +85,15 @@ public static String mostrarFacturas(){
     }
     return texto;
 }
-//Funcionalidad a la que pertenece: Devoluciones
-//Método que se encarga de mostrar, por medio de un String, los productos de la factura, indicando si han sido devueltos o no. 
 
-  public static String mostrarProductosFactura(Factura f){
-    int n=1; 
-    String texto="";
-    for (Producto p: f.getListaProductos()){
-      if (p.estado.equals(estadosProducto.DEVUELTO)){
-      texto+=n+". "+p.nombre + "(devuelto)"+"\n";
-      }
-      else{
-        texto+=n+". "+p.nombre+"\n";
-      }
-      n++;
-    } return texto;
-}
+//Funcionalidad a la que pertenece: Devoluciones
+//Método que se encarga de mostrar, por medio de un String, los productos de la factura, indicando si han sido devueltos o no. Se llama desde la implementacion de la 
+//interfaz IMostrarProductos
+
+  public String mostrarProductos(){
+    return IMostrarProductos.mostrarProductos(this);
+  }
+    
 public  static Factura seleccionarFactura(int n){
   return listaFacturas.get(n-1);
 }

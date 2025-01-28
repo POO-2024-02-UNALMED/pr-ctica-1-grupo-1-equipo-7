@@ -4,6 +4,7 @@ package gestion;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+
 public abstract class Persona implements Serializable{
     private static final long serialVersionUID = 3L;
 
@@ -19,6 +20,7 @@ public abstract class Persona implements Serializable{
     private static int personasTotales = 0;
     private static ArrayList<Persona> listaPersonas = new ArrayList<>();
                                   
+
 
     protected Persona(String nombre,int cedula, int edad, CuentaBancaria cuentaBancaria){
         this.nombre=nombre;

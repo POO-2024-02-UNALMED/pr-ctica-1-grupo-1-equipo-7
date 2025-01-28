@@ -6,12 +6,13 @@ import gestion.Vendedor;
 import gestion.Cliente;
 import gestion.CuentaBancaria;
 import gestion.Factura;
+import gestion.IMostrarProductos;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
-public class Tienda implements Moda, Serializable{
+public class Tienda implements Moda, Serializable, IMostrarProductos{
     private static final long serialVersionUID = 8L;
     
     //atributos
@@ -310,6 +311,7 @@ public Cliente devolverProducto(Factura factura, Producto producto){
 //Método que se encarga de filtrar los productos que puede seleccionar el usuario para cambiar
 //Devuelve un ArrayList con los productos disponibles para la venta de la tienda, menos el producto que desea cambiar.
 
+@Override //Sobreescribe el método por default de la interfaz IMostrarProducto
 public ArrayList<Producto> mostrarProductos(Producto producto) {
     ArrayList<Producto> productosParaMostrar=new ArrayList<>();
     for (Producto p : this.getListaProducto()) {
@@ -359,7 +361,8 @@ public void descargarProducto(Transporte transporteSeleccionado) {
     }
     transporteSeleccionado.getListaDeProductos().clear(); // Vaciar la lista de productos del transporte
 }
-
+//Metodo perteniente la funcionalidad Envio Pedidos
+//El método crea y devuelve una lista de productos con su cantidad. Si un producto ya está en la lista, incrementa su cantidad; de lo contrario, lo agrega con una cantidad inicial de 1. La comparación se hace por el nombre del producto.
 public ArrayList<ArrayList<Object>> listaProductosTienda() {
     ArrayList<ArrayList<Object>> listaProductos = new ArrayList<>();
     
@@ -392,6 +395,8 @@ public ArrayList<ArrayList<Object>> listaProductosTienda() {
     }
     return listaProductos;  // Regresar la lista de productos y sus cantidades
 }
+//Metodo perteniente la funcionalidad Envio Pedidos
+//El método muestra una lista de productos con su nombre, precio, cantidad y peso. Si no hay productos registrados, devuelve un mensaje indicando que no hay productos disponibles.
 public String mostrarListaProductosTienda(ArrayList<ArrayList<Object>> listaProductos) {
     if (listaProductos == null || listaProductos.isEmpty()) {
         return "Actualmente no hay productos registrados en el sistema.";
@@ -415,6 +420,8 @@ public String mostrarListaProductosTienda(ArrayList<ArrayList<Object>> listaProd
 
     return texto.toString().trim();
 }
+//Metodo perteneciente a la funcionalidad Envio Pedidos
+//El método elimina productos de la tienda comparando sus nombres con los de una lista de productos a eliminar. Recorre la lista de productos de la tienda de atrás hacia adelante para evitar problemas al eliminar elementos durante la iteración.
 public void eliminarProductosPorNombre(ArrayList<Producto> listaEliminar) {
     // Recorrer la lista de productos a eliminar
     for (Producto productoAEliminar : listaEliminar) {
@@ -430,12 +437,13 @@ public void eliminarProductosPorNombre(ArrayList<Producto> listaEliminar) {
         }
     }
 }
-
+//Metodo perteneciente a la funcionalidad Envio Pedidos
+//El método crea una factura para el pedido con los productos, cliente, transporte y precio de envío seleccionados, y devuelve su representación en cadena.
 public String enviarPedido(ArrayList<Producto> listaProductosPedidos, Transporte transporteSeleccionado,Cliente clienteSeleccionado,int precioEnvio,LocalDate dia ){
     Factura factura = new Factura(this, clienteSeleccionado, transporteSeleccionado, listaProductosPedidos,precioEnvio, dia);
     return factura.toString();
 }
-
+@Override
 public String toString(){
     return "Nombre: " + nombre;
 }
