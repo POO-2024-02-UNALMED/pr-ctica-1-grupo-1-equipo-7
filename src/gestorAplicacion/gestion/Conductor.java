@@ -44,10 +44,10 @@ public class Conductor extends Persona {
 
     @Override
     public String toString(){
-        String texto = "\nNombre:" + this.getNombre() +
-                       "\nCedula:" + this.getCedula() +
-                       "\nEdad:" + this.getEdad() +
-                       "\nTransporte" + this.getTransporte();
+        String texto = "\nNombre: " + this.getNombre() +
+                       "\nCedula: " + this.getCedula() +
+                       "\nEdad: " + this.getEdad() +
+                       "\nTransporte: " + this.getTransporte().getTipoTransporte();
         return texto;
     }
 

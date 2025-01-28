@@ -32,10 +32,10 @@ public class Vendedor extends Persona {
     }
     @Override
     public String toString(){
-        String texto = "\nNombre:" + this.getNombre() +
-                       "\nCedula:" + this.getCedula() +
-                       "\nEdad:" + this.getEdad() +
-                       "\nTienda" + this.getTienda();
+        String texto = "\nNombre: " + this.getNombre() +
+                       "\nCedula: " + this.getCedula() +
+                       "\nEdad: " + this.getEdad() +
+                       "\nTienda: " + this.getTienda().getNombre();
         return texto;
     }
 

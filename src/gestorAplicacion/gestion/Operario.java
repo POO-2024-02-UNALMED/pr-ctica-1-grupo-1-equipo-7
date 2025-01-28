@@ -36,10 +36,10 @@ public class Operario extends Persona {
    
     @Override
     public String toString(){
-        String texto = "\nNombre:" + this.getNombre() +
-                       "\nCedula:" + this.getCedula() +     //toString Operario
-                       "\nEdad:" + this.getEdad() +
-                       "\nFabrica" + this.getFabrica();
+        String texto = "\nNombre: " + this.getNombre() +
+                       "\nCedula: " + this.getCedula() +     //toString Operario
+                       "\nEdad: " + this.getEdad() +
+                       "\nFabrica: " + this.getFabrica().getNombre();
         return texto;
     }
     
