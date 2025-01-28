@@ -287,7 +287,6 @@ public class Main {
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                                sc.close();
                                 return;
                             } else if (eleccion > 0 && eleccion <= listaProductosTienda.size()) {
                                 // Obtener el producto seleccionado y la cantidad disponible
