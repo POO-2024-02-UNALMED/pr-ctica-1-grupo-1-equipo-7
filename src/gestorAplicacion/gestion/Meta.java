@@ -17,9 +17,6 @@ public class Meta implements Serializable{
         this.verificador = false;
     }
 
-    //Hace parte de la funcionalidad pago trabajdores
-    //verifica con el indice del trabajdor seleccionado y el indice de la propia meta para 
-    //verificar que el indice del trabajdor sea mayor para asi confirmar que se cumplio la meta
     public boolean cumpleMeta(double indiceDeTrabajo){
         if(this.getIndice() <= indiceDeTrabajo){
             return true;
@@ -28,9 +25,6 @@ public class Meta implements Serializable{
         }
     }
 
-    /*Calcula el porcentaje cumplido de la meta, devuelve un String con la información de los porcentajes
-     * cumplidos de la meta y si el porcentaje es menor de 100 agrega el porcentaje faltante para cumplir la meta
-     */
     public String porcentajeCumplidos(double indiceDeTrabajo){
         double porcentajeIndice = (indiceDeTrabajo * 100)/this.indice;
         porcentajeIndice = Math.round(porcentajeIndice * 100.0) / 100.0;

@@ -4,7 +4,6 @@ package gestion;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import produccion.Producto;
 import produccion.Tienda;
@@ -88,8 +87,8 @@ public static String mostrarFacturas(){
 }
 
 //Funcionalidad a la que pertenece: Devoluciones
-//Método que se encarga de mostrar, por medio de un String, los productos de la factura, indicando si han sido devueltos o no.
-// Se llama desde la implementacion de la interfaz IMostrarProductos
+//Método que se encarga de mostrar, por medio de un String, los productos de la factura, indicando si han sido devueltos o no. Se llama desde la implementacion de la 
+//interfaz IMostrarProductos
 
   public String mostrarProductos(){
     return IMostrarProductos.mostrarProductos(this);
@@ -231,24 +230,10 @@ public static double promedioGanancias(LocalDate fecha1, LocalDate fecha2) {
 
 //Funcionalidad a la que pertenece: Estadistica
 //Obtiene el aumento porcentual de las ganancias de las facturas entre dos fechas
-public static ArrayList<Object> aumentoPorcentual(LocalDate fecha1, LocalDate fecha2) {
-  
-  ArrayList<Object> data = gananciasDiscretas(fecha1, fecha2);
-  ArrayList<Object> aumentos = new ArrayList<>();
-  if (data.size() != 0) {
-    for (int i = 1; i < data.size(); i++) {
-      ArrayList<Object> ganancia1 = (ArrayList<Object>) data.get(i - 1);
-      ArrayList<Object> ganancia2 = (ArrayList<Object>) data.get(i);
-      double aumento = ((double) ganancia2.get(1) - (double) ganancia1.get(1)) / (double) ganancia1.get(1) * 100;
-      ArrayList<Object> aumentoData = new ArrayList<>();
-      aumentoData.add(ganancia1.get(0));
-      aumentoData.add(ganancia2.get(0));
-      aumentoData.add(aumento);
-      aumentos.add(aumentoData);
-    }
-  }
-  return aumentos;
-  
+public static double aumentoPorcentual(LocalDate fecha1, LocalDate fecha2) {
+  double ganancias1 = gananciasTotales(fecha1, fecha2);
+  double ganancias2 = gananciasTotales(Factura.getFechaMin(), Factura.getFechaMax());
+  return ((ganancias2 - ganancias1) / ganancias1) * 100;
 }
 
 //Funcionalidad a la que pertenece: Estadistica

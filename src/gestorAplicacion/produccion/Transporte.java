@@ -12,7 +12,7 @@ public class Transporte implements Serializable {
     private double capacidad;
     private double costo;
     private Conductor conductor;
-    private static ArrayList<Transporte> listaTransportes;
+    private ArrayList<TipoTransporte> listaTransportes;
     private Tienda tienda;
     private ArrayList<Producto> listaDeProductos;
     final static int montoEnvioGratis=100000;
@@ -21,7 +21,7 @@ public class Transporte implements Serializable {
         this.tipoTransporte = tipoTransporte;
         this.capacidad = capacidad;
         this.costo = costo;
-        Transporte.listaTransportes = new ArrayList<>();
+        this.listaTransportes = new ArrayList<>();
         this.listaDeProductos = new ArrayList<>();
     }
 
@@ -65,12 +65,12 @@ public class Transporte implements Serializable {
     }
 
     // Para el atributo listaTransportes
-    public static ArrayList<Transporte> getListaTransportes() {
-        return Transporte.listaTransportes;
+    public ArrayList<TipoTransporte> getListaTransportes() {
+        return this.listaTransportes;
     }
 
-    public static void setListaTransportes(ArrayList<Transporte> listaTransportes) { 
-        Transporte.listaTransportes = listaTransportes;
+    public void setListaTransportes(ArrayList<TipoTransporte> listaTransportes) { 
+        this.listaTransportes = listaTransportes;
     }
     
     // Para el atributo tienda
@@ -90,14 +90,12 @@ public class Transporte implements Serializable {
     public void setListaDeProductos(ArrayList<Producto> listaDeProductos) { 
         this.listaDeProductos = listaDeProductos;
     }
-    //Funcionalidad de abastecer productos
+
      // Método para cargar productos en el transporte y asignar la tienda de destino
     public void abastecerProducto(Tienda tiendaSeleccionada, ArrayList<Producto> productosSeleccionados) {
         this.listaDeProductos.addAll(productosSeleccionados);
         this.tienda = tiendaSeleccionada;
      }
-     //Metodo startic perteneciente a la funcionalidad Envio Pedidos
-     //El método devuelve true si el precio total de los productos supera el monto de envío gratuito, de lo contrario, false.
     public static boolean enviarGratis(ArrayList<Producto> listaProductos) {
         int precioTotal = 0;
         for (Producto producto : listaProductos) {
@@ -105,7 +103,7 @@ public class Transporte implements Serializable {
         }
         return precioTotal > montoEnvioGratis;
     }
-    //Metodo static perteneciente a la funcionalidad Envio Pedidos
+     //Metodo static perteneciente a la funcionalidad Envio Pedidos
     //El método calcula y devuelve el peso total de una lista de productos, sumando solo los productos con peso positivo. Si un producto tiene un peso inválido (no positivo), muestra un mensaje de error.
     public static double calcularTotalPeso(ArrayList<Producto> listaProductosPedidos){
         double totalPeso=0;
@@ -119,6 +117,7 @@ public class Transporte implements Serializable {
         }
         return totalPeso;
     }
+
 
 /*      public ArrayList<Producto> cantidadProductos(Producto producto ,int cantidadAenviar){
         for (int i=0; i<=int cantidadAEnviar; i++){

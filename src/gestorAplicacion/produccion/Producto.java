@@ -37,27 +37,21 @@ public class Producto implements Moda, Serializable{
         this.estado = estado;
         this.tipo = tipo;
         this.categoria = categoria;
-        totalCreados++;
         this.peso=peso;
         this.id=totalCreados;
         Producto.listaProductos.add(this);
-    }
-    public Producto(){
         totalCreados++;
+
     }
+    
     //este es un constructor de copia para generar un nuevo producto con los mismos atributos de otro producto
     //funcionalidad a la que pertenece: Abastecer tiendas
     public Producto(Producto producto){
-        this.nombre = producto.nombre;
-        this.precio = producto.precio;
-        this.estado = producto.estado;
-        this.tipo = producto.tipo;
-        this.categoria = producto.categoria;
-        this.peso = producto.peso;
-        this.motivoDevolucion = producto.motivoDevolucion;
-        this.devuelto = producto.devuelto;
+       this(producto.nombre,producto.precio,producto.estado,producto.tipo,producto.categoria,producto.peso);
+    }
+
+    public Producto(){
         totalCreados++;
-        this.id=totalCreados;
     }
 
 

@@ -30,9 +30,10 @@ public class Cliente implements Moda, Serializable{
             listaClientes.add(this);}
     public Cliente(){}
 
+    //Métodos: 
     //Método perteneciente a la funcionalidad Enviar Pedidos: 
     //Imprime la lista de clientes, comenzando desde 1 para facilitar al usurario a la hora de escojer. La forma de imprimir es : 1.Cliente
-    public static String mostrarClientes(){  
+    public static String mostrarClientes(){
         String texto = "";
         if (listaClientes.isEmpty()) {
             
@@ -104,6 +105,5 @@ public class Cliente implements Moda, Serializable{
     }
 
 }
-
 
 

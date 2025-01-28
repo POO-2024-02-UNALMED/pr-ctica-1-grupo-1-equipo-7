@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import produccion.Fabrica;
 
 public class Conductor extends Persona {
-    private static ArrayList<Conductor> listaConductores = new ArrayList<>();
+    private static ArrayList<Conductor> listaConductores = new ArrayList<>();//me genera error en un metodo ya que una lista de conductos no es una lista de conductores V:
     private Transporte transporte;
     private Fabrica fabrica;
     private ArrayList<Meta> metaConductor;
@@ -26,20 +26,20 @@ public class Conductor extends Persona {
 
    public Conductor(){}
 
-   //Metodo de la funcionalidad pago trabajdores que devuelve un String con todas las metas que no se han cumplido 
-    public String mostrarMetas(){
-        String texto = "";
-        int indice = 1;
+   /*Metodo que hace parte de la funcionalidad pago trabajadores que devuevle un string con toda la informacion de las metas del trabajdores */
+   public String mostrarMetas(){
+    StringBuilder texto = new StringBuilder();
+    int indice = 1;
 
-        for (Meta i: this.metaConductor) {
-            if(i.getVerificador() == false){
-                texto += "\n" + "Meta "+ indice + i.toString() + "\n";  //Uso de ligadura dinámica
-                indice++;  
-            }             
+    for (Meta i : this.metaConductor) {
+        if (!i.getVerificador()) {
+            texto.append("\nMeta ").append(indice).append(" ").append(i.toString()).append("\n");
+            indice++;
         }
-
-        return texto;
     }
+
+    return texto.toString();
+}
       
 
     @Override
@@ -51,7 +51,6 @@ public class Conductor extends Persona {
         return texto;
     }
 
-    //sobreescritura del metod de personas para la funcionalidad pago a trabajadores
     public void recibirSueldo(double valor){
         this.getCuentaBancaria().añadirDinero(valor);
         this.setCantidadTrabajo(0);
@@ -117,5 +116,3 @@ public class Conductor extends Persona {
         this.licencia = licencia;
     }
 }
-
-

@@ -13,7 +13,6 @@ import java.util.concurrent.TimeUnit;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import javax.management.AttributeChangeNotificationFilter;
 
 import baseDatos.Load;
 
@@ -27,7 +26,6 @@ public class Main {
     public static void main(String[] args) {
 
         Load.cargar();
-
         Scanner sc = new Scanner(System.in);
         
         boolean salir = false;
@@ -78,10 +76,10 @@ public class Main {
         sc.close();
     }
 
-    // Método principal para el envío de pedidos
     public static void enviarPedidos() {
-        Scanner sc = new Scanner(System.in);
-        
+     
+    // Método principal para el envío de pedidos
+   
         // Bucle principal para manejar el flujo del envío de pedidos
         while (true){
             System.out.println("\nEligió la opción de envio de pedidos. \n\nSeleccione al cliente que realizó el pedido. Oprima  0 para salir.");
@@ -144,7 +142,6 @@ public class Main {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            System.out.println("\nPor favor, seleccione nuevamente al cliente para continuar.\n");
                             break;
                         } 
                         else {
@@ -178,8 +175,8 @@ public class Main {
                                 }
                                 return;
                             } 
-                            else if (opcion > 0 && opcion <= Fabrica.getListaTiendas().size()){
-                                tiendaSeleccionada = Fabrica.getListaTiendas().get(opcion - 1);
+                            else if (opcion > 0 && opcion <= Fabrica.getListaTienda().size()){
+                                tiendaSeleccionada = Fabrica.getListaTienda().get(opcion - 1);
                                 break; // Tienda seleccionada correctamente
                             } 
                             else {
@@ -201,7 +198,7 @@ public class Main {
                         String eleccion = sc.next();
 
                         if (eleccion.equals("1")) { // Confirmar tienda
-                            tiendaSeleccionada = Fabrica.getListaTiendas().get(opcion - 1);
+                            tiendaSeleccionada = Fabrica.getListaTienda().get(opcion - 1);
                             System.out.println("\nTienda confirmada: " + tiendaSeleccionada.getNombre());
                             confirmacionTienda = 1;
                             break;
@@ -213,7 +210,6 @@ public class Main {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
-                            System.out.println("\nPor favor, seleccione otra tienda para continuar.\n");
                             break;
                         } 
                         else {
@@ -237,6 +233,7 @@ public class Main {
                                 String eleccion = sc.next();
                         
                                 if (eleccion.equals("1")) { // Confirmación de cantidad de productos
+                                    tiendaSeleccionada = Fabrica.getListaTienda().get(opcion - 1);
                                     System.out.println("\nHa confirmado que desea enviar " + cantidadProductosSeleccionados + " productos.");
                                     confirmacionCantidadProductos = 1;
                                     break;
@@ -281,7 +278,7 @@ public class Main {
                             System.out.println(tiendaSeleccionada.mostrarListaProductosTienda(listaProductosTienda));
                             System.out.print("\n» ");
                             int eleccion = sc.nextInt();
-                        
+
                             // Si el usuario elige salir, termina el proceso
                             if (eleccion == 0) {
                                 System.out.println("\nSaliendo...");
@@ -290,22 +287,21 @@ public class Main {
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
+                                sc.close();
                                 return;
-                            } 
-                            // Validar que la elección esté dentro del rango correcto
-                            else if (eleccion > 0 && eleccion <= listaProductosTienda.size()) {
+                            } else if (eleccion > 0 && eleccion <= listaProductosTienda.size()) {
                                 // Obtener el producto seleccionado y la cantidad disponible
                                 Producto productoSeleccionado = (Producto) listaProductosTienda.get(eleccion - 1).get(0);
                                 int cantidadProducto = (int) listaProductosTienda.get(eleccion - 1).get(1);
-                        
+
                                 // Verificar si hay stock disponible
                                 if (cantidadProducto <= 0) {
                                     System.out.println("\nEl producto seleccionado ya no tiene stock disponible. Por favor, elija otro.");
                                     continue; // Volver a pedir otro producto
                                 }
-                        
+
                                 System.out.println("\nPara confirmar, ingrese 1. Si desea volver a ingresar el producto, ingrese 0.");
-                        
+
                                 while (true) {
                                     System.out.print("\n» ");
                                     int confirmacionProductoSeleccionado = sc.nextInt();
@@ -313,7 +309,7 @@ public class Main {
                                         // Agregar el producto a la lista de pedidos y actualizar el stock
                                         listaProductosPedidos.add(productoSeleccionado);
                                         listaProductosTienda.get(eleccion - 1).set(1, cantidadProducto - 1);
-                        
+
                                         System.out.println("\nProducto agregado: " + productoSeleccionado.getNombre());
                                         try {
                                             Thread.sleep(500); // Pausa de 500 milisegundos (0.5 segundo)
@@ -328,21 +324,27 @@ public class Main {
                                     }
                                 }
                                 break; // Salir del bucle principal tras confirmar o rechazar el producto
-                            } 
-                            // Si el número ingresado está fuera del rango, mostrar un mensaje de error
-                            else {
+                            } else {
                                 System.out.println("\nNúmero fuera de rango. Por favor, elija un producto válido.");
-                                continue;
                             }
                         } catch (Exception e) {
                             System.out.println("\nEntrada inválida. Por favor, ingrese un número.");
-                            sc.nextLine(); // Limpiar el buffer de entrada
+                            sc.nextLine();
                         }
                     }
                 }
 
                 // Calcular el peso total de los productos seleccionados
-                double totalPeso = Transporte.calcularTotalPeso(listaProductosPedidos);
+                double totalPeso = 0.0;
+                for (Producto producto : listaProductosPedidos) {
+                    double peso = producto.getPeso();
+                    if (peso > 0) { // Validamos que el peso sea positivo
+                        totalPeso += peso;
+                    } else {
+                        System.out.println("\nError: Peso inválido para el producto " + producto.getNombre());
+                    }
+                }
+
                 // Determinar los tipos de transporte posibles según el peso total
                 ArrayList<TipoTransporte> listaPosibleTransporte = TipoTransporte.crearTipoTransporteSegunCarga(totalPeso);
                 ArrayList<TipoTransporte> listaTransporteFiltrada = new ArrayList<>();
@@ -476,7 +478,6 @@ public class Main {
             }
         }
     }
-
 
     public static void devoluciones() {
         // Implementar la funcionalidad de devoluciones
@@ -746,7 +747,7 @@ public class Main {
             Tienda tiendaSeleccionada = null;
             
             // Bucle para seleccionar la tienda
-            while (tiendaSeleccionadaIndex < 0 || tiendaSeleccionadaIndex > Fabrica.getListaTiendas().size()) {
+            while (tiendaSeleccionadaIndex < 0 || tiendaSeleccionadaIndex > Fabrica.getListaTienda().size()) {
                 try {
                     System.out.print("» ");
                     tiendaSeleccionadaIndex = sc.nextInt();
@@ -763,12 +764,12 @@ public class Main {
                         }
                         return;
                     }
-                    if (tiendaSeleccionadaIndex < 1 || tiendaSeleccionadaIndex > Fabrica.getListaTiendas().size()) {
-                        System.out.println("Número inválido. Ingrese un número entre 1 y " + Fabrica.getListaTiendas().size() + ".");
+                    if (tiendaSeleccionadaIndex < 1 || tiendaSeleccionadaIndex > Fabrica.getListaTienda().size()) {
+                        System.out.println("Número inválido. Ingrese un número entre 1 y " + Fabrica.getListaTienda().size() + ".");
                     } else {
                         boolean confirmacionTienda= false;
                         while(!confirmacionTienda){
-                            tiendaSeleccionada= Fabrica.getListaTiendas().get(tiendaSeleccionadaIndex - 1);
+                            tiendaSeleccionada= Fabrica.getListaTienda().get(tiendaSeleccionadaIndex - 1);
                             System.out.println("Tienda seleccionada: " + tiendaSeleccionada.getNombre());
 
                             System.out.println("¿Es correcta esta selección? (1 para sí, 2 para no)"); 
@@ -799,8 +800,8 @@ public class Main {
                                         }
                                         return;
                                     }
-                                    if (tiendaSeleccionadaIndex < 1 || tiendaSeleccionadaIndex > Fabrica.getListaTiendas().size()) {
-                                        System.out.println("Número inválido. Ingrese un número entre 1 y " + Fabrica.getListaTiendas().size() + ".");
+                                    if (tiendaSeleccionadaIndex < 1 || tiendaSeleccionadaIndex > Fabrica.getListaTienda().size()) {
+                                        System.out.println("Número inválido. Ingrese un número entre 1 y " + Fabrica.getListaTienda().size() + ".");
                                     } else {
                                         System.out.println("Entrada inválida. Por favor, ingrese un número.");
                                         //confirmacionTienda = true;
@@ -1309,6 +1310,8 @@ public class Main {
                                     // Validación de que el usuario quiere volver al menú principal.
                                     if(opcionPT4 == 0){
                                         System.out.println("Volviendo al menú principal.\n");
+                                        
+                                        
                                         try {
                                             Thread.sleep(1000);
                                         } catch (InterruptedException o) {
@@ -1318,7 +1321,7 @@ public class Main {
                                     }
 
                                     // Confirmación de que el número está dentro del rango
-                                    if(opcionPT4 < 1 || opcionPT4 > metasTrabajadorNoPagas.size()){
+                                    if(opcionPT4 < 1 || opcionPT4 > metasTrabajadorNoPagas.size()+2){
                                         System.out.println("Escoja un número que esté dentro del rango.\n");
                                         continue;
                                     }
@@ -1376,7 +1379,7 @@ public class Main {
                         if (opcionPT3 != 3){
                             double pagoTotal = pagoPotencial + pagoPorMetas;
                             Fabrica.cuentaBancaria.descontarDinero(pagoTotal);
-                            
+                            trabajadorSeleccionado.recibirSueldo(pagoTotal);
                             System.out.println("Procesando pago...");
                             try {
                                 Thread.sleep(1500);
@@ -1499,6 +1502,7 @@ public class Main {
             asignarFecha();
         }
     }
+    
 
     private static void mostrarMenu() {
         System.out.println("=== Opciones ===");
@@ -1530,48 +1534,29 @@ public class Main {
                         LocalDate f = (LocalDate) ganancias.get(0);
                         String fecha = f.format(formato);
                         System.out.println("Fecha: " + fecha + " Ganancia: " + ganancias.get(1));
-                        System.out.println();
                     }
                     break;
                 case 2:
                     System.out.println("La ganancia total es:");
                     System.out.println(Factura.gananciasTotales(fechaInicio, fechaFin));
-                    System.out.println();
                     break;
                 case 3:
                     System.out.println("El promedio es: ");
                     System.out.println(Factura.promedioGanancias(fechaInicio, fechaFin));
-                    System.out.println();
                     break;
                 case 4:
                     System.out.println("El aumento porcentual es: ");
-                    if (Factura.aumentoPorcentual(fechaInicio, fechaFin).isEmpty()) {
-                        System.out.println("0%");
-                    }
-                    else {
-                        for (Object a : Factura.aumentoPorcentual(fechaInicio, fechaFin)) {
-                            ArrayList<Object> aumento = (ArrayList<Object>) a;
-                            LocalDate f1 = (LocalDate) aumento.get(0);
-                            String fecha1 = f1.format(formato);
-                            LocalDate f2 = (LocalDate) aumento.get(1);
-                            String fecha2 = f2.format(formato);
-                            System.out.println("Entre la Fecha " + fecha1 + "y la Fecha " + fecha2 + " varió un " + aumento.get(2) + "%\n");
-                        }
-                    }
+                    System.out.println(Factura.aumentoPorcentual(fechaInicio, fechaFin));
                     break;
                 case 5:
                     System.out.println("El producto más vendido es: ");
                     System.out.println(Factura.modaProductos(fechaInicio, fechaFin));
-                    System.out.println();
                     System.out.println("La tienda que más vendió es: ");
                     System.out.println(Factura.modaTiendas(fechaInicio, fechaFin));
-                    System.out.println();
                     System.out.println("El cliente que más compró es: ");
                     System.out.println(Factura.modaClientes(fechaInicio, fechaFin));
-                    System.out.println();
                     break;
                 case 6:
-                System.out.println("Cambiando fechas...");
                     asignarFecha();
                     break;
                 case 0:
@@ -1597,4 +1582,3 @@ public class Main {
         } while (opcion != 0);
     }
 }
-

@@ -9,7 +9,7 @@ import gestion.Operario;
 import gestion.Persona;
 
 public class Fabrica implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 6L;
 
     // Atributos
     private  String idFabrica;
@@ -115,8 +115,9 @@ public class Fabrica implements Serializable {
         }
         return resultado.toString();
     }
+
     // Método sobrecargado que solo muestra las tiendas, sin productos
-    //Método pertenetiente a la funcionalidad Envio de pedidos
+     //Método pertenetiente a la funcionalidad Envio de pedidos
     //El método verifica si hay tiendas registradas y, si es así, devuelve una lista numerada con sus nombres; de lo contrario, indica que no hay tiendas.
     public static String mostrarTiendas(Boolean sinProducto) {
         if (listaTienda.isEmpty()) {
@@ -196,10 +197,10 @@ public class Fabrica implements Serializable {
     public static void setProductosDisponibles(ArrayList<Producto> productosDisponibles) {
         Fabrica.productosDisponibles = productosDisponibles;
     }
-    public static void setListaTiendas(ArrayList<Tienda> l){
-        listaTienda = l;
+          public static ArrayList<Tienda> getListaTiendas(){
+            return listaTienda;
     }
-    public static ArrayList<Tienda> getListaTiendas(){
+    public static ArrayList<Tienda> getListaTienda(){
         return listaTienda;
     }
 

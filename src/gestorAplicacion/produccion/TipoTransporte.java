@@ -14,7 +14,6 @@ package produccion;
         HELICOPTERO(70000, 29000, "Helicoptero"),
         TREN(20000, 30000, "Tren"),
         CAMINANDO(5000, 15, "Caminando");
-        //atributos basados en lo concordado, y metodos de prouebas, se podrian modificar
         private final int precioEnvio;
         private final int capacidadMax;
         private final String nombre;

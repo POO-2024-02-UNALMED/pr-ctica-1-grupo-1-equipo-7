@@ -3,7 +3,6 @@ package baseDatos;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import gestion.*;
 import produccion.*;
 
@@ -11,41 +10,30 @@ import produccion.*;
 public class Load {
     
     public static Fabrica fabrica;
-    public static ArrayList<Producto> catalogo = new ArrayList<Producto>();
-    public static ArrayList<Tienda> listaTiendas = new ArrayList<Tienda>();
-    public static ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
-    public static ArrayList<Vendedor> listaVendedores = new ArrayList<Vendedor>();
-    public static ArrayList<Factura> listaFacturas = new ArrayList<Factura>();
-    public static ArrayList<Conductor> listaConductores = new ArrayList<Conductor>();
-    public static ArrayList<Transporte> listaTransportes = new ArrayList<Transporte>();
-    public static ArrayList<Operario> listaOperario = new ArrayList<Operario>();
-    public static ArrayList<Meta> listaMetas = new ArrayList<Meta>();
-    public static ArrayList<CuentaBancaria> listaCuentas = new ArrayList<CuentaBancaria>();
+     public static ArrayList<Producto> catalogo = new ArrayList<Producto>();
+     public static ArrayList<Tienda> listaTiendas = new ArrayList<Tienda>();
+     public static ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
+     public static ArrayList<Vendedor> listaVendedores = new ArrayList<Vendedor>();
+     public static ArrayList<Factura> listaFacturas = new ArrayList<Factura>();
+     public static ArrayList<Conductor> listaConductores = new ArrayList<Conductor>();
+     public static Transporte transporteAbastecer;
     
 
     public static void guardar(){
 
-      cargarPorDefecto();
-      
-      listaTiendas = Fabrica.getListaTiendas();
       listaFacturas = Factura.getListaFacturas();
       listaClientes = Cliente.getListaClientes();
       catalogo = Producto.getListaProductos();
-      listaVendedores = Vendedor.getListaVendedores();
       listaConductores = Conductor.getListaConductores();
-      listaTransportes = Transporte.getListaTransportes();
 
       Serializador.guardarTiendas();
       Serializador.guardarCatalogo();
       Serializador.guardarFabrica();
       Serializador.guardarFacturas();
-      Serializador.guardarTransportes();
+      Serializador.guardarTransporte();
       Serializador.guardarVendedores();
       Serializador.guardarClientes();
       Serializador.guardarConductores();
-      Serializador.guardarOperario();
-      Serializador.guardarMetas();
-      Serializador.guardarCuentas();
 
     }
 
@@ -61,10 +49,6 @@ public class Load {
      Vendedor vendedor1 = new Vendedor("Maria Beatriz", 577935, 20, cuentaVendedor1);
      Vendedor vendedor2 = new Vendedor("Adriana Alexia Putellas", 89235, 21, cuentaVendedor2);
      Vendedor vendedor3 = new Vendedor("Lionel Andres Messi", 14720, 22, cuentaVendedor3);
-
-    listaVendedores.add(vendedor1);
-    listaVendedores.add(vendedor2);
-    listaVendedores.add(vendedor3);
 
     // Crear tiendas
      Tienda tienda1 = new Tienda("Herramientas UNAL", vendedor1, cuentaFabrica,100,100,100);
@@ -168,10 +152,6 @@ public class Load {
         tienda1.getListaProducto().addAll(listaProductosTienda1);
         tienda2.getListaProducto().addAll(listaProductosTienda2);
         tienda3.getListaProducto().addAll(listaProductosTienda3);
-
-        listaTiendas.add(tienda1);
-        listaTiendas.add(tienda2);
-        listaTiendas.add(tienda3);
     }
 
     // Crear lista de tiendas para la fábrica
@@ -185,7 +165,7 @@ public class Load {
      Operario operario1 = new Operario("Jaime", 97890, 20, cuentaOperario, null);
 
     // Crear fábrica
-     Load.fabrica = new Fabrica("F001", "Fábrica Principal", "Calle Principal 123", cuentaFabrica, catalogo, listaTiendas, operario1);
+     Fabrica fabrica = new Fabrica("F001", "Fábrica Principal", "Calle Principal 123", cuentaFabrica, catalogo, listaTiendas,operario1);
 
         // Crear cuentas bancarias para los conductores
          CuentaBancaria cuentaConductor1 = new CuentaBancaria(12345, 5000);
@@ -223,21 +203,6 @@ public class Load {
          Conductor conductor9 = new Conductor("Yhan Jaramillo", 93049, 38, cuentaConductor9, fabrica, transporte9);
          Conductor conductor10 = new Conductor("Jose Sanchez", 10101, 39, cuentaConductor10, fabrica, transporte10);
 
-        //crear lista de transportes
-        ArrayList<Transporte> listaTransportes = new ArrayList<>();
-        {
-            listaTransportes.add(transporte1);
-            listaTransportes.add(transporte2);
-            listaTransportes.add(transporte3);
-            listaTransportes.add(transporte4);
-            listaTransportes.add(transporte5);
-            listaTransportes.add(transporte6);
-            listaTransportes.add(transporte7);
-            listaTransportes.add(transporte8);
-            listaTransportes.add(transporte9);
-            listaTransportes.add(transporte10);
-        }
-
         // Crear lista de conductores
          ArrayList<Conductor> listaConductores = new ArrayList<>();
          {
@@ -252,27 +217,6 @@ public class Load {
             listaConductores.add(conductor9);
             listaConductores.add(conductor10);
         }
-
-        // Crear lista de cuentas
-          
-          {
-              Load.listaCuentas.add(cuentaFabrica);
-              Load.listaCuentas.add(cuentaVendedor1);
-              Load.listaCuentas.add(cuentaVendedor2);
-              Load.listaCuentas.add(cuentaVendedor3);
-              Load.listaCuentas.add(cuentaOperario);
-              Load.listaCuentas.add(cuentaConductor1);
-              Load.listaCuentas.add(cuentaConductor2);
-              Load.listaCuentas.add(cuentaConductor3);
-              Load.listaCuentas.add(cuentaConductor4);
-              Load.listaCuentas.add(cuentaConductor5);
-              Load.listaCuentas.add(cuentaConductor6);
-              Load.listaCuentas.add(cuentaConductor7);
-              Load.listaCuentas.add(cuentaConductor8);
-              Load.listaCuentas.add(cuentaConductor9);
-              Load.listaCuentas.add(cuentaConductor10);
-          }
-
     // Instancias estáticas de las cuentas bancarias
       CuentaBancaria cuentaCliente1 = new CuentaBancaria(10001, 5000);
       CuentaBancaria cuentaCliente2 = new CuentaBancaria(10002, 15000);
@@ -305,22 +249,6 @@ public class Load {
       Meta metaConductor2= new Meta("Normal", 50, 13500);
       Meta metaConductor3 = new Meta("Dificil", 60, 21000);
       Meta metaConductor4 = new Meta("Muy Dificil", 100, 28500);
-
-      //crear lista de metas
-      {
-          Load.listaMetas.add(metaOperario1);
-          Load.listaMetas.add(metaOperario2);
-          Load.listaMetas.add(metaOperario3);
-          Load.listaMetas.add(metaOperario4);
-          Load.listaMetas.add(metaVendedor1);
-          Load.listaMetas.add(metaVendedor2);
-          Load.listaMetas.add(metaVendedor3);
-          Load.listaMetas.add(metaVendedor4);
-          Load.listaMetas.add(metaConductor1);
-          Load.listaMetas.add(metaConductor2);
-          Load.listaMetas.add(metaConductor3);
-          Load.listaMetas.add(metaConductor4);
-      }
     
     //Factura
      LocalDate fecha = LocalDate.of(2024,10,2);
@@ -391,34 +319,29 @@ public class Load {
         conductor10.setCantidadTrabajo(6);
         conductor10.setIndiceMeta(18);
 
-        Load.listaOperario.add(operario1);
-
-
     }
 
     }
 
     public static void cargar(){
+
+      cargarPorDefecto();
+
       try{
 
        listaTiendas =  Deserializador.cargarTiendas();
        catalogo = Deserializador.cargarCatalogo();
        fabrica = Deserializador.cargarFabrica();
        listaClientes = Deserializador.cargarClientes();
-       listaTransportes = Deserializador.cargarTransportes();
+       transporteAbastecer = Deserializador.cargarTransporte();
        listaVendedores =  Deserializador.cargarVendedores();
        listaFacturas =  Deserializador.cargarFacturas();
        listaConductores = Deserializador.cargaConductores();
-       listaOperario = Deserializador.cargarOperario();
-       listaMetas = Deserializador.cargarMetas();
-       listaCuentas = Deserializador.cargarCuentas();
-        
-       Fabrica.setListaTiendas(listaTiendas);
+
        Factura.setListaFacturas(listaFacturas);
        Cliente.setListaClientes(listaClientes);
        Producto.setListaProductos(catalogo);
        Conductor.setListaConductores(listaConductores);
-       Transporte.setListaTransportes(listaTransportes);
 
       }catch(Exception e){
         System.out.println("Ha ocurrido un error en la deserialización");
@@ -427,19 +350,6 @@ public class Load {
     }
 
     public static void main(String[] args) {
-        cargar();
-        System.out.println("Carga exitosa");
-        System.out.println(fabrica.getNombre());
-        System.out.println(listaTiendas);
-        System.out.println(catalogo);
-        System.out.println(listaClientes);
-        System.out.println(listaVendedores);
-        System.out.println(listaFacturas);
-        System.out.println(listaConductores);
-        System.out.println(listaTransportes);
-        System.out.println(listaOperario);
-        System.out.println(listaMetas);
-        System.out.println(listaCuentas);
-
+      
     }
 }

@@ -19,19 +19,19 @@ public class Operario extends Persona {
         //TODO Auto-generated constructor stub
     }
 
-    //Metodo de la funcionalidad pago trabajdores que devuelve un String con todas las metas que no se han cumplido 
+    /*Metodo que hace parte de la funcionalidad pago trabajadores que devuevle un string con toda la informacion de las metas del trabajdores */
     public String mostrarMetas(){
-        String texto = "";
+        StringBuilder texto = new StringBuilder();
         int indice = 1;
-
-        for (Meta i: this.metaOperario) {
-            if(i.getVerificador() == false){
-                texto += "\n" + "Meta "+ indice + i.toString() + "\n";  //Uso de ligadura dinámica
-                indice++;  
-            }             
+    
+        for (Meta i : this.metaOperario) {
+            if (!i.getVerificador() ) {
+                texto.append("\nMeta ").append(indice).append(" ").append(i.toString()).append("\n");
+                indice++;
+            }
         }
-
-        return texto;
+    
+        return texto.toString();
     }
    
     @Override
@@ -43,7 +43,6 @@ public class Operario extends Persona {
         return texto;
     }
     
-    //sobreescritura del metod de personas para la funcionalidad pago a trabajadores
     public void recibirSueldo(double valor){
         this.getCuentaBancaria().añadirDinero(valor);
         this.setCantidadTrabajo(0);
@@ -73,4 +72,3 @@ public class Operario extends Persona {
     }
 
 }
-
