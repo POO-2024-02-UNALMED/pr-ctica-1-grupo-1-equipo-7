@@ -51,77 +51,77 @@ public class Load {
      Vendedor vendedor3 = new Vendedor("Lionel Andres Messi", 14720, 22, cuentaVendedor3);
 
     // Crear tiendas
-     Tienda tienda1 = new Tienda("Hefesto Construcciones", vendedor1, cuentaFabrica,100,100,100);
-     Tienda tienda2 = new Tienda("Consumibles de la Abuela Tata", vendedor2, cuentaFabrica,100,100,100);
-     Tienda tienda3 = new Tienda("Miss Músculo Aseo", vendedor3, cuentaFabrica, 100, 100,100);
+     Tienda tienda1 = new Tienda("Herramientas UNAL", vendedor1, cuentaFabrica,100,100,100);
+     Tienda tienda2 = new Tienda("Muebles comodisimo", vendedor2, cuentaFabrica,100,100,100);
+     Tienda tienda3 = new Tienda("Limpieza UNAL", vendedor3, cuentaFabrica, 100, 100,100);
 
     // Crear productos para cada tienda
    
     //tienda 1
-     Producto producto1 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
-     Producto producto2 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
-     Producto producto3 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
-     Producto producto4 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
-     Producto producto5 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
+     Producto producto1 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Herramientas", 25.0);
+     Producto producto2 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Herramientas", 25.0);
+     Producto producto3 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Herramientas", 25.0);
+     Producto producto4 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Herramientas", 25.0);
+     Producto producto5 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Herramientas", 25.0);
     
-     Producto producto6 = new Producto("Cemento Blanco", 55000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
-     Producto producto7 = new Producto("Cemento Blanco", 55000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
+     Producto producto6 = new Producto("Cemento Blanco", 55000, estadosProducto.DISPONIBLE, "Material", "Herramientas", 25.0);
+     Producto producto7 = new Producto("Cemento Blanco", 55000, estadosProducto.DISPONIBLE, "Material", "Herramientas", 25.0);
     
-     Producto producto8 = new Producto("Adhesivo Cerámico", 20000, estadosProducto.DISPONIBLE, "Material", "Construcción", 5.0);
-     Producto producto9 = new Producto("Adhesivo Cerámico", 20000, estadosProducto.DISPONIBLE, "Material", "Construcción", 5.0);
+     Producto producto8 = new Producto("Adhesivo Cerámico", 20000, estadosProducto.DISPONIBLE, "Material", "Herramientas", 5.0);
+     Producto producto9 = new Producto("Adhesivo Cerámico", 20000, estadosProducto.DISPONIBLE, "Material", "Herramientas", 5.0);
     
-     Producto producto10 = new Producto("Pintura Interior", 35000, estadosProducto.DISPONIBLE, "Material", "Construcción", 18.0);
-     Producto producto11 = new Producto("Pintura Interior", 35000, estadosProducto.DISPONIBLE, "Material", "Construcción", 18.0);
+     Producto producto10 = new Producto("Pintura Interior", 35000, estadosProducto.DISPONIBLE, "Material", "Herramientas", 18.0);
+     Producto producto11 = new Producto("Pintura Interior", 35000, estadosProducto.DISPONIBLE, "Material", "Herramientas", 18.0);
     
     //tienda 2
-     Producto producto12 = new Producto("Pan", 10000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-     Producto producto13 = new Producto("Pan", 10000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-     Producto producto14 = new Producto("Pan", 10000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
+     Producto producto12 = new Producto("Sillas", 10000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 1.0);
+     Producto producto13 = new Producto("Sillas", 10000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 1.0);
+     Producto producto14 = new Producto("Sillas", 10000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 1.0);
 
-     Producto producto15 = new Producto("Leche Entera", 8000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 2.0);
-     Producto producto16 = new Producto("Leche Entera", 8000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 2.0);
-     Producto producto17 = new Producto("Leche Entera", 8000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 2.0);
+     Producto producto15 = new Producto("Mesas", 8000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 2.0);
+     Producto producto16 = new Producto("Mesas", 8000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 2.0);
+     Producto producto17 = new Producto("Mesas", 8000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 2.0);
 
-     Producto producto18 = new Producto("Arroz", 5000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-     Producto producto19 = new Producto("Arroz", 5000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-     Producto producto20 = new Producto("Arroz", 5000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
+     Producto producto18 = new Producto("Sofa", 5000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 1.0);
+     Producto producto19 = new Producto("Sofa", 5000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 1.0);
+     Producto producto20 = new Producto("Sofa", 5000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 1.0);
 
-     Producto producto21 = new Producto("Galletas", 12000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.5);
-     Producto producto22 = new Producto("Galletas", 12000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.5);
-     Producto producto23 = new Producto("Galletas", 12000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.5);
+     Producto producto21 = new Producto("Mesa de noche", 12000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 0.5);
+     Producto producto22 = new Producto("Mesa de noche", 12000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 0.5);
+     Producto producto23 = new Producto("Mesa de noche", 12000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 0.5);
 
-     Producto producto24 = new Producto("Mantequilla", 7000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.25);
-     Producto producto25 = new Producto("Mantequilla", 7000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.25);
-     Producto producto26 = new Producto("Mantequilla", 7000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.25);
+     Producto producto24 = new Producto("Cama", 7000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 0.25);
+     Producto producto25 = new Producto("Cama", 7000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 0.25);
+     Producto producto26 = new Producto("Cama", 7000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 0.25);
 
-     Producto producto27 = new Producto("Queso", 15000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-     Producto producto28 = new Producto("Queso", 15000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-     Producto producto29 = new Producto("Queso", 15000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
+     Producto producto27 = new Producto("Escritorio", 15000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 1.0);
+     Producto producto28 = new Producto("Escritorio", 15000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 1.0);
+     Producto producto29 = new Producto("Escritorio", 15000, estadosProducto.DISPONIBLE, "Comodidad", "Muebles", 1.0);
 
     //tienda 3
-     Producto producto30 = new Producto("Detergente", 15000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 3.0);
-     Producto producto31 = new Producto("Detergente", 15000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 3.0);
-     Producto producto32 = new Producto("Detergente", 15000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 3.0);
+     Producto producto30 = new Producto("Detergente", 15000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 3.0);
+     Producto producto31 = new Producto("Detergente", 15000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 3.0);
+     Producto producto32 = new Producto("Detergente", 15000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 3.0);
 
-     Producto producto33 = new Producto("Esponja", 5000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.5);
-     Producto producto34 = new Producto("Esponja", 5000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.5);
-     Producto producto35 = new Producto("Esponja", 5000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.5);
+     Producto producto33 = new Producto("Esponja", 5000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 0.5);
+     Producto producto34 = new Producto("Esponja", 5000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 0.5);
+     Producto producto35 = new Producto("Esponja", 5000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 0.5);
 
-     Producto producto36 = new Producto("Limpiador", 12000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
-     Producto producto37 = new Producto("Limpiador", 12000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
-     Producto producto38 = new Producto("Limpiador", 12000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
+     Producto producto36 = new Producto("Limpiador", 12000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 2.0);
+     Producto producto37 = new Producto("Limpiador", 12000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 2.0);
+     Producto producto38 = new Producto("Limpiador", 12000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 2.0);
 
-     Producto producto39 = new Producto("Jabón Líquido", 10000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 1.5);
-     Producto producto40 = new Producto("Jabón Líquido", 10000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 1.5);
-     Producto producto41 = new Producto("Jabón Líquido", 10000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 1.5);
+     Producto producto39 = new Producto("Jabón Líquido", 10000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 1.5);
+     Producto producto40 = new Producto("Jabón Líquido", 10000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 1.5);
+     Producto producto41 = new Producto("Jabón Líquido", 10000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 1.5);
 
-     Producto producto42 = new Producto("Trapeador", 25000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.8);
-     Producto producto43 = new Producto("Trapeador", 25000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.8);
-     Producto producto44 = new Producto("Trapeador", 25000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.8);
+     Producto producto42 = new Producto("Trapeador", 25000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 0.8);
+     Producto producto43 = new Producto("Trapeador", 25000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 0.8);
+     Producto producto44 = new Producto("Trapeador", 25000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 0.8);
 
-     Producto producto45 = new Producto("Cloro", 8000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
-     Producto producto46 = new Producto("Cloro", 8000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
-     Producto producto47 = new Producto("Cloro", 8000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
+     Producto producto45 = new Producto("Cloro", 8000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 2.0);
+     Producto producto46 = new Producto("Cloro", 8000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 2.0);
+     Producto producto47 = new Producto("Cloro", 8000, estadosProducto.DISPONIBLE, "Limpieza", "Aseo", 2.0);
 
      ArrayList<Producto> listaProductosTienda1 = new ArrayList<>(Arrays.asList(
         producto1, producto2, producto3, producto4, producto5,  // Cemento Gris
@@ -130,12 +130,12 @@ public class Load {
         producto10, producto11                                // Pintura Interior
 ));
      ArrayList<Producto> listaProductosTienda2 = new ArrayList<>(Arrays.asList(
-        producto12, producto13, producto14, // Pan
-        producto15, producto16, producto17, // Leche Entera
-        producto18, producto19, producto20, // Arroz
-        producto21, producto22, producto23, // Galletas
-        producto24, producto25, producto26, // Mantequilla
-        producto27, producto28, producto29  // Queso
+        producto12, producto13, producto14, // Sillas
+        producto15, producto16, producto17, // Mesas
+        producto18, producto19, producto20, // Sofa
+        producto21, producto22, producto23, // Mesa de noche
+        producto24, producto25, producto26, // Cama
+        producto27, producto28, producto29  // Escritorio
     ));
      ArrayList<Producto> listaProductosTienda3 = new ArrayList<>(Arrays.asList(
         producto30, producto31, producto32, // Detergente
@@ -158,8 +158,8 @@ public class Load {
      ArrayList<Tienda> listaTiendas = new ArrayList<>(Arrays.asList(tienda1, tienda2, tienda3));
 
     // Crear lista de productos disponibles para la fábrica
-     ArrayList<Producto> catalogo = new ArrayList<>(Arrays.asList(producto1, producto2, producto3, producto4, producto5, producto6, producto7, producto8, producto9));
-    //aqui esta el error en abastecimientossssss
+     ArrayList<Producto> catalogo = new ArrayList<>(Arrays.asList(producto1, producto6, producto8, producto10, producto12, producto15, producto18, producto21, producto24, producto27,producto30,producto33,producto36,producto39,producto42,producto45));
+
     // Crear operario
      CuentaBancaria cuentaOperario = new CuentaBancaria(55555, 100000);
      Operario operario1 = new Operario("Jaime", 97890, 20, cuentaOperario, null);

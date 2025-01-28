@@ -24,8 +24,8 @@ public class Tienda implements Moda, Serializable{
     private ArrayList<String> categorias = new ArrayList<>();
     private ArrayList<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
     private int capacidadMaximaMaterial;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Construccion
-    private int capacidadMaximaConsumible;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Alimentos
-    private int capacidadMaximaLimpieza;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Hogar
+    private int capacidadMaximaConsumible;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Muebles
+    private int capacidadMaximaLimpieza;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Aseo
 
 
     // constructor
@@ -147,9 +147,9 @@ public String productosPorCategoria(ArrayList<Producto> productos) {
 
     // Lista de todas las categorías posibles
     ArrayList<String> todasLasCategorias = new ArrayList<>();
-    todasLasCategorias.add("Construcción");
-    todasLasCategorias.add("Alimentos");
-    todasLasCategorias.add("Hogar");
+    todasLasCategorias.add("Herramientas");
+    todasLasCategorias.add("Muebles");
+    todasLasCategorias.add("Aseo");
 
     // Inicializar el conteo de todas las categorías a 0
     for (String categoria : todasLasCategorias) {
@@ -178,13 +178,13 @@ public String productosPorCategoria(ArrayList<Producto> productos) {
 
         // Dependiendo de la categoría, agregar la capacidad máxima correspondiente
         switch (categorias.get(i)) {
-            case "Construcción":
+            case "Herramientas":
                 resultado.append(capacidadMaximaMaterial);
                 break;
-            case "Alimentos":
+            case "Muebles":
                 resultado.append(capacidadMaximaConsumible);
                 break;
-            case "Hogar":
+            case "Aseo":
                 resultado.append(capacidadMaximaLimpieza);
                 break;
             default:
@@ -206,9 +206,9 @@ public String productosPorCategoria(ArrayList<Producto> productos, List<Integer>
 
     // Lista de todas las categorías posibles
     ArrayList<String> todasLasCategorias = new ArrayList<>();
-    todasLasCategorias.add("Construcción");
-    todasLasCategorias.add("Alimentos");
-    todasLasCategorias.add("Hogar");
+    todasLasCategorias.add("Herramientas");
+    todasLasCategorias.add("Muebles");
+    todasLasCategorias.add("Aseo");
 
     // Inicializar el conteo de todas las categorías a 0
     for (String categoria : todasLasCategorias) {
@@ -235,13 +235,13 @@ public String productosPorCategoria(ArrayList<Producto> productos, List<Integer>
 
         // Dependiendo de la categoría, agregar la capacidad máxima correspondiente
         switch (categorias.get(i)) {
-            case "Construcción":
+            case "Herramientas":
                 resultado.append(capacidadMaximaMaterial);
                 break;
-            case "Alimentos":
+            case "Muebles":
                 resultado.append(capacidadMaximaConsumible);
                 break;
-            case "Hogar":
+            case "Aseo":
                 resultado.append(capacidadMaximaLimpieza);
                 break;
             default:
