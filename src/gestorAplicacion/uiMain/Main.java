@@ -11,7 +11,7 @@ public class Main {
         boolean salir = false;
 
         while (!salir) {
-            System.out.println("¡Bienvenido al sistema de gestión!");
+            System.out.println("\n¡Bienvenido al sistema de gestión!");
             System.out.println("Seleccione una opción:");
             System.out.println("1. Enviar Pedidos");
             System.out.println("2. Devoluciones");

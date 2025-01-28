@@ -19,16 +19,18 @@ public class Factura implements Serializable{
     private Transporte transporte; 
     private LocalDate fecha; 
     private int id;
+    private int precioEnvio;
     private double total; //Precio total de la factura. 
     private ArrayList<Producto> listaProductos=new ArrayList<>();  
     private static int totalCreadas=0; 
     public static ArrayList<Factura> listaFacturas=new ArrayList<>(); 
 
-    public Factura(Tienda tienda, Cliente cliente, Transporte transporte, ArrayList<Producto> listaProductos, LocalDate fecha) {
+    public Factura(Tienda tienda, Cliente cliente, Transporte transporte, ArrayList<Producto> listaProductos,int precioEnvio, LocalDate fecha) {
         this.tienda = tienda;
         this.cliente = cliente;
         this.transporte = transporte;
-        this.listaProductos = listaProductos;
+        this.listaProductos = listaProductos; 
+        this.precioEnvio= precioEnvio;
         if (Factura.listaFacturas.size() > 2) {
           Factura.ordenarFacturasPorFecha();
         }
@@ -296,44 +298,53 @@ public static Object modaTiendas(LocalDate fecha1, LocalDate fecha2) {
   }
   return masComun(tiendas);
 }
+
 @Override
 public String toString() {
-  StringBuilder factura = new StringBuilder();
-  double totalPrecio = 0;
-  double totalPeso = 0;
+    StringBuilder factura = new StringBuilder();
+    double totalPrecio = 0;
+    double totalPeso = 0;
+    double precioEnvio = this.precioEnvio;
 
-  // Encabezado de la factura
-  factura.append("=====================================\n");
-  factura.append(String.format("           %s\n", tienda.getNombre()));
-  factura.append("=====================================\n");
-  factura.append(String.format("Cliente: %s\n", cliente.getNombre()));
-  factura.append(String.format("Cédula: %s\n", cliente.getCedula()));
-  factura.append(String.format("Fecha: %s\n", fecha));
-  factura.append(String.format("Transporte: %s\n", transporte.getTipoTransporte().getNombre()));
-  factura.append("=====================================\n");
-  factura.append(String.format("| %-30s | %-10s | %-10s |\n", "Producto", "Precio", "Peso (kg)"));
-  factura.append("|------------------------------|------------|------------|\n");
+    // Borde superior
+    factura.append("=====================================\n");
+    factura.append("|                                   |\n");
+    factura.append(String.format("| %-33s |\n", tienda.getNombre())); // Corrección aquí
+    factura.append("|                                   |\n");
+    factura.append("=====================================\n");
 
-  // Detalles de los productos
-  for (Producto producto : listaProductos) {
-      if (producto != null) {
-          factura.append(String.format("| %-30s | $%-10.2f | %-10.2f |\n", 
-              producto.getNombre(), 
-              (double) producto.getPrecio(), 
-              (double) producto.getPeso()));
-          totalPrecio += producto.getPrecio();
-          totalPeso += producto.getPeso();
-      }
-  }
+    // Encabezado del cliente y detalles
+    factura.append(String.format("| ID Factura: %-24d |\n", this.id));
+    factura.append(String.format("| Cliente: %-26s |\n", cliente.getNombre()));
+    factura.append(String.format("| Cédula: %-26s |\n", cliente.getCedula()));
+    factura.append(String.format("| Fecha: %-28s |\n", fecha));
+    factura.append(String.format("| Transporte: %-22s |\n", transporte.getTipoTransporte().getNombre()));
+    factura.append("========================================================\n");
 
-  // Línea de separación
-  factura.append("|------------------------------|------------|------------|\n");
+    // Encabezado de los productos
+    factura.append("| Producto                     | Precio    | Peso (kg) |\n");
+    factura.append("|------------------------------|-----------|-----------|\n");
 
-  // Totales
-  factura.append(String.format("| %-30s | $%-10.2f | %-10.2f |\n", "Total", totalPrecio, totalPeso));
-  factura.append("=====================================\n");
+    // Detalles de los productos
+    for (Producto producto : listaProductos) {
+        if (producto != null) {
+            factura.append(String.format(
+                "| %-28s | $%-8.2f | %-8.2f |\n",
+                producto.getNombre(), (double) producto.getPrecio(), producto.getPeso()
+            ));
+            totalPrecio += (double) producto.getPrecio();  // Convertir a double si no lo es
+            totalPeso += producto.getPeso();
+        }
+    }
 
-  return factura.toString();
+    // Totales
+    totalPrecio += (double) precioEnvio;  // Convertir a double si no lo es
+    factura.append("|------------------------------|-----------|-----------|\n");
+    factura.append(String.format("| Envío                       | $%-8.2f | %-8s |\n", (double) precioEnvio, "N/A"));
+    factura.append(String.format("| Total                       | $%-8.2f | %-8.2f |\n", totalPrecio, totalPeso));
+    factura.append("=======================================================\n");
+
+    return factura.toString();
 }
 //getters
 public ArrayList<Producto> getListaProductos(){
@@ -354,7 +365,9 @@ public LocalDate getFecha() {
 public int getId() {
   return id;
 }
-
+public int getPrecioEnvio(){
+  return precioEnvio;
+}
 public double getTotal() {
   return total;
 }
@@ -366,6 +379,7 @@ public static int getTotalCreadas() {
 public static ArrayList<Factura> getListaFacturas() {
   return listaFacturas;
 }
+
 
 
 
@@ -394,6 +408,9 @@ public void setFecha(LocalDate fecha) {
 public void setId(int id) {
   this.id = id;
 
+}
+public void setPrecioEnvio(int precioEnvio){
+  this.precioEnvio = precioEnvio;
 }
 
 public void setTotal(double total) {
