@@ -88,4 +88,25 @@ public class Deserializador {
         return listaConductores;
     }
 
+    public static ArrayList<Operario> cargarOperario() throws IOException, ClassNotFoundException{
+
+        ArrayList<Operario> listaOperario = (ArrayList<Operario>) deserializar("src/baseDatos/temp/operarios.txt");
+
+        return listaOperario;
+    }
+
+    public static ArrayList<Meta> cargarMetas() throws IOException, ClassNotFoundException{
+
+        ArrayList<Meta> listaMetas = (ArrayList<Meta>) deserializar("src/baseDatos/temp/metas.txt");
+
+        return listaMetas;
+    }
+
+    public static ArrayList<CuentaBancaria> cargarCuentas() throws IOException, ClassNotFoundException{
+
+        ArrayList<CuentaBancaria> listaCuentas = (ArrayList<CuentaBancaria>) deserializar("src/baseDatos/temp/cuentas.txt");
+
+        return listaCuentas;
+    }
+
 }

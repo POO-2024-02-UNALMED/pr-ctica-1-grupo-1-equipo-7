@@ -56,4 +56,17 @@ public class Serializador {
             serializar(Load.listaConductores, "src/baseDatos/temp/conductores.txt");
          }
 
+         public static void guardarOperario(){
+            serializar(Load.listaOperario, "src/baseDatos/temp/operarios.txt");
+         }
+
+         public static void guardarMetas(){
+            serializar(Load.listaMetas, "src/baseDatos/temp/metas.txt");
+         }
+
+         public static void guardarCuentas(){
+            serializar(Load.listaCuentas, "src/baseDatos/temp/cuentas.txt");
+         }
+
+
 }
