@@ -112,7 +112,7 @@ public class Main {
     
                     while (true) {
                         System.out.println("Seleccione el producto que desea devolver o presione 0 para regresar al menú anterior: ");
-                        String productos=Factura.mostrarProductosFactura(factura);
+                        String productos=factura.mostrarProductos();
                         System.out.println(productos);
     
                         int opcion2;

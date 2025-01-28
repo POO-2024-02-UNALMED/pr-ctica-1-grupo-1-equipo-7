@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import gestion.CuentaBancaria;
+import gestion.IMostrarProductos;
 import gestion.Operario;
 import gestion.Persona;
 
@@ -130,23 +131,11 @@ public class Fabrica implements Serializable {
     }
     
     //Funcionalidad a la que pertenece: Abastecer tiendas
-    //Metodo que se encarga de mostrar los productos disponibles en la fábrica para generar
+    //Metodo que se encarga de mostrar los productos disponibles en la fábrica para generar. Hace uso del metodo de la interfaz IMostrarProductos
     public static String mostrarProductos() {
-        StringBuilder productos = new StringBuilder();
-        if (Fabrica.productosDisponibles == null || Fabrica.productosDisponibles.isEmpty()) {
-            return "No hay productos registrados o disponibles.";
-        }
-        int index = 1;
-        for (Producto producto : Fabrica.productosDisponibles) {
-            productos.append(index).append(". ")
-                     .append(producto.getNombre()).append(" - ")
-                     .append(producto.getPeso()).append("kg - $")
-                     .append(producto.getPrecio()).append(" - ")
-                     .append(producto.getCategoria()).append("\n");
-            index++;
-        }
-        return productos.toString();
+        return IMostrarProductos.mostrarProductos(productosDisponibles);
     }
+
        public static ArrayList<Producto> cantidadProductos(Producto producto, int cantidadAEnviar) {
         ArrayList<Producto> productosGenerados = new ArrayList<>();
         for (int i = 0; i < cantidadAEnviar; i++) {

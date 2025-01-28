@@ -6,12 +6,13 @@ import gestion.Vendedor;
 import gestion.Cliente;
 import gestion.CuentaBancaria;
 import gestion.Factura;
+import gestion.IMostrarProductos;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
-public class Tienda implements Moda, Serializable{
+public class Tienda implements Moda, Serializable, IMostrarProductos{
     private static final long serialVersionUID = 8L;
     
     //atributos
@@ -310,6 +311,7 @@ public Cliente devolverProducto(Factura factura, Producto producto){
 //Método que se encarga de filtrar los productos que puede seleccionar el usuario para cambiar
 //Devuelve un ArrayList con los productos disponibles para la venta de la tienda, menos el producto que desea cambiar.
 
+@Override //Sobreescribe el método por default de la interfaz IMostrarProducto
 public ArrayList<Producto> mostrarProductos(Producto producto) {
     ArrayList<Producto> productosParaMostrar=new ArrayList<>();
     for (Producto p : this.getListaProducto()) {
