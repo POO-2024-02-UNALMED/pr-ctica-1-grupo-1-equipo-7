@@ -205,10 +205,10 @@ public class Fabrica implements Serializable {
     public static void setProductosDisponibles(ArrayList<Producto> productosDisponibles) {
         Fabrica.productosDisponibles = productosDisponibles;
     }
-          public static ArrayList<Tienda> getListaTiendas(){
-            return listaTienda;
+    public static void setListaTiendas(ArrayList<Tienda> l){
+        listaTienda = l;
     }
-    public static ArrayList<Tienda> getListaTienda(){
+    public static ArrayList<Tienda> getListaTiendas(){
         return listaTienda;
     }
 

@@ -33,7 +33,7 @@ public class Serializador {
 
         public static void guardarFabrica(){
 
-            serializar(Load.fabrica, "src/baseDatos/temp/fabrica.txt");
+            serializar(Load.fabricaa, "src/baseDatos/temp/fabrica.txt");
         }
 
         public static void guardarCatalogo(){
@@ -48,8 +48,8 @@ public class Serializador {
             serializar(Load.listaVendedores, "src/baseDatos/temp/vendedores.txt");
          }
 
-         public static void guardarTransporte(){
-             serializar(Load.transporteAbastecer, "src/baseDatos/temp/transporte.txt");
+         public static void guardarTransportes(){
+             serializar(Load.listaTransportes, "src/baseDatos/temp/transporte.txt");
          }
 
          public static void guardarConductores(){

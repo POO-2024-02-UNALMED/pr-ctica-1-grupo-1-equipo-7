@@ -10,9 +10,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 import baseDatos.Load;
 
@@ -348,7 +345,7 @@ public class Main {
             Tienda tiendaSeleccionada = null;
             
             // Bucle para seleccionar la tienda
-            while (tiendaSeleccionadaIndex < 0 || tiendaSeleccionadaIndex > Fabrica.getListaTienda().size()) {
+            while (tiendaSeleccionadaIndex < 0 || tiendaSeleccionadaIndex > Fabrica.getListaTiendas().size()) {
                 try {
                     System.out.print("» ");
                     tiendaSeleccionadaIndex = sc.nextInt();
@@ -365,12 +362,12 @@ public class Main {
                         }
                         return;
                     }
-                    if (tiendaSeleccionadaIndex < 1 || tiendaSeleccionadaIndex > Fabrica.getListaTienda().size()) {
-                        System.out.println("Número inválido. Ingrese un número entre 1 y " + Fabrica.getListaTienda().size() + ".");
+                    if (tiendaSeleccionadaIndex < 1 || tiendaSeleccionadaIndex > Fabrica.getListaTiendas().size()) {
+                        System.out.println("Número inválido. Ingrese un número entre 1 y " + Fabrica.getListaTiendas().size() + ".");
                     } else {
                         boolean confirmacionTienda= false;
                         while(!confirmacionTienda){
-                            tiendaSeleccionada= Fabrica.getListaTienda().get(tiendaSeleccionadaIndex - 1);
+                            tiendaSeleccionada= Fabrica.getListaTiendas().get(tiendaSeleccionadaIndex - 1);
                             System.out.println("Tienda seleccionada: " + tiendaSeleccionada.getNombre());
 
                             System.out.println("¿Es correcta esta selección? (1 para sí, 2 para no)"); 
@@ -401,8 +398,8 @@ public class Main {
                                         }
                                         return;
                                     }
-                                    if (tiendaSeleccionadaIndex < 1 || tiendaSeleccionadaIndex > Fabrica.getListaTienda().size()) {
-                                        System.out.println("Número inválido. Ingrese un número entre 1 y " + Fabrica.getListaTienda().size() + ".");
+                                    if (tiendaSeleccionadaIndex < 1 || tiendaSeleccionadaIndex > Fabrica.getListaTiendas().size()) {
+                                        System.out.println("Número inválido. Ingrese un número entre 1 y " + Fabrica.getListaTiendas().size() + ".");
                                     } else {
                                         System.out.println("Entrada inválida. Por favor, ingrese un número.");
                                         //confirmacionTienda = true;

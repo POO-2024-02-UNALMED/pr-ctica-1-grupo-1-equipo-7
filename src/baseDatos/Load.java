@@ -3,41 +3,47 @@ package baseDatos;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 import gestion.*;
 import produccion.*;
 
 
 public class Load {
     
-    public static Fabrica fabrica;
+     public static Fabrica fabricaa;
      public static ArrayList<Producto> catalogo = new ArrayList<Producto>();
      public static ArrayList<Tienda> listaTiendas = new ArrayList<Tienda>();
      public static ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
      public static ArrayList<Vendedor> listaVendedores = new ArrayList<Vendedor>();
      public static ArrayList<Factura> listaFacturas = new ArrayList<Factura>();
      public static ArrayList<Conductor> listaConductores = new ArrayList<Conductor>();
-     public static Transporte transporteAbastecer;
+     public static ArrayList<Transporte> listaTransportes = new ArrayList<Transporte>();
     
 
     public static void guardar(){
 
+      //cargarPorDefecto();
+      
+      listaTiendas = Fabrica.getListaTiendas();
       listaFacturas = Factura.getListaFacturas();
       listaClientes = Cliente.getListaClientes();
       catalogo = Producto.getListaProductos();
+      listaVendedores = Vendedor.getListaVendedores();
       listaConductores = Conductor.getListaConductores();
+      listaTransportes = Transporte.getListaTransportes();
 
       Serializador.guardarTiendas();
       Serializador.guardarCatalogo();
       Serializador.guardarFabrica();
       Serializador.guardarFacturas();
-      Serializador.guardarTransporte();
+      Serializador.guardarTransportes();
       Serializador.guardarVendedores();
       Serializador.guardarClientes();
       Serializador.guardarConductores();
 
     }
 
-    public static void cargarPorDefecto(){
+    /*public static void cargarPorDefecto(){
 
       // Crear cuentas bancarias
      CuentaBancaria cuentaFabrica = new CuentaBancaria(9999999, 1000000000);
@@ -49,6 +55,10 @@ public class Load {
      Vendedor vendedor1 = new Vendedor("Maria Beatriz", 577935, 20, cuentaVendedor1);
      Vendedor vendedor2 = new Vendedor("Adriana Alexia Putellas", 89235, 21, cuentaVendedor2);
      Vendedor vendedor3 = new Vendedor("Lionel Andres Messi", 14720, 22, cuentaVendedor3);
+
+    listaVendedores.add(vendedor1);
+    listaVendedores.add(vendedor2);
+    listaVendedores.add(vendedor3);
 
     // Crear tiendas
      Tienda tienda1 = new Tienda("Herramientas UNAL", vendedor1, cuentaFabrica,100,100,100);
@@ -152,6 +162,10 @@ public class Load {
         tienda1.getListaProducto().addAll(listaProductosTienda1);
         tienda2.getListaProducto().addAll(listaProductosTienda2);
         tienda3.getListaProducto().addAll(listaProductosTienda3);
+
+        listaTiendas.add(tienda1);
+        listaTiendas.add(tienda2);
+        listaTiendas.add(tienda3);
     }
 
     // Crear lista de tiendas para la fábrica
@@ -165,7 +179,7 @@ public class Load {
      Operario operario1 = new Operario("Jaime", 97890, 20, cuentaOperario, null);
 
     // Crear fábrica
-     Fabrica fabrica = new Fabrica("F001", "Fábrica Principal", "Calle Principal 123", cuentaFabrica, catalogo, listaTiendas,operario1);
+     Fabrica fabrica = new Fabrica("F001", "Fábrica Principal", "Calle Principal 123", cuentaFabrica, catalogo, listaTiendas, operario1);
 
         // Crear cuentas bancarias para los conductores
          CuentaBancaria cuentaConductor1 = new CuentaBancaria(12345, 5000);
@@ -203,6 +217,21 @@ public class Load {
          Conductor conductor9 = new Conductor("Yhan Jaramillo", 93049, 38, cuentaConductor9, fabrica, transporte9);
          Conductor conductor10 = new Conductor("Jose Sanchez", 10101, 39, cuentaConductor10, fabrica, transporte10);
 
+        //crear lista de transportes
+        ArrayList<Transporte> listaTransportes = new ArrayList<>();
+        {
+            listaTransportes.add(transporte1);
+            listaTransportes.add(transporte2);
+            listaTransportes.add(transporte3);
+            listaTransportes.add(transporte4);
+            listaTransportes.add(transporte5);
+            listaTransportes.add(transporte6);
+            listaTransportes.add(transporte7);
+            listaTransportes.add(transporte8);
+            listaTransportes.add(transporte9);
+            listaTransportes.add(transporte10);
+        }
+
         // Crear lista de conductores
          ArrayList<Conductor> listaConductores = new ArrayList<>();
          {
@@ -217,6 +246,7 @@ public class Load {
             listaConductores.add(conductor9);
             listaConductores.add(conductor10);
         }
+
     // Instancias estáticas de las cuentas bancarias
       CuentaBancaria cuentaCliente1 = new CuentaBancaria(10001, 5000);
       CuentaBancaria cuentaCliente2 = new CuentaBancaria(10002, 15000);
@@ -280,30 +310,29 @@ public class Load {
             i.setMetaVendedor(metaVendedor4);
         }
 
+      }
         
     }
-
-    }
+*/
 
     public static void cargar(){
-
-      cargarPorDefecto();
-
       try{
 
        listaTiendas =  Deserializador.cargarTiendas();
        catalogo = Deserializador.cargarCatalogo();
-       fabrica = Deserializador.cargarFabrica();
+       fabricaa = Deserializador.cargarFabrica();
        listaClientes = Deserializador.cargarClientes();
-       transporteAbastecer = Deserializador.cargarTransporte();
+       listaTransportes = Deserializador.cargarTransportes();
        listaVendedores =  Deserializador.cargarVendedores();
        listaFacturas =  Deserializador.cargarFacturas();
        listaConductores = Deserializador.cargaConductores();
-
+        
+       Fabrica.setListaTiendas(listaTiendas);
        Factura.setListaFacturas(listaFacturas);
        Cliente.setListaClientes(listaClientes);
        Producto.setListaProductos(catalogo);
        Conductor.setListaConductores(listaConductores);
+       Transporte.setListaTransportes(listaTransportes);
 
       }catch(Exception e){
         System.out.println("Ha ocurrido un error en la deserialización");
@@ -312,6 +341,8 @@ public class Load {
     }
 
     public static void main(String[] args) {
-      
+        cargar();
+        System.out.println("Carga exitosa");
+        System.out.println(Producto.getListaProductos().size());
     }
 }

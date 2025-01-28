@@ -111,8 +111,8 @@ public interface uiEnviarPedidos {
                                 }
                                 return;
                             } 
-                            else if (opcion > 0 && opcion <= Fabrica.getListaTienda().size()){
-                                tiendaSeleccionada = Fabrica.getListaTienda().get(opcion - 1);
+                            else if (opcion > 0 && opcion <= Fabrica.getListaTiendas().size()){
+                                tiendaSeleccionada = Fabrica.getListaTiendas().get(opcion - 1);
                                 break; // Tienda seleccionada correctamente
                             } 
                             else {
@@ -134,7 +134,7 @@ public interface uiEnviarPedidos {
                         String eleccion = sc.next();
 
                         if (eleccion.equals("1")) { // Confirmar tienda
-                            tiendaSeleccionada = Fabrica.getListaTienda().get(opcion - 1);
+                            tiendaSeleccionada = Fabrica.getListaTiendas().get(opcion - 1);
                             System.out.println("\nTienda confirmada: " + tiendaSeleccionada.getNombre());
                             confirmacionTienda = 1;
                             break;
@@ -169,7 +169,7 @@ public interface uiEnviarPedidos {
                                 String eleccion = sc.next();
                         
                                 if (eleccion.equals("1")) { // Confirmación de cantidad de productos
-                                    tiendaSeleccionada = Fabrica.getListaTienda().get(opcion - 1);
+                                    tiendaSeleccionada = Fabrica.getListaTiendas().get(opcion - 1);
                                     System.out.println("\nHa confirmado que desea enviar " + cantidadProductosSeleccionados + " productos.");
                                     confirmacionCantidadProductos = 1;
                                     break;
