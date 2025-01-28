@@ -115,6 +115,8 @@ public class Fabrica implements Serializable {
         return resultado.toString();
     }
     // Método sobrecargado que solo muestra las tiendas, sin productos
+    //Método pertenetiente a la funcionalidad Envio de pedidos
+    //El método verifica si hay tiendas registradas y, si es así, devuelve una lista numerada con sus nombres; de lo contrario, indica que no hay tiendas.
     public static String mostrarTiendas(Boolean sinProducto) {
         if (listaTienda.isEmpty()) {
             return "No hay tiendas registradas.";

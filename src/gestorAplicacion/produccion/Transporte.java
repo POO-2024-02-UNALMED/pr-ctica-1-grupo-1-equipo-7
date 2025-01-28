@@ -96,12 +96,28 @@ public class Transporte implements Serializable {
         this.listaDeProductos.addAll(productosSeleccionados);
         this.tienda = tiendaSeleccionada;
      }
+     //Metodo startic perteneciente a la funcionalidad Envio Pedidos
+     //El método devuelve true si el precio total de los productos supera el monto de envío gratuito, de lo contrario, false.
     public static boolean enviarGratis(ArrayList<Producto> listaProductos) {
         int precioTotal = 0;
         for (Producto producto : listaProductos) {
             precioTotal += producto.getPrecio();
         }
         return precioTotal > montoEnvioGratis;
+    }
+    //Metodo static perteneciente a la funcionalidad Envio Pedidos
+    //El método calcula y devuelve el peso total de una lista de productos, sumando solo los productos con peso positivo. Si un producto tiene un peso inválido (no positivo), muestra un mensaje de error.
+    public static double calcularTotalPeso(ArrayList<Producto> listaProductosPedidos){
+        double totalPeso=0;
+        for (Producto producto : listaProductosPedidos) {
+            double peso = producto.getPeso();
+            if (peso > 0) { // Validamos que el peso sea positivo
+                totalPeso += peso;
+            } else {
+                System.out.println("\nError: Peso inválido para el producto " + producto.getNombre());
+            }
+        }
+        return totalPeso;
     }
 
 /*      public ArrayList<Producto> cantidadProductos(Producto producto ,int cantidadAenviar){
