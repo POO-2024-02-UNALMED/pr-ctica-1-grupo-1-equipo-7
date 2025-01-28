@@ -19,22 +19,22 @@ public class uiPagoTrabajadores {
             System.out.println("Seleccione el tipo de empleado que desea pagarle.");
             System.out.println("1. Operarios \n2. Conductores \n3. Vendedores\n0. Volver al menú.");
             System.out.print("» ");
-            int opcion;
-            int opcion2;
-            int opcion3;
-            int opcion4;
-            int opcion5;
-            int opcion6;
+            int opcionPT;
+            int opcionPT2;
+            int opcionPT3;
+            int opcionPT4;
+            int opcionPT5;
+            int opcionPT6;
             int pagoPorMetas = 0;
             try {
-                opcion = sc.nextInt();
+                opcionPT = sc.nextInt();
             } catch (Exception e) {
                 System.out.println("\nEntrada inválida. Por favor, ingrese un número.");
                 sc.nextLine(); // Limpiar el buffer
                 continue; 
             }
             
-            if (opcion == 0) {
+            if (opcionPT == 0) {
                 System.out.println("Volviendo al menú principal.\n");
                 try {
                     Thread.sleep(1000);
@@ -44,15 +44,15 @@ public class uiPagoTrabajadores {
                 break;
             }
 
-            else if(opcion != 1 && opcion != 2 && opcion != 3){
+            else if(opcionPT != 1 && opcionPT != 2 && opcionPT != 3){
                 System.out.println("\nEntrada inválida. Por favor, ingrese un número que esté en el rango [0-3].");
                 continue;
             }
 
             // Validación de la opción del usuario: si la entrada es válida,
             // muestra la lista de los posibles trabajadores.
-            else if (opcion > 0 && opcion <= 3){
-                switch (opcion) {
+            else if (opcionPT > 0 && opcionPT <= 3){
+                switch (opcionPT) {
                     case 1:
                         for(Operario i : Operario.getListaOperario()){
                             listaTrabajadores.add(i);
@@ -100,7 +100,7 @@ public class uiPagoTrabajadores {
                     System.out.print("» ");
                     // Para validar que el usuario ingrese un número válido otra vez
                     try {
-                        opcion2 = sc.nextInt();
+                        opcionPT2 = sc.nextInt();
                     } catch (Exception e) {
                         System.out.println("Entrada inválida. Por favor, ingrese un número.\n");
                         sc.nextLine(); // Limpiar el buffer
@@ -108,7 +108,7 @@ public class uiPagoTrabajadores {
                     } 
 
                     // Validación de que el usuario quiere volver al menú principal.
-                    if(opcion2 == 0){
+                    if(opcionPT2 == 0){
                         System.out.println("Volviendo al menú principal.\n");
                         try {
                             Thread.sleep(1000);
@@ -119,13 +119,13 @@ public class uiPagoTrabajadores {
                     }
 
                     // Confirmación de que el número está dentro del rango.
-                    if(opcion2 < 1 || opcion2 > trabajadores.size()){
+                    if(opcionPT2 < 1 || opcionPT2 > trabajadores.size()){
                         System.out.println("Escoja un número que esté dentro del rango.");
                         continue;
 
                     } else {
                         // Muestra el pago que se le mandará al trabajador sin ver las metas.
-                        Persona trabajadorSeleccionado = trabajadores.get(opcion2 - 1);
+                        Persona trabajadorSeleccionado = trabajadores.get(opcionPT2 - 1);
                         double pagoPotencial = trabajadorSeleccionado.getCuentaBancaria().calcularPago(trabajadorSeleccionado) + trabajadorSeleccionado.getSalarioBase();
                         System.out.println("\nTrabajador(a) seleccionado(a): " + trabajadorSeleccionado.getNombre() + ". Se le debe hacer un pago de: "
                                             + pagoPotencial + " por haber trabajado " + trabajadorSeleccionado.getCantidadTrabajo() + " veces.\n");
@@ -139,7 +139,7 @@ public class uiPagoTrabajadores {
 
                             // Verificación de que se ingrese un número.
                             try {
-                                opcion3 = sc.nextInt();
+                                opcionPT3 = sc.nextInt();
                             } catch (Exception e) {
                                 System.out.println("\nEntrada inválida. Por favor, ingrese un número.\n");
                                 sc.nextLine(); // Limpiar el buffer
@@ -147,7 +147,7 @@ public class uiPagoTrabajadores {
                             } 
 
                             // Validación de que el usuario quiere volver al menú principal.
-                            if(opcion3 == 0){
+                            if(opcionPT3 == 0){
                                 System.out.println("Volviendo al menú principal.\n");
                                 try {
                                     Thread.sleep(1000);
@@ -158,7 +158,7 @@ public class uiPagoTrabajadores {
                             }
 
                             // Validación de que el usuario quiere cambiar de trabajador.
-                            if(opcion3 == 3){
+                            if(opcionPT3 == 3){
                                 System.out.println("Volviendo a mostrar la lista de trabajadores:");
                                 try {
                                     Thread.sleep(700);
@@ -169,11 +169,11 @@ public class uiPagoTrabajadores {
                             }
 
                             // Verificación de opción escogida.
-                            if(opcion3 != 1 && opcion3 != 2 && opcion3 != 3 && opcion3 != 0){
+                            if(opcionPT3 != 1 && opcionPT3 != 2 && opcionPT3 != 3 && opcionPT3 != 0){
                                 System.out.println("Seleccione una opción válida.\n");
                                 continue;
 
-                            }else if(opcion3 == 1){
+                            }else if(opcionPT3 == 1){
 
                                 // LOOP para verificar metas
                                 while(true){
@@ -199,7 +199,7 @@ public class uiPagoTrabajadores {
 
                                     // Para validar que el usuario ingrese un número válido otra vez
                                     try {
-                                        opcion4 = sc.nextInt();
+                                        opcionPT4 = sc.nextInt();
                                     } catch (Exception e) {
                                         System.out.println("Entrada inválida. Por favor, ingrese un número.\n");
                                         sc.nextLine(); // Limpiar el buffer
@@ -207,7 +207,7 @@ public class uiPagoTrabajadores {
                                     } 
 
                                     // Validación de que el usuario quiere volver al menú principal.
-                                    if(opcion4 == 0){
+                                    if(opcionPT4 == 0){
                                         System.out.println("Volviendo al menú principal.\n");
                                         try {
                                             Thread.sleep(1000);
@@ -218,15 +218,15 @@ public class uiPagoTrabajadores {
                                     }
 
                                     // Confirmación de que el número está dentro del rango
-                                    if(opcion4 < 1 || opcion4 > metasTrabajadorNoPagas.size()){
+                                    if(opcionPT4 < 1 || opcionPT4 > metasTrabajadorNoPagas.size()){
                                         System.out.println("Escoja un número que esté dentro del rango.\n");
                                         continue;
                                     }
-                                    else if(opcion4 == (metasTrabajadorNoPagas.size()+1)){
+                                    else if(opcionPT4 == (metasTrabajadorNoPagas.size()+1)){
                                         break LOOP_TERCIARIO;
                                     }
                                     else{
-                                        Meta metaSeleccionada = metasTrabajadorNoPagas.get(opcion4-1);
+                                        Meta metaSeleccionada = metasTrabajadorNoPagas.get(opcionPT4-1);
                                         String mensajeMeta = "\n" + metaSeleccionada.porcentajeCumplidos(trabajadorSeleccionado.getIndiceMeta()) + "\n";
                                         System.out.println("\nINFORMACIÓN DE LA META SELECCIONADA:");
                                         if (metaSeleccionada.cumpleMeta(trabajadorSeleccionado.getIndiceMeta()) == true){
@@ -244,17 +244,17 @@ public class uiPagoTrabajadores {
                                         System.out.println("¿Qué desea hacer? \n1. Revisar otra meta \n2. Proceder con el pago.");
                                         System.out.print("» ");
                                         try {
-                                            opcion5 = sc.nextInt();
+                                            opcionPT5 = sc.nextInt();
                                         } catch (Exception e) {
                                             System.out.println("Entrada inválida. Por favor, ingrese un número.\n");
                                             sc.nextLine(); // Limpiar el buffer
                                             continue; 
                                         }
-                                        if(opcion5 != 1 && opcion5 != 2){
-                                            System.out.println("Escoja alguna de las opciones.\n");
+                                        if(opcionPT5 != 1 && opcionPT5 != 2){
+                                            System.out.println("Escoja alguna de las opcionPTes.\n");
                                             continue;
 
-                                        }else if(opcion5 == 1){
+                                        }else if(opcionPT5 == 1){
                                             System.out.println("\nVolviendo a mostrar metas.");
                                             try {
                                                 Thread.sleep(600);
@@ -269,11 +269,11 @@ public class uiPagoTrabajadores {
 
                                     }
                                 }
-                            }else if(opcion3 == 2){
+                            }else if(opcionPT3 == 2){
                                 break LOOP_TERCIARIO;
                             }
                         }
-                        if (opcion3 != 3){
+                        if (opcionPT3 != 3){
                             double pagoTotal = pagoPotencial + pagoPorMetas;
                             Fabrica.cuentaBancaria.descontarDinero(pagoTotal);
                             trabajadorSeleccionado.recibirSueldo(pagoTotal);
@@ -299,17 +299,17 @@ public class uiPagoTrabajadores {
                 System.out.println("\n¿Qué desea hacer? \n1. Pagar a otro trabajador. \n0. Volver al menú principal.");
                 System.out.print("» ");
                 try {
-                    opcion6 = sc.nextInt();
+                    opcionPT6 = sc.nextInt();
                 } catch (Exception e) {
                     System.out.println("Entrada inválida. Por favor, ingrese un número.");
                     sc.nextLine(); // Limpiar el buffer
                     continue; 
                 }
-                if (opcion6 != 1 && opcion6 != 0){
+                if (opcionPT6 != 1 && opcionPT6 != 0){
                     System.out.println("Seleccione una opción válida.");
                     continue;
                 }
-                else if (opcion6 == 1){
+                else if (opcionPT6 == 1){
                     System.out.println("\n");
                     try {
                         Thread.sleep(700);
