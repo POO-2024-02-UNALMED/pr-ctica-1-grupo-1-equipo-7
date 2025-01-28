@@ -1,6 +1,8 @@
 package baseDatos;
 import java.io.*;
 
+
+
 public class Serializador {
     
     public static void serializar(Object objeto, String nombreArchivo) {
@@ -10,7 +12,7 @@ public class Serializador {
             out.writeObject(objeto);
             out.close();
             fileOut.close();
-            System.out.println("Serialización exitosa");
+            //System.out.println("Serialización exitosa");
         } catch (IOException i) {
             i.printStackTrace();
         }
@@ -18,14 +20,14 @@ public class Serializador {
 
     public static void guardarFacturas(){
 
-            serializar(Load.facturas,
+            serializar(Load.listaFacturas,
              "src/baseDatos/temp/facturas.txt");
 
             }
 
         public static void guardarTiendas(){
 
-            serializar(Load.tiendas, "src/baseDatos/temp/tiendas.txt");
+            serializar(Load.listaTiendas, "src/baseDatos/temp/tiendas.txt");
 
         }
 
@@ -39,11 +41,11 @@ public class Serializador {
         }
 
         public static void guardarClientes(){
-            serializar(Load.clientes, "src/baseDatos/temp/clientes.txt");
+            serializar(Load.listaClientes, "src/baseDatos/temp/clientes.txt");
         }
 
          public static void guardarVendedores(){
-            serializar(Load.vendedores, "src/baseDatos/temp/vendedores.txt");
+            serializar(Load.listaVendedores, "src/baseDatos/temp/vendedores.txt");
          }
 
          public static void guardarTransporte(){
@@ -51,7 +53,7 @@ public class Serializador {
          }
 
          public static void guardarConductores(){
-            serializar(Load.conductores, "src/baseDatos/temp/conductores.txt");
+            serializar(Load.listaConductores, "src/baseDatos/temp/conductores.txt");
          }
 
 }

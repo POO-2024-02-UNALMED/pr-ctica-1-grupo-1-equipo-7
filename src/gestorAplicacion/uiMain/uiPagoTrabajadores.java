@@ -36,6 +36,11 @@ public class uiPagoTrabajadores {
             
             if (opcion == 0) {
                 System.out.println("Volviendo al menú principal.\n");
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException o) {
+                    o.printStackTrace();
+                }
                 break;
             }
 
@@ -71,10 +76,26 @@ public class uiPagoTrabajadores {
                 while(true){
                     ArrayList<Persona> trabajadores = Fabrica.busquedaTrabajo(listaTrabajadores);
                     if(trabajadores.isEmpty() == true){
-                        System.out.println("No hay trabajadores de este tipo para pagarles.");
+                        System.out.println("\nNo hay trabajadores de este tipo para pagarles.");
+                        try {
+                            Thread.sleep(650);
+                        } catch (InterruptedException o) {
+                            o.printStackTrace();
+                        }
                         break LOOP_SECUNDARIO;
                     }
+                    System.out.println("Mostrando trabajadores...");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     System.out.println(Fabrica.mostrarPersonas(trabajadores));
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException o) {
+                        o.printStackTrace();
+                    }
                     System.out.println("Elija el trabajador que desea pagarle. Seleccione un número entre: [1 - " + trabajadores.size() + "] \n0. Volver al menú.");
                     System.out.print("» ");
                     // Para validar que el usuario ingrese un número válido otra vez
@@ -88,7 +109,12 @@ public class uiPagoTrabajadores {
 
                     // Validación de que el usuario quiere volver al menú principal.
                     if(opcion2 == 0){
-                        System.out.println("Volviendo al menú principal.");
+                        System.out.println("Volviendo al menú principal.\n");
+                        try {
+                            Thread.sleep(1000);
+                        } catch (InterruptedException o) {
+                            o.printStackTrace();
+                        }
                         break LOOP_PRINCIPAL;
                     }
 
@@ -122,13 +148,23 @@ public class uiPagoTrabajadores {
 
                             // Validación de que el usuario quiere volver al menú principal.
                             if(opcion3 == 0){
-                                System.out.println("Volviendo al menú principal.");
+                                System.out.println("Volviendo al menú principal.\n");
+                                try {
+                                    Thread.sleep(1000);
+                                } catch (InterruptedException o) {
+                                    o.printStackTrace();
+                                }
                                 break LOOP_PRINCIPAL;
                             }
 
                             // Validación de que el usuario quiere cambiar de trabajador.
                             if(opcion3 == 3){
                                 System.out.println("Volviendo a mostrar la lista de trabajadores:");
+                                try {
+                                    Thread.sleep(700);
+                                } catch (InterruptedException o) {
+                                    o.printStackTrace();
+                                }
                                 break;
                             }
 
@@ -142,17 +178,23 @@ public class uiPagoTrabajadores {
                                 // LOOP para verificar metas
                                 while(true){
                                     ArrayList<Meta> metasTrabajador = trabajadorSeleccionado.getMeta();
+                                    ArrayList<Meta> metasTrabajadorNoPagas = new ArrayList<>();
                                     for(Meta i : metasTrabajador){
-                                        if(i.getVerificador() == true){
-                                            metasTrabajador.remove(i);
+                                        if(i.getVerificador() == false){
+                                            metasTrabajadorNoPagas.add(i);
                                         }
                                     }
-                                    if(metasTrabajador.isEmpty() == true){
+                                    if(metasTrabajadorNoPagas.isEmpty() == true){
                                         System.out.println("El trabajador no tiene metas en este momento.\nProcediendo con el pago.");
                                         break LOOP_TERCIARIO;
                                     }
                                     System.out.println(trabajadorSeleccionado.mostrarMetas());
-                                    System.out.println("\nElija la meta que desea revisar. Seleccione un número entre: [1 - " + metasTrabajador.size() + "]\n"+ (metasTrabajador.size()+1) +". Proceder con el pago. \n0. Volver al menú.");
+                                    try {
+                                        Thread.sleep(1000);
+                                    } catch (InterruptedException o) {
+                                        o.printStackTrace();
+                                    }
+                                    System.out.println("\nElija la meta que desea revisar. Seleccione un número entre: [1 - " + metasTrabajadorNoPagas.size() + "]\n"+ (metasTrabajadorNoPagas.size()+1) +". Proceder con el pago. \n0. Volver al menú.");
                                     System.out.print("» ");
 
                                     // Para validar que el usuario ingrese un número válido otra vez
@@ -166,23 +208,29 @@ public class uiPagoTrabajadores {
 
                                     // Validación de que el usuario quiere volver al menú principal.
                                     if(opcion4 == 0){
-                                        System.out.println("Volviendo al menú principal.");
+                                        System.out.println("Volviendo al menú principal.\n");
+                                        try {
+                                            Thread.sleep(1000);
+                                        } catch (InterruptedException o) {
+                                            o.printStackTrace();
+                                        }
                                         break LOOP_PRINCIPAL;
                                     }
 
                                     // Confirmación de que el número está dentro del rango
-                                    if(opcion4 < 1 || opcion4 > metasTrabajador.size()){
+                                    if(opcion4 < 1 || opcion4 > metasTrabajadorNoPagas.size()){
                                         System.out.println("Escoja un número que esté dentro del rango.\n");
                                         continue;
                                     }
-                                    else if(opcion4 == (metasTrabajador.size()+1)){
+                                    else if(opcion4 == (metasTrabajadorNoPagas.size()+1)){
                                         break LOOP_TERCIARIO;
                                     }
                                     else{
-                                        Meta metaSeleccionada = metasTrabajador.get(opcion4-1);
+                                        Meta metaSeleccionada = metasTrabajadorNoPagas.get(opcion4-1);
                                         String mensajeMeta = "\n" + metaSeleccionada.porcentajeCumplidos(trabajadorSeleccionado.getIndiceMeta()) + "\n";
+                                        System.out.println("\nINFORMACIÓN DE LA META SELECCIONADA:");
                                         if (metaSeleccionada.cumpleMeta(trabajadorSeleccionado.getIndiceMeta()) == true){
-                                            System.out.println("\nLa meta ha sido cumplida exitosamente.\nSumaremos el pago indicado por haberlo conseguido." + mensajeMeta);
+                                            System.out.println("La meta ha sido cumplida exitosamente.\nSumaremos el pago indicado por haberlo conseguido." + mensajeMeta);
                                             pagoPorMetas += metaSeleccionada.getPago();
                                             metaSeleccionada.setVerificador(true);
                                         }else{
@@ -208,6 +256,11 @@ public class uiPagoTrabajadores {
 
                                         }else if(opcion5 == 1){
                                             System.out.println("\nVolviendo a mostrar metas.");
+                                            try {
+                                                Thread.sleep(600);
+                                            } catch (InterruptedException o) {
+                                                o.printStackTrace();
+                                            }
                                             break LOOP_QUINTO;
 
                                         }else{
@@ -224,12 +277,18 @@ public class uiPagoTrabajadores {
                             double pagoTotal = pagoPotencial + pagoPorMetas;
                             Fabrica.cuentaBancaria.descontarDinero(pagoTotal);
                             trabajadorSeleccionado.recibirSueldo(pagoTotal);
-                            System.out.println("\n------------------------------");
+                            System.out.println("Procesando pago...");
+                            try {
+                                Thread.sleep(1500);
+                            } catch (InterruptedException o) {
+                                o.printStackTrace();
+                            }
+                            System.out.println("\n------------------------------------------------------------");
                             System.out.println("COMPROBANTE \nTrabajador(a): " + trabajadorSeleccionado.getNombre() 
                             + " se le envió un total de: " + pagoTotal 
                             + "\n" + pagoPotencial + " Por las veces trabajadas\n" +
                             pagoPorMetas + " Por las metas cumplidas");
-                            System.out.println("------------------------------");
+                            System.out.println("------------------------------------------------------------");
                             break LOOP_SECUNDARIO;
                         }
                     }
@@ -252,10 +311,20 @@ public class uiPagoTrabajadores {
                 }
                 else if (opcion6 == 1){
                     System.out.println("\n");
+                    try {
+                        Thread.sleep(700);
+                    } catch (InterruptedException o) {
+                        o.printStackTrace();
+                    }
                     break ULTIMO_LOOP;
                 } 
                 else{
-                    System.out.println("Volviendo al menú principal.");
+                    System.out.println("Volviendo al menú principal.\n");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException o) {
+                        o.printStackTrace();
+                    }
                     break LOOP_PRINCIPAL;
                 }
             }

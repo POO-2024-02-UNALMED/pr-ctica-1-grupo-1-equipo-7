@@ -1,12 +1,20 @@
 package uiMain;
 import gestion.*;
 import produccion.*;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Scanner;
+
+import baseDatos.Load;
 
 public class Main {
     public static void main(String[] args) {
+
+        Load.cargar();
+
         Scanner sc = new Scanner(System.in);
         boolean salir = false;
 
@@ -44,6 +52,7 @@ public class Main {
                     estadisticas();
                     break;
                 case 0:
+                    Load.guardar();
                     salir = true;
                     System.out.println("Saliendo del sistema...");
                     break;
@@ -61,8 +70,253 @@ public class Main {
 
     public static void devoluciones() {
         // Implementar la funcionalidad de devoluciones
-        uiMain.uiDevoluciones.devolver();
-    }
+        Scanner sc = new Scanner(System.in);
+    
+            while (true) {
+                System.out.println("Eligió la opción de devoluciones.\nSeleccione la factura que desea consultar. Oprima 0 para salir.");
+                System.out.println("0. Salir");
+                String txt=Factura.mostrarFacturas();
+                System.out.println(txt);
+    
+                int opcion;
+                try {
+                    opcion = sc.nextInt();
+                } catch (Exception e) {
+                    System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                    sc.nextLine(); // Limpiar el buffer
+                    continue;
+                }
+    
+                if (opcion == 0) {
+                    System.out.println("Saliendo del menú de devoluciones.");
+                    break;
+                }
+    
+                if (opcion > 0 && opcion <= Factura.listaFacturas.size()) {
+                    System.out.println("Eligió la factura con el número: " + opcion);
+                    Factura factura = Factura.seleccionarFactura(opcion);
+                    Tienda tienda=factura.getTienda();
+
+    
+                    while (true) {
+                        System.out.println("Seleccione el producto que desea devolver o presione 0 para regresar al menú anterior: ");
+                        String productos=Factura.mostrarProductosFactura(factura);
+                        System.out.println(productos);
+    
+                        int opcion2;
+                        try {
+                            opcion2 = sc.nextInt();
+                        } catch (Exception e) {
+                            System.out.println("Entrada inválida. Por favor, ingrese un número.");
+                            sc.nextLine(); // Limpiar el buffer
+                            continue;
+                        }
+    
+                        if (opcion2 == 0) {
+                            System.out.println("Regresando al menú de facturas.");
+                            break;
+                        }
+    
+                        if (opcion2 > 0 && opcion2 <= factura.getListaProductos().size()) {
+                            if (Factura.todosDevueltos(factura.getListaProductos())) {
+                                System.out.println("Todos los productos de esta factura ya han sido devueltos.");
+                                break;
+                            }
+                            Producto producto = factura.seleccionarProducto(opcion2);
+                            if (producto.getEstado().equals(estadosProducto.DEVUELTO)) {
+                                System.out.println("El producto ya ha sido devuelto, elija otro.");
+                            } else{
+                                System.out.println("Eligió el producto: " + producto.getNombre());
+                                System.out.println("Indique el motivo de la devolución: ");
+                                String motivosDevolucion=Producto.mostrarMotivosDeDevolucion();
+                                System.out.println("Motivos de devolución: \n" + motivosDevolucion); // Se imprimen los motivos de devolucion validos más la opcion de agregar un motivo propio
+                                int motivoDevolucion=sc.nextInt();
+                                String motivo=Producto.obtenerMotivoDeDevolucion(motivoDevolucion);
+                                producto.setMotivoDevolucion(motivo); //Se agrega el motivo de la devolucion del producto. 
+
+
+                                if (motivoDevolucion ==1 || motivoDevolucion==2 || motivoDevolucion==3 ){
+
+                                    System.out.println("Por el motivo indicado, se le hará el reembolso del dinero.");
+                                    Cliente cliente=tienda.devolverProducto(factura, producto);
+                                    double valorADevolver=Fabrica.descontarDineroCuenta(producto); // Se descuenta el dinero de la cuenta de la fábrica
+                                    // y se obtiene el valor del producto a devolver.
+                                    Fabrica.cuentaBancaria.devolverDinero(valorADevolver, cliente); 
+                                    cliente.removerProducto(producto);// Se remueve el producto de la lista de productos del cliente.
+                                    System.out.println("Se le devolverá el valor de su producto, que es de $ "+ producto.getPrecio());
+                                    System.out.println("----Devolviendo el dinero---"); 
+                                    try {
+                                        Thread.sleep(2000);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    System.out.println("El producto ha sido devuelto exitosamente y se ha reembolsado su dinero.");
+                                    System.out.println("¿Qué desea hacer? \n1. Devolver otro producto \n0. Regresar al menú de facturas");
+                                    int opcion3;
+                                    switch (opcion3 = sc.nextInt()) {
+                                        case 0:
+                                            System.out.println("Saliendo del menú de devoluciones.");
+                                            break;
+                                        case 1:
+                                            devoluciones();
+                                        default:
+                                            System.out.println("Opción inválida. Intente nuevamente.");
+                                            break;
+                                    }
+                
+                                }
+                                else if (motivoDevolucion==Producto.motivosDevolucion.size()){
+                                        System.out.println("Especifique su causa de la devolución: ");
+                                        sc.nextLine(); // Limpiar el buffer antes de leer el motivo
+                                        String causa =sc.nextLine();
+                                        producto.setMotivoDevolucion(causa);
+                                        Producto.motivosDevolucion.add(Producto.motivosDevolucion.size()-1, causa);
+                                    }
+                                    System.out.println("Por el motivo indicado, se le hará el cambio del producto.");
+                                    System.out.println("Si el producto que seleccione tiene un precio menor al que desea cambiar, puede agregar otro producto para completar el valor restante. Es posible que tenga que pagar un excedente.\nNO se le devolverá el dinero restante.");
+                                    System.out.println("Seleccione el producto por el cual desea cambiar: ");
+                                    double precio=producto.getPrecio();
+                                    System.out.println("El precio de su producto es de: $"+precio);
+                                    ArrayList<Integer> seleccionProductos = new ArrayList<>();
+                                    ArrayList<Producto> carrito = new ArrayList<>();
+                                    double subtotal = 0;
+                                    System.out.println("\nProductos disponibles para cambio:");
+                                    ArrayList<Producto> productosDisponibles = tienda.mostrarProductos(producto);
+                                  
+                                    
+                                    while (true) {
+                                        //Se muestran los productos 
+                                        //que el cliente puede cambiar. 
+                                        if (productosDisponibles.isEmpty()){
+                                            System.out.println("Se han agotado los productos en la tienda disponibles para cambiar. Se procederá al cambio del producto con su carrito actual");
+                                            break; //Se considera el caso (poco probable pero no imposible) de que la tienda se quede sin productos para cambiar. 
+                                        }
+                                        ArrayList<Producto> productosUnicos=new ArrayList<>(); //Productos disponibles para cambiar, pero aparecen solo una vez
+                                        ArrayList<Integer> frecuencias= new ArrayList<>(); //Lista que contiene la frecuencia de cada producto en la lista de productosDisponibles
+                                        for (Producto p: productosDisponibles){
+                                            boolean encontrado=false; 
+
+                                            for (int i = 0; i < productosUnicos.size(); i++) {
+                                                if (productosUnicos.get(i).getNombre().equals(p.getNombre())) {
+                                                    // Si el producto ya está en la lista, aumentar su frecuencia
+                                                    frecuencias.set(i, frecuencias.get(i) + 1);
+                                                    encontrado = true;
+                                                    break;
+                                                }
+                                            }
+                                        
+                                            if (!encontrado) {
+                                                // Si no se encontró, agregar el producto a productosUnicos
+                                                productosUnicos.add(p);
+                                                frecuencias.add(1);
+                                            }
+                                        }
+                                        
+                                        for (int i = 0; i < productosUnicos.size(); i++) {
+                                            Producto p = productosUnicos.get(i);
+                                            int cantidadProducto=frecuencias.get(i);
+                                            System.out.println((i + 1) + ". " + p.getNombre() + " - Precio: $" + p.getPrecio()+ " - Productos disponibles: "+ cantidadProducto);
+                                            //Se imprime cada producto de la tienda que se puede cambiar, su precio y la cantidad que hay. 
+                                        }
+                                        // Pedir al usuario que seleccione un producto
+                                        System.out.println("Ingrese el número del producto que desea añadir al carrito (o 0 para finalizar):");
+                                        int opcion4 = sc.nextInt();
+                            
+                                        // Salir si el cliente no quiere añadir más productos
+                                        if (opcion4 == 0) {
+                                            System.out.println("Ha decidido no añadir más productos.");
+                                            return;
+                                        }
+                            
+                                        // Agregar la selección a la lista
+                                        seleccionProductos.add(opcion4);
+                                        Producto productoSeleccionado=productosUnicos.get(opcion4-1); //Se usa para eliminar el producto de la lista de productos disponibles al final de la iteracion. 
+                            
+                                        // Llamar al método de la tienda para procesar la selección.
+                                        carrito = tienda.agregarProductosParaCambio(precio, seleccionProductos,productosUnicos);
+                            
+                                        // Mostrar los productos seleccionados
+                                        System.out.println("\nResumen del cambio:");
+                                        subtotal = 0;
+                                        for (Producto p : carrito) {
+                                            System.out.println("- " + p.getNombre() + ": $" + p.getPrecio());
+                                            subtotal += p.getPrecio();
+                                        }
+                                        System.out.println("Subtotal actual: $" + subtotal);
+                            
+                                        // Verificar si el subtotal alcanzó el límite permitido
+                                        if (subtotal > precio) {
+                                            break;
+                                        }
+                            
+                                        // Preguntar si desea continuar
+                                        System.out.println("¿Desea continuar añadiendo productos? (1: Sí, 0: No)");
+                                        int continuar = sc.nextInt();
+                                        if (continuar==1){
+                                            Iterator<Producto> iterator = productosDisponibles.iterator();
+                                            while (iterator.hasNext()){
+                                                Producto p=iterator.next();
+                                                if (p.getId()==productoSeleccionado.getId()) {
+                                                    iterator.remove();
+                                            }
+                                          }
+                                          System.out.println("\nProductos disponibles para cambio:");
+
+                                        }  
+                                        else if (continuar == 0) {
+                                            System.out.println("Proceso finalizado. Su carrito de cambio está listo.");
+                                            break;
+                                        }
+                                    }
+
+                                    double excedente = Fabrica.calcularExcedente(carrito, precio); //Calcula el excedente que debe pagar el cliente (si debe hacerlo) por su cambio.
+                                    if (excedente > 0) {
+                                        System.out.println("El valor total de los productos seleccionados supera el precio del producto a cambiar.");
+                                        System.out.println("El excedente a pagar es de: $" + excedente);
+                                    } else {
+                                        System.out.println("El valor total de los productos seleccionados no supera el precio del producto a cambiar. Le recordamos que no se le devolverá el dinero restante.");
+                                    }
+
+                                    Cliente cliente=factura.getCliente();
+                                    cliente.cuentaBancaria.transferirDinero(excedente, Fabrica.cuentaBancaria); // Se transfiere el excedente de la cuenta del cliente a la cuenta de la fábrica.
+                                    cliente.removerProducto(producto); // Se remueve el producto de la lista de productos del cliente.
+                                    producto.setEstado(estadosProducto.DEVUELTO);
+                                    for (Producto p : carrito) {
+                                        cliente.listaProductos.add(p); // Se añaden los productos seleccionados por el cambio al cliente.
+                                        tienda.getListaProducto().remove(p); // Se eliminan los productos que el cliente seleccionó de la lista de la tienda 
+                                    }
+                                    System.out.println("Generando resumen final del cambio...");
+                            
+                                    // Mostrar resumen final del cambio
+                                    try {
+                                        Thread.sleep(2500);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                    System.out.println("\n----- Resumen final del cambio -----");
+                                    System.out.println("Usted ha cambiado un "+ producto.getNombre()+" por:");
+
+                                    for (Producto p : carrito) {
+                                        System.out.println(" - " + p.getNombre() + ": $" + p.getPrecio());
+                                    }
+                                    System.out.println("Total del carrito: $" + subtotal+"\nExcedente pagado: "+excedente);
+                                    System.out.println("---------------------------------------");
+                                    
+                                }
+                            }
+                                else{
+                                    System.out.println("Motivo de devolución inválido. Intente nuevamente.");
+                                }
+                            }
+                        } else {
+                            System.out.println("Opción inválida. Intente nuevamente.");
+                        }
+                    }
+                }  {
+                    System.out.println("Opción inválida. Intente nuevamente.");
+                }
+        
+    
 
     public static void abastecerTiendas() {
         // Implementar la funcionalidad de abastecer tiendas
@@ -77,238 +331,8 @@ public class Main {
     public static void estadisticas() {
         // Implementar la funcionalidad de estadísticas
         uiMain.uiEstadistica.bienvenida();
+        uiMain.uiEstadistica.asignarFecha();
         uiMain.uiEstadistica.mostrar();
     }
-
-    // Crear cuentas bancarias
-    static CuentaBancaria cuentaFabrica = new CuentaBancaria(9999999, 1000000000);
-    static CuentaBancaria cuentaVendedor1 = new CuentaBancaria(56932, 100);
-    static CuentaBancaria cuentaVendedor2 = new CuentaBancaria(45728, 200);
-    static CuentaBancaria cuentaVendedor3 = new CuentaBancaria(95687, 200);
-
-    // Crear vendedores
-    static Vendedor vendedor1 = new Vendedor("Maria Beatriz", 57793, 20, cuentaVendedor1);
-    static Vendedor vendedor2 = new Vendedor("Adriana Alexia Putellas", 89235, 21, cuentaVendedor2);
-    static Vendedor vendedor3 = new Vendedor("Lionel Andres Messi", 14720, 22, cuentaVendedor3);
-
-    // Crear tiendas
-    static Tienda tienda1 = new Tienda("Hefesto Construcciones", vendedor1, cuentaFabrica,100,100,100);
-    static Tienda tienda2 = new Tienda("Consumibles de la Abuela Tata", vendedor2, cuentaFabrica,100,100,100);
-    static Tienda tienda3 = new Tienda("Miss Músculo Aseo", vendedor3, cuentaFabrica, 100, 100,100);
-
-    // Crear productos para cada tienda
-   
-    //tienda 1
-    static Producto producto1 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
-    static Producto producto2 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
-    static Producto producto3 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
-    static Producto producto4 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
-    static Producto producto5 = new Producto("Cemento Gris", 50000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
-    
-    static Producto producto6 = new Producto("Cemento Blanco", 55000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
-    static Producto producto7 = new Producto("Cemento Blanco", 55000, estadosProducto.DISPONIBLE, "Material", "Construcción", 25.0);
-    
-    static Producto producto8 = new Producto("Adhesivo Cerámico", 20000, estadosProducto.DISPONIBLE, "Material", "Construcción", 5.0);
-    static Producto producto9 = new Producto("Adhesivo Cerámico", 20000, estadosProducto.DISPONIBLE, "Material", "Construcción", 5.0);
-    
-    static Producto producto10 = new Producto("Pintura Interior", 35000, estadosProducto.DISPONIBLE, "Material", "Construcción", 18.0);
-    static Producto producto11 = new Producto("Pintura Interior", 35000, estadosProducto.DISPONIBLE, "Material", "Construcción", 18.0);
-    
-    //tienda 2
-    static Producto producto12 = new Producto("Pan", 10000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-    static Producto producto13 = new Producto("Pan", 10000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-    static Producto producto14 = new Producto("Pan", 10000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-
-    static Producto producto15 = new Producto("Leche Entera", 8000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 2.0);
-    static Producto producto16 = new Producto("Leche Entera", 8000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 2.0);
-    static Producto producto17 = new Producto("Leche Entera", 8000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 2.0);
-
-    static Producto producto18 = new Producto("Arroz", 5000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-    static Producto producto19 = new Producto("Arroz", 5000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-    static Producto producto20 = new Producto("Arroz", 5000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-
-    static Producto producto21 = new Producto("Galletas", 12000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.5);
-    static Producto producto22 = new Producto("Galletas", 12000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.5);
-    static Producto producto23 = new Producto("Galletas", 12000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.5);
-
-    static Producto producto24 = new Producto("Mantequilla", 7000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.25);
-    static Producto producto25 = new Producto("Mantequilla", 7000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.25);
-    static Producto producto26 = new Producto("Mantequilla", 7000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 0.25);
-
-    static Producto producto27 = new Producto("Queso", 15000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-    static Producto producto28 = new Producto("Queso", 15000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-    static Producto producto29 = new Producto("Queso", 15000, estadosProducto.DISPONIBLE, "Consumible", "Alimentos", 1.0);
-
-    //tienda 3
-    static Producto producto30 = new Producto("Detergente", 15000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 3.0);
-    static Producto producto31 = new Producto("Detergente", 15000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 3.0);
-    static Producto producto32 = new Producto("Detergente", 15000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 3.0);
-
-    static Producto producto33 = new Producto("Esponja", 5000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.5);
-    static Producto producto34 = new Producto("Esponja", 5000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.5);
-    static Producto producto35 = new Producto("Esponja", 5000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.5);
-
-    static Producto producto36 = new Producto("Limpiador", 12000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
-    static Producto producto37 = new Producto("Limpiador", 12000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
-    static Producto producto38 = new Producto("Limpiador", 12000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
-
-    static Producto producto39 = new Producto("Jabón Líquido", 10000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 1.5);
-    static Producto producto40 = new Producto("Jabón Líquido", 10000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 1.5);
-    static Producto producto41 = new Producto("Jabón Líquido", 10000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 1.5);
-
-    static Producto producto42 = new Producto("Trapeador", 25000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.8);
-    static Producto producto43 = new Producto("Trapeador", 25000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.8);
-    static Producto producto44 = new Producto("Trapeador", 25000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 0.8);
-
-    static Producto producto45 = new Producto("Cloro", 8000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
-    static Producto producto46 = new Producto("Cloro", 8000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
-    static Producto producto47 = new Producto("Cloro", 8000, estadosProducto.DISPONIBLE, "Limpieza", "Hogar", 2.0);
-
-    static ArrayList<Producto> listaProductosTienda1 = new ArrayList<>(Arrays.asList(
-        producto1, producto2, producto3, producto4, producto5,  // Cemento Gris
-        producto6, producto7,                                 // Cemento Blanco
-        producto8, producto9,                                 // Adhesivo Cerámico
-        producto10, producto11                                // Pintura Interior
-));
-    static ArrayList<Producto> listaProductosTienda2 = new ArrayList<>(Arrays.asList(
-        producto12, producto13, producto14, // Pan
-        producto15, producto16, producto17, // Leche Entera
-        producto18, producto19, producto20, // Arroz
-        producto21, producto22, producto23, // Galletas
-        producto24, producto25, producto26, // Mantequilla
-        producto27, producto28, producto29  // Queso
-    ));
-    static ArrayList<Producto> listaProductosTienda3 = new ArrayList<>(Arrays.asList(
-        producto30, producto31, producto32, // Detergente
-        producto33, producto34, producto35, // Esponja
-        producto36, producto37, producto38, // Limpiador
-        producto39, producto40, producto41, // Jabón Líquido
-        producto42, producto43, producto44, // Trapeador
-        producto45, producto46, producto47  // Cloro
-));
-
-
-
-    static {
-        tienda1.getListaProducto().addAll(listaProductosTienda1);
-        tienda2.getListaProducto().addAll(listaProductosTienda2);
-        tienda3.getListaProducto().addAll(listaProductosTienda3);
-    }
-
-    // Crear lista de tiendas para la fábrica
-    static ArrayList<Tienda> listaTiendas = new ArrayList<>(Arrays.asList(tienda1, tienda2, tienda3));
-
-    // Crear lista de productos disponibles para la fábrica
-    static ArrayList<Producto> productosFabrica = new ArrayList<>(Arrays.asList(producto1, producto2, producto3, producto4, producto5, producto6, producto7, producto8, producto9));
-
-    // Crear operario
-    static CuentaBancaria cuentaOperario = new CuentaBancaria(55555, 100000);
-    static Operario operario1 = new Operario("Jaime", 97890, 20, cuentaOperario, null);
-
-    // Crear fábrica
-    static Fabrica fabrica = new Fabrica("F001", "Fábrica Principal", "Calle Principal 123", cuentaFabrica, productosFabrica, listaTiendas,operario1);
-
-        // Crear cuentas bancarias para los conductores
-        static CuentaBancaria cuentaConductor1 = new CuentaBancaria(12345, 5000);
-        static CuentaBancaria cuentaConductor2 = new CuentaBancaria(23456, 6000);
-        static CuentaBancaria cuentaConductor3 = new CuentaBancaria(34567, 7000);
-        static CuentaBancaria cuentaConductor4 = new CuentaBancaria(45678, 8000);
-        static CuentaBancaria cuentaConductor5 = new CuentaBancaria(56789, 9000);
-        static CuentaBancaria cuentaConductor6 = new CuentaBancaria(67890, 10000);
-        static CuentaBancaria cuentaConductor7 = new CuentaBancaria(78901, 11000);
-        static CuentaBancaria cuentaConductor8 = new CuentaBancaria(89012, 12000);
-        static CuentaBancaria cuentaConductor9 = new CuentaBancaria(90123, 13000);
-        static CuentaBancaria cuentaConductor10 = new CuentaBancaria(123456, 14000);
-
-    // Crear transportes
-        static Transporte transporte1 = new Transporte(TipoTransporte.CAMION, 15000, 16329);
-        static Transporte transporte2 = new Transporte(TipoTransporte.AVION, 30000, 64000);
-        static Transporte transporte3 = new Transporte(TipoTransporte.AUTOMOVIL, 9000, 500);
-        static Transporte transporte4 = new Transporte(TipoTransporte.CAMIONETA, 12000, 650);
-        static Transporte transporte5 = new Transporte(TipoTransporte.BICICLETA, 5000, 35);
-        static Transporte transporte6 = new Transporte(TipoTransporte.PATINES, 3000, 20);
-        static Transporte transporte7 = new Transporte(TipoTransporte.BARCO, 20000, 3356835);
-        static Transporte transporte8 = new Transporte(TipoTransporte.HELICOPTERO, 70000, 29000);
-        static Transporte transporte9 = new Transporte(TipoTransporte.TREN, 20000, 30000);
-        static Transporte transporte10 = new Transporte(TipoTransporte.CAMINANDO, 5000, 15);
-
-    // Crear conductores
-        static Conductor conductor1 = new Conductor("Conductor 1", 11111, 30, cuentaConductor1, fabrica, transporte1);
-        static Conductor conductor2 = new Conductor("Conductor 2", 22222, 31, cuentaConductor2, fabrica, transporte2);
-        static Conductor conductor3 = new Conductor("Conductor 3", 33333, 32, cuentaConductor3, fabrica, transporte3);
-        static Conductor conductor4 = new Conductor("Conductor 4", 44444, 33, cuentaConductor4, fabrica, transporte4);
-        static Conductor conductor5 = new Conductor("Conductor 5", 55555, 34, cuentaConductor5, fabrica, transporte5);
-        static Conductor conductor6 = new Conductor("Conductor 6", 66666, 35, cuentaConductor6, fabrica, transporte6);
-        static Conductor conductor7 = new Conductor("Conductor 7", 77777, 36, cuentaConductor7, fabrica, transporte7);
-        static Conductor conductor8 = new Conductor("Conductor 8", 88888, 37, cuentaConductor8, fabrica, transporte8);
-        static Conductor conductor9 = new Conductor("Conductor 9", 99999, 38, cuentaConductor9, fabrica, transporte9);
-        static Conductor conductor10 = new Conductor("Conductor 10", 101010, 39, cuentaConductor10, fabrica, transporte10);
-
-        // Crear lista de conductores
-        static ArrayList<Conductor> listaConductores = new ArrayList<>();
-        static {
-            listaConductores.add(conductor1);
-            listaConductores.add(conductor2);
-            listaConductores.add(conductor3);
-            listaConductores.add(conductor4);
-            listaConductores.add(conductor5);
-            listaConductores.add(conductor6);
-            listaConductores.add(conductor7);
-            listaConductores.add(conductor8);
-            listaConductores.add(conductor9);
-            listaConductores.add(conductor10);
-        }
-    // Instancias estáticas de las cuentas bancarias
-    public static CuentaBancaria cuentaCliente1 = new CuentaBancaria(10001, 5000);
-    public static CuentaBancaria cuentaCliente2 = new CuentaBancaria(10002, 15000);
-    public static CuentaBancaria cuentaCliente3 = new CuentaBancaria(10003, 8000);
-    public static CuentaBancaria cuentaCliente4 = new CuentaBancaria(10004, 2000);
-    public static CuentaBancaria cuentaCliente5 = new CuentaBancaria(10005, 12000);
-
-    // Instancias estáticas de los clientes
-    public static Cliente cliente1 = new Cliente("Juan Pérez", 30, 987654321, cuentaCliente1);
-    public static Cliente cliente2 = new Cliente("María López", 25, 123456789, cuentaCliente2);
-    public static Cliente cliente3 = new Cliente("Carlos García", 40, 567890123, cuentaCliente3);
-    public static Cliente cliente4 = new Cliente("Ana Rodríguez", 35, 654321987, cuentaCliente4);
-    public static Cliente cliente5 = new Cliente("Luis Fernández", 28, 192837465, cuentaCliente5);
-
-
-    //Instancias estáticas de las metas para operario
-    public static Meta metaOperario1 = new Meta("Facil",5, 10000);
-    public static Meta metaOperario2 = new Meta("Normal", 10, 17000);
-    public static Meta metaOperario3 = new Meta("Dificil", 15, 25000);
-    public static Meta metaOperario4 = new Meta("Muy Dificil", 20, 35000);
-
-    //Instancias estáticas de las metas para Vendedor
-    public static Meta metaVendedor1 = new Meta("Facil",5, 9000);
-    public static Meta metaVendedor2= new Meta("Normal", 10, 15000);
-    public static Meta metaVendedor3 = new Meta("Dificil", 15, 22000);
-    public static Meta metaVendedor4 = new Meta("Muy Dificil", 20, 30000);
-
-    //Instancias estáticas de las metas para operario
-    public static Meta metaConductor1 = new Meta("Facil",25, 8000);
-    public static Meta metaConductor2= new Meta("Normal", 40, 13500);
-    public static Meta metaConductor3 = new Meta("Dificil", 55, 21000);
-    public static Meta metaConductor4 = new Meta("Muy Dificil", 70, 28500);
-
-    static{
-        operario1.setMetaOperario(metaOperario1);
-        operario1.setMetaOperario(metaOperario2);
-        operario1.setMetaOperario(metaOperario3);
-        operario1.setMetaOperario(metaOperario4);
-
-        for(Conductor i: Conductor.getListaConductores()){
-            i.setMetaConductor(metaConductor1);
-            i.setMetaConductor(metaConductor2);
-            i.setMetaConductor(metaConductor3);
-            i.setMetaConductor(metaConductor4);
-        }
-
-        for(Vendedor i : Vendedor.getListaVendedores()){
-            i.setMetaVendedor(metaVendedor1);
-            i.setMetaVendedor(metaVendedor2);
-            i.setMetaVendedor(metaVendedor3);
-            i.setMetaVendedor(metaVendedor4);
-        }
-    }
 }
+

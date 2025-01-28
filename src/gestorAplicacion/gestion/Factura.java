@@ -11,7 +11,7 @@ import produccion.Transporte;
 import produccion.estadosProducto;
 
 public class Factura implements Serializable{
-    private static final long serialVersionUID = 3L;
+    private static final long serialVersionUID = 2L;
 
     //Atributos
     private Tienda tienda; 
@@ -21,7 +21,7 @@ public class Factura implements Serializable{
     private int id;
     private int precioEnvio;
     private double total; //Precio total de la factura. 
-    private ArrayList<Producto> listaProductos=new ArrayList<>();  
+    private ArrayList<Producto> listaProductos;
     private static int totalCreadas=0; 
     public static ArrayList<Factura> listaFacturas=new ArrayList<>(); 
 
@@ -151,7 +151,7 @@ public static LocalDate getFechaMin(){
 public static ArrayList<Factura> getFacturasEntreFechas(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<Factura> facturas = new ArrayList<>();
   for (Factura f: listaFacturas) {
-    if (f.getFecha().isAfter(fecha1) && f.getFecha().isBefore(fecha2)) {
+    if (f.getFecha().isAfter(fecha1) && f.getFecha().isBefore(fecha2) || f.getFecha().isEqual(fecha1) || f.getFecha().isEqual(fecha2)) {
       facturas.add(f);
     }
   }
@@ -239,64 +239,85 @@ public static double promedioGanancias(LocalDate fecha1, LocalDate fecha2) {
 //Obtiene el aumento porcentual de las ganancias de las facturas entre dos fechas
 public static double aumentoPorcentual(LocalDate fecha1, LocalDate fecha2) {
   double ganancias1 = gananciasTotales(fecha1, fecha2);
-  double ganancias2 = gananciasTotales();
+  double ganancias2 = gananciasTotales(Factura.getFechaMin(), Factura.getFechaMax());
   return ((ganancias2 - ganancias1) / ganancias1) * 100;
-}
-
-
-//Funcionalidad a la que pertenece: Estadistica
-//Obtiene el producto mas comun de una lista de productos
-public static Object masComun(ArrayList<Object> obj) {
-  Object masComun = obj.get(0);
-  int max = 0;
-  for (Object p: obj) {
-    int count = 0;
-    for (Object p2: obj) {
-      if (p.equals(p2)) {
-        count++;
-      }
-    }
-    if (count > max) {
-      max = count;
-      masComun = p;
-    }
-  }
-  return masComun;
 }
 
 //Funcionalidad a la que pertenece: Estadistica
 //Obtiene la moda de una lista de productos
-public static Object modaProductos(LocalDate fecha1, LocalDate fecha2) {
+public static String modaProductos(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<Factura> facturas = getFacturasEntreFechas(fecha1, fecha2);
-  ArrayList<Object> productos = new ArrayList<>();
+  ArrayList<String> productos = new ArrayList<>();
   for (Factura f: facturas) {
     for (Producto p: f.getListaProductos()) {
-      productos.add(p);
+      productos.add(p.getNombre());
     }
   }
-  return masComun(productos);
+  int maxCount = 0;
+  String maxStr = "";
+  for (String s: productos) {
+    int count = 0;
+    for (String s2: productos) {
+      if (s.equals(s2)) {
+        count++;
+      }
+    }
+    if (count > maxCount) {
+      maxCount = count;
+      maxStr = s;
+    }
+  }
+  return maxStr;
 }
 
 //Funcionalidad a la que pertenece: Estadistica
 //Obtiene la moda de una lista de clientes
 public static Object modaClientes(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<Factura> facturas = getFacturasEntreFechas(fecha1, fecha2);
-  ArrayList<Object> clientes = new ArrayList<>();
+  ArrayList<String> clientes = new ArrayList<>();
   for (Factura f: facturas) {
-    clientes.add(f.getCliente());
+    clientes.add(f.getCliente().getNombre());
   }
-  return masComun(clientes);
+  int maxCount = 0;
+  String maxStr = "";
+  for (String s: clientes) {
+    int count = 0;
+    for (String s2: clientes) {
+      if (s.equals(s2)) {
+        count++;
+      }
+    }
+    if (count > maxCount) {
+      maxCount = count;
+      maxStr = s;
+    }
+  }
+  return maxStr;
 }
 
 //Funcionalidad a la que pertenece: Estadistica
 //Obtiene la moda de una lista de tiendas
 public static Object modaTiendas(LocalDate fecha1, LocalDate fecha2) {
   ArrayList<Factura> facturas = getFacturasEntreFechas(fecha1, fecha2);
-  ArrayList<Object> tiendas = new ArrayList<>();
+  ArrayList<String> tiendas = new ArrayList<>();
   for (Factura f: facturas) {
-    tiendas.add(f.getTienda());
+    tiendas.add(f.getTienda().getNombre());
   }
-  return masComun(tiendas);
+  int maxCount = 0;
+  String maxStr = "";
+  for (String s: tiendas) {
+    int count = 0;
+    for (String s2: tiendas) {
+      if (s.equals(s2)) {
+        count++;
+      }
+    }
+    if (count > maxCount) {
+      maxCount = count;
+      maxStr = s;
+    }
+  }
+  return maxStr;
 }
 
 @Override

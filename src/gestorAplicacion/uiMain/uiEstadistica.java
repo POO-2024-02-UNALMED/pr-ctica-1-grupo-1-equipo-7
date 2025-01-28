@@ -1,9 +1,9 @@
 package uiMain;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
-//import java.util.ArrayList;
 import java.util.Scanner;
 
 import gestion.Factura;
@@ -15,6 +15,8 @@ public class uiEstadistica {
     private static Scanner scanner = new Scanner(System.in);
     private static LocalDate fechaInicio;
     private static LocalDate fechaFin;
+    private static DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static int num = 0;
 
     public static void bienvenida() {
         System.out.println("=== Bienvenido al módulo de estadísticas ===");
@@ -22,8 +24,14 @@ public class uiEstadistica {
     }
 
     public static void asignarFecha() {
-
-        System.out.println("Usar fechas por defecto? (s/n): ");
+        
+        // Convertir la fecha a String con el nuevo formato
+        String fechaMinFormateada = Factura.getFechaMin().format(formato);
+        String fechaMaxFormateada = Factura.getFechaMax().format(formato);
+        
+        System.out.println("La fecha mínima es: " + fechaMinFormateada);
+        System.out.println("La fecha máxima es: " + fechaMaxFormateada);
+        System.out.println("Usar fechas por defecto (las mostradas anteriormente)? (s/n): ");
 
         String respuesta = scanner.nextLine();
 
@@ -32,37 +40,64 @@ public class uiEstadistica {
             fechaFin = Factura.getFechaMax();
             return;
             
-        }else {
-            System.out.println("Ingrese la fecha de inicio (dd/mm/yyyy): ");
-            String SFechaInicio = scanner.nextLine();
-            try {
+        }else if (respuesta.equalsIgnoreCase("n")) {
+            while (true) {
+                System.out.println("Ingrese la fecha de inicio (dd/mm/yyyy): ");
+                String SFechaInicio = scanner.nextLine();
                 fechaInicio = Factura.convertirStrADate(SFechaInicio);
-            } catch (DateTimeParseException e) {
-                System.out.println("Fecha inválida. Intente de nuevo.");
-                asignarFecha();
+                try {
+                    if (SFechaInicio.equals("0")) {
+                        System.out.println("Saliendo...");
+                        break;
+                    }else
+                    if (fechaInicio.isBefore(Factura.getFechaMin()) || fechaInicio.isAfter(Factura.getFechaMax())  || fechaInicio.isAfter(fechaFin)) {
+                        System.out.println("Fecha inválida. Intente de nuevo.");
+                    } else {
+                        break;
+                    }
+                } catch (DateTimeParseException e) {
+                    System.out.println("Formato inválido. Intente de nuevo.");
+                }
             }
-
-            System.out.println("Ingrese la fecha de fin (dd/mm/yyyy): ");
-            String SFechaFin = scanner.nextLine();
-            try {
+            
+            while (true) {
+                System.out.println("Ingrese la fecha de fin (dd/mm/yyyy): ");
+                String SFechaFin = scanner.nextLine();
                 fechaFin = Factura.convertirStrADate(SFechaFin);
-            } catch (DateTimeParseException e) {
-                System.out.println("Fecha inválida. Intente de nuevo.");
-                asignarFecha();
+                try {
+                    if (SFechaFin.equals("0")) {
+                        System.out.println("Saliendo...");
+                        break;
+                   
+                    } else
+                    if (fechaFin.isBefore(Factura.getFechaMin()) || fechaFin.isAfter(Factura.getFechaMax()) || fechaFin.isBefore(fechaInicio)) {
+                        System.out.println("Fecha inválida. Intente de nuevo.");
+                    } else {
+                        break;
+                    }
+                } catch (DateTimeParseException e) {
+                    System.out.println("Formato inválido. Intente de nuevo.");
+                }
             }
+        } else {
+            System.out.println("Respuesta no válida. Intente de nuevo.");
+            asignarFecha();
         }
     }
 
     private static void mostrarMenu() {
-        asignarFecha();
         System.out.println("=== Opciones ===");
-        System.out.println("1. Mostrar ganancias discretas entre fechas");
-        System.out.println("2. Mostrar ganancias totales entre fechas");
-        System.out.println("3. Mostrar promedio de ganancias por día entre fechas");
-        System.out.println("4. Mostrar aumento porcentual de ganancias entre fechas");
-        System.out.println("5. Mostrar moda de productos entre fechas");
-        System.out.println("6. Salir");
+        System.out.println("1. Mostrar ganancias discretas");
+        System.out.println("2. Mostrar ganancias totales");
+        System.out.println("3. Mostrar promedio de ganancias por día");
+        System.out.println("4. Mostrar aumento porcentual de ganancias");
+        System.out.println("5. Mostrar moda de productos, tiendas y clientes");
+        if (num > 0) {
+            System.out.println("6. Cambiar fechas");
+        }
+        System.out.println("0. Salir");
         System.out.print("Seleccione una opción: ");
+        num++;
     }
 
     public static void mostrar() {
@@ -75,12 +110,13 @@ public class uiEstadistica {
             switch (opcion) {
                 case 1:
                     System.out.println("Las ganancias discretas son: ");
-                    for (Object f : Factura.gananciasDiscretas(fechaInicio, fechaFin)) {
-                        for (ArrayList o : (ArrayList<ArrayList>) f) {
-                            System.out.println(o.get(0));
-                            System.out.println(o.get(1)+ "\n");
-                        }
+                    for (Object g : Factura.gananciasDiscretas(fechaInicio, fechaFin)) {
+                        ArrayList<Object> ganancias = (ArrayList<Object>) g;
+                        LocalDate f = (LocalDate) ganancias.get(0);
+                        String fecha = f.format(formato);
+                        System.out.println("Fecha: " + fecha + " Ganancia: " + ganancias.get(1));
                     }
+                    
                     break;
                 case 2:
                     System.out.println("La ganancia total es:");
@@ -103,20 +139,23 @@ public class uiEstadistica {
                     System.out.println(Factura.modaClientes(fechaInicio, fechaFin));
                     break;
                 case 6:
+                    asignarFecha();
+                    break;
+                case 0:
                     System.out.println("Saliendo...");
                     break;
                 default:
                     System.out.println("Opción no válida. Intente de nuevo.");
             }
 
-            while (true) {
+            while (opcion != 0) {
                 System.out.println("Desea realizar otra operación? (s/n): ");
                 String respuesta = scanner.nextLine().toLowerCase();
                 if (respuesta.equals("s")) {
                     break;
                 } else if (respuesta.equals("n")) {
                     System.out.println("Saliendo...");
-                    opcion = 6;
+                    opcion = 0;
                     break;
                 } else {
                     System.out.println("Respuesta no válida. Intente de nuevo.");
@@ -124,7 +163,7 @@ public class uiEstadistica {
                 
             }
 
-        } while (opcion != 6);
+        } while (opcion != 0);
     }
 
     

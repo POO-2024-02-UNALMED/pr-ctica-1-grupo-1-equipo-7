@@ -1,6 +1,7 @@
 package produccion;
 
 import java.io.Serializable;
+import gestion.Moda;
 import gestion.Vendedor;
 import gestion.Cliente;
 import gestion.CuentaBancaria;
@@ -10,14 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.time.LocalDate;
 
-public class Tienda implements Serializable{
+public class Tienda implements Moda, Serializable{
     private static final long serialVersionUID = 8L;
     
     //atributos
     private String nombre;
     private Vendedor vendedor;
     private CuentaBancaria cuentaBancaria;
-    private ArrayList<Producto> productosDevueltos;
     private static int numTiendas = 0; 
     private ArrayList<Producto> listaProducto; //Cada tienda tiene una lista de productos DIFERENTES, este atributo NO puede ser static. 
     private ArrayList<Object[]> productosPorCategoria = new ArrayList<>(); // Lista de [Producto, Categoria]
@@ -76,14 +76,6 @@ public void setCuentaBancaria(CuentaBancaria cuentaBancaria) {
     this.cuentaBancaria = cuentaBancaria;
 }
 
-// Atributo productosDevueltos
-public ArrayList<Producto> getProductosDevueltos() {
-    return productosDevueltos;
-}
-
-public void setProductosDevueltos(ArrayList<Producto> productosDevueltos) {
-    this.productosDevueltos = productosDevueltos;
-}
 
 // Atributo numTiendas
 public int getNumTiendas() {
@@ -272,10 +264,8 @@ public int getCantidadActualPorCategoria(String categoria) {
 }
 //Funcionalidad a la que pertenece: Devoluciones
 public Cliente devolverProducto(Factura factura, Producto producto){
-    productosDevueltos.add(producto);
-    
+    listaProducto.add(producto);
     producto.setEstado(estadosProducto.DEVUELTO);
-    productosDevueltos.add(producto);
     return factura.getCliente();
 }
 
@@ -297,17 +287,14 @@ public Cliente devolverProducto(Factura factura, Producto producto){
             continue; // Ignorar índices inválidos
         }
 
-        Producto productoSeleccionado = productosDisponibles.get(indice - 1); //Probar con indice normal. 
+        Producto productoSeleccionado = productosDisponibles.get(indice - 1);
 
-        // Evitar agregar productos duplicados
-        if (!productosSeleccionados.contains(productoSeleccionado)) {
-            productosSeleccionados.add(productoSeleccionado);
-            subtotal += productoSeleccionado.getPrecio();
-        }
+        // Agregar el producto al carrito sin verificar duplicados
+        productosSeleccionados.add(productoSeleccionado);
+        subtotal += productoSeleccionado.getPrecio();
 
-        // Verificar si el subtotal supera el precio permitido después de añadir al menos un producto
+        // Verificar si el subtotal supera el precio permitido
         if (subtotal > precioCambio) {
-            System.out.println("El subtotal ha excedido el valor límite después de añadir: " + productoSeleccionado.getNombre());
             break;
         }
     }
@@ -315,13 +302,13 @@ public Cliente devolverProducto(Factura factura, Producto producto){
     return productosSeleccionados;
 }
 
+
     
     
 //Funcionalidad a la que pertencece: Devoluciones 
 
 //Método que se encarga de filtrar los productos que puede seleccionar el usuario para cambiar
-//Devuelve un ArrayList con los productos disponibles para la venta de la tienda, menos el producto que desea cambiar y mostrando primero los productos
-//de la misma categoria que el que se desea cambiar. 
+//Devuelve un ArrayList con los productos disponibles para la venta de la tienda, menos el producto que desea cambiar.
 
 public ArrayList<Producto> mostrarProductos(Producto producto) {
     ArrayList<Producto> productosParaMostrar=new ArrayList<>();
@@ -346,6 +333,7 @@ public String cantidadProductos() {
     StringBuilder resultado = new StringBuilder();
 
     for (Producto producto : listaProducto) {
+    
         if (!nombresContados.contains(producto.getNombre())) {
             int cantidad = 0;
             for (Producto p : listaProducto) {
@@ -360,6 +348,7 @@ public String cantidadProductos() {
                      .append(" unidades\n");
         }
     }
+
 
     return resultado.toString(); // Retorna el resultado 
 }
@@ -446,6 +435,11 @@ public String enviarPedido(ArrayList<Producto> listaProductosPedidos, Transporte
     Factura factura = new Factura(this, clienteSeleccionado, transporteSeleccionado, listaProductosPedidos,precioEnvio, dia);
     return factura.toString();
 }
+
+public String toString(){
+    return "Nombre: " + nombre;
+}
+
 }
 
 

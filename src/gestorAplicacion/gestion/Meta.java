@@ -3,7 +3,6 @@ package gestion;
 import java.io.Serializable;
 
 public class Meta implements Serializable{
-    private static final long serialVersionUID = 4L;
 
     //Atributos
     private String nivelDeDificultad;
@@ -19,7 +18,7 @@ public class Meta implements Serializable{
     }
 
     public boolean cumpleMeta(double indiceDeTrabajo){
-        if(this.getIndice() < indiceDeTrabajo){
+        if(this.getIndice() <= indiceDeTrabajo){
             return true;
         }else{
             return false;
