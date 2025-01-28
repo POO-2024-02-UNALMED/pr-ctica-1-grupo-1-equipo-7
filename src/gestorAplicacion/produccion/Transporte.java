@@ -12,7 +12,7 @@ public class Transporte implements Serializable {
     private double capacidad;
     private double costo;
     private Conductor conductor;
-    private ArrayList<TipoTransporte> listaTransportes;
+    private static ArrayList<Transporte> listaTransportes;
     private Tienda tienda;
     private ArrayList<Producto> listaDeProductos;
     final static int montoEnvioGratis=100000;
@@ -21,7 +21,7 @@ public class Transporte implements Serializable {
         this.tipoTransporte = tipoTransporte;
         this.capacidad = capacidad;
         this.costo = costo;
-        this.listaTransportes = new ArrayList<>();
+        Transporte.listaTransportes = new ArrayList<>();
         this.listaDeProductos = new ArrayList<>();
     }
 
@@ -65,12 +65,12 @@ public class Transporte implements Serializable {
     }
 
     // Para el atributo listaTransportes
-    public ArrayList<TipoTransporte> getListaTransportes() {
-        return this.listaTransportes;
+    public static ArrayList<Transporte> getListaTransportes() {
+        return Transporte.listaTransportes;
     }
 
-    public void setListaTransportes(ArrayList<TipoTransporte> listaTransportes) { 
-        this.listaTransportes = listaTransportes;
+    public static void setListaTransportes(ArrayList<Transporte> listaTransportes) { 
+        Transporte.listaTransportes = listaTransportes;
     }
     
     // Para el atributo tienda

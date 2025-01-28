@@ -73,11 +73,11 @@ public class Deserializador {
     }
 
 
-    public static Transporte cargarTransporte() throws IOException, ClassNotFoundException{
+    public static ArrayList<Transporte> cargarTransportes() throws IOException, ClassNotFoundException{
 
-        Transporte transporte = (Transporte) deserializar("src/baseDatos/temp/transporte.txt");
+        ArrayList<Transporte> listaTransportes = (ArrayList<Transporte>) deserializar("src/baseDatos/temp/transporte.txt");
 
-        return transporte;
+        return listaTransportes;
     }
 
 
