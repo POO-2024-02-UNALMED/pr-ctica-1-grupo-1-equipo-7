@@ -43,7 +43,7 @@ public class Load {
 
     }
 
-    /*public static void cargarPorDefecto(){
+    public static void cargarPorDefecto(){
 
       // Crear cuentas bancarias
      CuentaBancaria cuentaFabrica = new CuentaBancaria(9999999, 1000000000);
@@ -350,7 +350,8 @@ public class Load {
         conductor10.setIndiceMeta(18);
 
     }
-*/
+
+    }
 
     public static void cargar(){
       try{
