@@ -22,10 +22,12 @@ public class CuentaBancaria implements Serializable{
 
     
     //metodos
+    //añade dinero a la cuenta de banco hace parte de la funcionalidad pago trabajdores
     public void añadirDinero(double valor){
         this.saldo += valor;
     }
 
+    //Quita dinero a la cuenta de banco hace parte de la funcionalidad pago trabajdores
     public void descontarDinero(double valor){
         this.saldo -= valor;
     }
@@ -35,6 +37,9 @@ public class CuentaBancaria implements Serializable{
         cuentaDestino.añadirDinero(valor);
     }
 
+    /*Metodo de la funcion Pago trabajadores donde se ingresa una persona como parametro 
+     * y se verifica que tipo de trabajdor es para asi calcular elpago potencial con base al número de veces que se haya trabajado
+     */
     public int calcularPago(Persona persona) {
         int saldoTrabajo;
         if (persona instanceof Operario) {
