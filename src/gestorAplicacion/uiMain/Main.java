@@ -213,6 +213,7 @@ public class Main {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
+                            System.out.println("\nPor favor, seleccione otra tienda para continuar.\n");
                             break;
                         } 
                         else {
