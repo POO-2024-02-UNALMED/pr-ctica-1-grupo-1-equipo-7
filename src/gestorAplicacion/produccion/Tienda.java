@@ -295,7 +295,6 @@ public Cliente devolverProducto(Factura factura, Producto producto){
 
         // Verificar si el subtotal supera el precio permitido
         if (subtotal > precioCambio) {
-            System.out.println("El subtotal ha excedido el valor límite después de añadir: " + productoSeleccionado.getNombre());
             break;
         }
     }
