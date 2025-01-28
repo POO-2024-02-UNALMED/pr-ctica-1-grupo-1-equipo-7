@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import produccion.Fabrica;
 
 public class Conductor extends Persona {
-    private static ArrayList<Conductor> listaConductores = new ArrayList<>();//me genera error en un metodo ya que una lista de conductos no es una lista de conductores V:
+    private static ArrayList<Conductor> listaConductores = new ArrayList<>();
     private Transporte transporte;
     private Fabrica fabrica;
     private ArrayList<Meta> metaConductor;
