@@ -10,7 +10,7 @@ import produccion.*;
 
 public class Load {
     
-     public static Fabrica fabricaa;
+     public static Fabrica fabrica;
      public static ArrayList<Producto> catalogo = new ArrayList<Producto>();
      public static ArrayList<Tienda> listaTiendas = new ArrayList<Tienda>();
      public static ArrayList<Cliente> listaClientes = new ArrayList<Cliente>();
@@ -179,7 +179,7 @@ public class Load {
      Operario operario1 = new Operario("Jaime", 97890, 20, cuentaOperario, null);
 
     // Crear fábrica
-     Fabrica fabrica = new Fabrica("F001", "Fábrica Principal", "Calle Principal 123", cuentaFabrica, catalogo, listaTiendas, operario1);
+     Load.fabrica = new Fabrica("F001", "Fábrica Principal", "Calle Principal 123", cuentaFabrica, catalogo, listaTiendas, operario1);
 
         // Crear cuentas bancarias para los conductores
          CuentaBancaria cuentaConductor1 = new CuentaBancaria(12345, 5000);
@@ -358,7 +358,7 @@ public class Load {
 
        listaTiendas =  Deserializador.cargarTiendas();
        catalogo = Deserializador.cargarCatalogo();
-       fabricaa = Deserializador.cargarFabrica();
+       fabrica = Deserializador.cargarFabrica();
        listaClientes = Deserializador.cargarClientes();
        listaTransportes = Deserializador.cargarTransportes();
        listaVendedores =  Deserializador.cargarVendedores();
@@ -381,6 +381,7 @@ public class Load {
     public static void main(String[] args) {
         cargar();
         System.out.println("Carga exitosa");
-        System.out.println(Fabrica.getListaTiendas().get(0).getListaProducto());
+        System.out.println(fabrica.getNombre());
+        //System.out.println(listaConductores.get(0).getFabrica().getNombre());
     }
 }

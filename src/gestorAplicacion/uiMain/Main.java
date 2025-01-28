@@ -27,6 +27,7 @@ public class Main {
     public static void main(String[] args) {
 
         Load.cargar();
+
         Scanner sc = new Scanner(System.in);
         
         boolean salir = false;

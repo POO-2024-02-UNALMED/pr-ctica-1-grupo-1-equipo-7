@@ -33,7 +33,7 @@ public class Serializador {
 
         public static void guardarFabrica(){
 
-            serializar(Load.fabricaa, "src/baseDatos/temp/fabrica.txt");
+            serializar(Load.fabrica, "src/baseDatos/temp/fabrica.txt");
         }
 
         public static void guardarCatalogo(){
