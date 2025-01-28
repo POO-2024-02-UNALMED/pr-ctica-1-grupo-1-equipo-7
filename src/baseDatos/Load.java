@@ -254,10 +254,11 @@ public class Load {
      LocalDate fecha = LocalDate.of(2024,10,2);
      LocalDate fecha2 = LocalDate.of(2024,10,5);
      LocalDate fecha3 = LocalDate.of(2024,10,8);
+     
 
-     Factura f1 =new Factura(tienda1, cliente1, transporte1, listaProductosTienda1, fecha);
-     Factura f2 =new Factura(tienda2, cliente2, transporte2, listaProductosTienda2, fecha2);
-     Factura f3 =new Factura(tienda2, cliente1, transporte3, listaProductosTienda3, fecha3);
+     Factura f1 =new Factura(tienda1, cliente1, transporte1, listaProductosTienda1,transporte1.getTipoTransporte().getPrecioEnvio(), fecha);
+     Factura f2 =new Factura(tienda2, cliente2, transporte2, listaProductosTienda2,transporte2.getTipoTransporte().getPrecioEnvio(), fecha2);
+     Factura f3 =new Factura(tienda2, cliente1, transporte3, listaProductosTienda3,transporte3.getTipoTransporte().getPrecioEnvio(),fecha3);
 
     {
         operario1.setMetaOperario(metaOperario1);
