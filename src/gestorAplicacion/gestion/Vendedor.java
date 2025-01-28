@@ -69,4 +69,7 @@ public class Vendedor extends Persona {
     public void aumentarCargaTrabajo(){
         this.cantidadTrabajo += 1;
     }
+    public void aumentarIndiceMeta(){
+        setIndiceMeta(getIndiceMeta()+1);;
+    }
 }

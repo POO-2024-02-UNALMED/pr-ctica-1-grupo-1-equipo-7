@@ -381,6 +381,11 @@ public interface uiEnviarPedidos {
                 tiendaSeleccionada.getVendedor().aumentarCargaTrabajo();
                 transporteSeleccionado.getConductor().aumentarCargaTrabajo();
 
+                //Aumentar el indice de meta para el vendendor y conducto
+                tiendaSeleccionada.getVendedor().aumentarIndiceMeta();
+                transporteSeleccionado.getConductor().aumentarIndiceMeta(totalPeso);
+
+
                 // Eliminar los productos vendidos del inventario
                 tiendaSeleccionada.eliminarProductosPorNombre(listaProductosPedidos);
 
