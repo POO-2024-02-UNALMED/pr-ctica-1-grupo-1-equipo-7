@@ -1528,29 +1528,48 @@ public class Main {
                         LocalDate f = (LocalDate) ganancias.get(0);
                         String fecha = f.format(formato);
                         System.out.println("Fecha: " + fecha + " Ganancia: " + ganancias.get(1));
+                        System.out.println();
                     }
                     break;
                 case 2:
                     System.out.println("La ganancia total es:");
                     System.out.println(Factura.gananciasTotales(fechaInicio, fechaFin));
+                    System.out.println();
                     break;
                 case 3:
                     System.out.println("El promedio es: ");
                     System.out.println(Factura.promedioGanancias(fechaInicio, fechaFin));
+                    System.out.println();
                     break;
                 case 4:
                     System.out.println("El aumento porcentual es: ");
-                    System.out.println(Factura.aumentoPorcentual(fechaInicio, fechaFin));
+                    if (Factura.aumentoPorcentual(fechaInicio, fechaFin).isEmpty()) {
+                        System.out.println("0%");
+                    }
+                    else {
+                        for (Object a : Factura.aumentoPorcentual(fechaInicio, fechaFin)) {
+                            ArrayList<Object> aumento = (ArrayList<Object>) a;
+                            LocalDate f1 = (LocalDate) aumento.get(0);
+                            String fecha1 = f1.format(formato);
+                            LocalDate f2 = (LocalDate) aumento.get(1);
+                            String fecha2 = f2.format(formato);
+                            System.out.println("Entre la Fecha " + fecha1 + "y la Fecha " + fecha2 + " varió un " + aumento.get(2) + "%\n");
+                        }
+                    }
                     break;
                 case 5:
                     System.out.println("El producto más vendido es: ");
                     System.out.println(Factura.modaProductos(fechaInicio, fechaFin));
+                    System.out.println();
                     System.out.println("La tienda que más vendió es: ");
                     System.out.println(Factura.modaTiendas(fechaInicio, fechaFin));
+                    System.out.println();
                     System.out.println("El cliente que más compró es: ");
                     System.out.println(Factura.modaClientes(fechaInicio, fechaFin));
+                    System.out.println();
                     break;
                 case 6:
+                System.out.println("Cambiando fechas...");
                     asignarFecha();
                     break;
                 case 0:
