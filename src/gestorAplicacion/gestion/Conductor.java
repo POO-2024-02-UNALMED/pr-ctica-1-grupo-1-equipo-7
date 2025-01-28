@@ -102,6 +102,9 @@ public class Conductor extends Persona {
     public void aumentarCargaTrabajo(){
         this.cantidadTrabajo += 1;
     }
+    public void aumentarIndiceMeta(double peso){
+        setIndiceMeta(getIndiceMeta()+peso);;
+    }
     // Getter para licencia
     public String getLicencia() {
         return licencia;

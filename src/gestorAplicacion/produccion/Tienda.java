@@ -24,8 +24,8 @@ public class Tienda implements Moda, Serializable{
     private ArrayList<String> categorias = new ArrayList<>();
     private ArrayList<Integer> conteoCategorias = new ArrayList<>();//conteo de productos por categoria
     private int capacidadMaximaMaterial;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Construccion
-    private int capacidadMaximaConsumible;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Alimentos
-    private int capacidadMaximaLimpieza;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Hogar
+    private int capacidadMaximaConsumible;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Muebles
+    private int capacidadMaximaLimpieza;//Es la cantidad maxima de productos que puede tener una tienda por la categoria Aseo
 
 
     // constructor
@@ -147,9 +147,9 @@ public String productosPorCategoria(ArrayList<Producto> productos) {
 
     // Lista de todas las categorías posibles
     ArrayList<String> todasLasCategorias = new ArrayList<>();
-    todasLasCategorias.add("Construcción");
-    todasLasCategorias.add("Alimentos");
-    todasLasCategorias.add("Hogar");
+    todasLasCategorias.add("Herramientas");
+    todasLasCategorias.add("Muebles");
+    todasLasCategorias.add("Aseo");
 
     // Inicializar el conteo de todas las categorías a 0
     for (String categoria : todasLasCategorias) {
@@ -178,13 +178,13 @@ public String productosPorCategoria(ArrayList<Producto> productos) {
 
         // Dependiendo de la categoría, agregar la capacidad máxima correspondiente
         switch (categorias.get(i)) {
-            case "Construcción":
+            case "Herramientas":
                 resultado.append(capacidadMaximaMaterial);
                 break;
-            case "Alimentos":
+            case "Muebles":
                 resultado.append(capacidadMaximaConsumible);
                 break;
-            case "Hogar":
+            case "Aseo":
                 resultado.append(capacidadMaximaLimpieza);
                 break;
             default:
@@ -206,9 +206,9 @@ public String productosPorCategoria(ArrayList<Producto> productos, List<Integer>
 
     // Lista de todas las categorías posibles
     ArrayList<String> todasLasCategorias = new ArrayList<>();
-    todasLasCategorias.add("Construcción");
-    todasLasCategorias.add("Alimentos");
-    todasLasCategorias.add("Hogar");
+    todasLasCategorias.add("Herramientas");
+    todasLasCategorias.add("Muebles");
+    todasLasCategorias.add("Aseo");
 
     // Inicializar el conteo de todas las categorías a 0
     for (String categoria : todasLasCategorias) {
@@ -235,13 +235,13 @@ public String productosPorCategoria(ArrayList<Producto> productos, List<Integer>
 
         // Dependiendo de la categoría, agregar la capacidad máxima correspondiente
         switch (categorias.get(i)) {
-            case "Construcción":
+            case "Herramientas":
                 resultado.append(capacidadMaximaMaterial);
                 break;
-            case "Alimentos":
+            case "Muebles":
                 resultado.append(capacidadMaximaConsumible);
                 break;
-            case "Hogar":
+            case "Aseo":
                 resultado.append(capacidadMaximaLimpieza);
                 break;
             default:
@@ -295,7 +295,6 @@ public Cliente devolverProducto(Factura factura, Producto producto){
 
         // Verificar si el subtotal supera el precio permitido
         if (subtotal > precioCambio) {
-            System.out.println("El subtotal ha excedido el valor límite después de añadir: " + productoSeleccionado.getNombre());
             break;
         }
     }
@@ -361,17 +360,6 @@ public void descargarProducto(Transporte transporteSeleccionado) {
     transporteSeleccionado.getListaDeProductos().clear(); // Vaciar la lista de productos del transporte
 }
 
-public double venderProducto(Producto productoSeleccionado) {
-    for (Producto producto : listaProducto) {
-        if (producto.equals(productoSeleccionado)) {
-            double pesoProducto = producto.getPeso(); // Obtener el peso antes de eliminar
-            listaProducto.remove(producto);          // Eliminar el producto de la lista
-            return pesoProducto;                     // Retornar el peso del producto
-        }
-    }
-    return 0.0;                                      // Si no se encuentra, retorna 0.0
-}
-
 public ArrayList<ArrayList<Object>> listaProductosTienda() {
     ArrayList<ArrayList<Object>> listaProductos = new ArrayList<>();
     
@@ -430,23 +418,21 @@ public String mostrarListaProductosTienda(ArrayList<ArrayList<Object>> listaProd
 public void eliminarProductosPorNombre(ArrayList<Producto> listaEliminar) {
     // Recorrer la lista de productos a eliminar
     for (Producto productoAEliminar : listaEliminar) {
-        boolean productoEliminado = false;
-        
-        // Recorrer la lista de productos de la tienda
-        for (int i = 0; i < listaProducto.size(); i++) {
+        // Recorrer la lista de productos de la tienda de atrás hacia adelante
+        for (int i = listaProducto.size() - 1; i >= 0; i--) {
             Producto productoTienda = listaProducto.get(i);
             
             // Si el nombre del producto coincide, lo eliminamos
-            if (productoTienda.getNombre().equals(productoAEliminar.getNombre()) && !productoEliminado) {
+            if (productoTienda.getNombre().equals(productoAEliminar.getNombre())) {
                 listaProducto.remove(i);  // Eliminar el producto de la tienda
-                productoEliminado = true;  // Asegurarse de que solo se elimine una vez
-                break;  // Salir del bucle una vez que se elimine el producto
+                break;  // Salir del bucle para no eliminar el mismo producto dos veces
             }
         }
     }
 }
-public String enviarPedido(ArrayList<Producto> listaProductosPedidos, Transporte transporteSeleccionado,Cliente clienteSeleccionado,LocalDate dia ){
-    Factura factura = new Factura(this, clienteSeleccionado, transporteSeleccionado, listaProductosPedidos, dia);
+
+public String enviarPedido(ArrayList<Producto> listaProductosPedidos, Transporte transporteSeleccionado,Cliente clienteSeleccionado,int precioEnvio,LocalDate dia ){
+    Factura factura = new Factura(this, clienteSeleccionado, transporteSeleccionado, listaProductosPedidos,precioEnvio, dia);
     return factura.toString();
 }
 
