@@ -19,6 +19,7 @@ public class Operario extends Persona {
         //TODO Auto-generated constructor stub
     }
 
+    //Metodo de la funcionalidad pago trabajdores que devuelve un String con todas las metas que no se han cumplido 
     public String mostrarMetas(){
         String texto = "";
         int indice = 1;
@@ -42,6 +43,7 @@ public class Operario extends Persona {
         return texto;
     }
     
+    //sobreescritura del metod de personas para la funcionalidad pago a trabajadores
     public void recibirSueldo(double valor){
         this.getCuentaBancaria().añadirDinero(valor);
         this.setCantidadTrabajo(0);

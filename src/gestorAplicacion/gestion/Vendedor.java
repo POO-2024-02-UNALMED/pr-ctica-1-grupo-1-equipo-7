@@ -16,6 +16,7 @@ public class Vendedor extends Persona {
         //TODO Auto-generated constructor stub
     }
 
+    //Metodo de la funcionalidad pago trabajdores que devuelve un String con todas las metas que no se han cumplido 
     public String mostrarMetas(){
         String texto = "";
         int indice = 1;
@@ -39,9 +40,10 @@ public class Vendedor extends Persona {
         return texto;
     }
 
-        public void recibirSueldo(double valor){
-            this.getCuentaBancaria().añadirDinero(valor);
-            this.setCantidadTrabajo(0);
+    //sobreescritura del metod de personas para la funcionalidad pago a trabajadores
+    public void recibirSueldo(double valor){
+        this.getCuentaBancaria().añadirDinero(valor);
+        this.setCantidadTrabajo(0);
     }
 
     // Getter y Setter 'Tienda'
