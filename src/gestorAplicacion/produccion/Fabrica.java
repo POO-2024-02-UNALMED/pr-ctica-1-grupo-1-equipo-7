@@ -9,7 +9,7 @@ import gestion.Operario;
 import gestion.Persona;
 
 public class Fabrica implements Serializable {
-    private static final long serialVersionUID = 6L;
+    private static final long serialVersionUID = 1L;
 
     // Atributos
     private  String idFabrica;

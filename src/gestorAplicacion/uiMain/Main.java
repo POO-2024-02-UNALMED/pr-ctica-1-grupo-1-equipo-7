@@ -27,6 +27,7 @@ public class Main {
     public static void main(String[] args) {
 
         Load.cargar();
+
         Scanner sc = new Scanner(System.in);
         
         boolean salir = false;
@@ -212,6 +213,7 @@ public class Main {
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
+                            System.out.println("\nPor favor, seleccione otra tienda para continuar.\n");
                             break;
                         } 
                         else {
