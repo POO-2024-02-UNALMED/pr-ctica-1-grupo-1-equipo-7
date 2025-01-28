@@ -380,6 +380,6 @@ public class Load {
     public static void main(String[] args) {
         cargar();
         System.out.println("Carga exitosa");
-        System.out.println(Producto.getListaProductos().size());
+        System.out.println(Fabrica.getListaTiendas().get(0).getListaProducto());
     }
 }
