@@ -40,6 +40,7 @@ package produccion;
         }
     
         // Método 1: Crear lista según la carga
+        //El método filtra y devuelve una lista de tipos de transporte cuya capacidad máxima es mayor o igual al peso total de los productos.
         public static ArrayList<TipoTransporte> crearTipoTransporteSegunCarga(Double pesoTotalProductos) {
             ArrayList<TipoTransporte> listaFiltrada = new ArrayList<>();
             for (TipoTransporte transporte : TipoTransporte.values()) {
@@ -50,11 +51,13 @@ package produccion;
             return listaFiltrada;
         }
         // Método 2: Mostrar opciones de transporte en formato String
+        //El primer método, mostrarTipoTransporteSegunCarga, llama al segundo método con el parámetro envioGratisRecomendado por defecto en false. 
         public static String mostrarTipoTransporteSegunCarga(ArrayList<TipoTransporte> listaFiltrada) {
             return mostrarTipoTransporteSegunCarga(listaFiltrada, false); // Por defecto, el transporte recomendado no es gratis
         }
         
         // Método principal con el parámetro booleano
+        //El segundo método muestra los detalles de cada tipo de transporte filtrado, incluyendo el precio de envío, la capacidad máxima y una etiqueta si es el transporte recomendado (con el precio más bajo). Si envioGratisRecomendado es true, el transporte recomendado se muestra con envío gratis
         public static String mostrarTipoTransporteSegunCarga(ArrayList<TipoTransporte> listaFiltrada, boolean envioGratisRecomendado) {
             StringBuilder sb = new StringBuilder("");
         
